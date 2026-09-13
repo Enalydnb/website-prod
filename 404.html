@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>404 · Page Not Found · ENALY</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡️</text></svg>">
+  
+  <style>
+    @font-face { font-family: 'League Gothic'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/league-gothic-v13-latin-regular.woff2') format('woff2'); }
+    @font-face { font-family: 'Manrope'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/manrope-v20-latin-regular.woff2') format('woff2'); }
+
+    :root {
+      --bg: #060607;
+      --card-bg: #0E0E10;
+      --card-border: rgba(255, 255, 255, 0.05);
+      --text: #F2F2F2;
+      --pink: #FF006E;
+      --muted: #888888;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Manrope', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .error-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 3.5rem 2rem;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .error-code {
+      font-family: 'League Gothic', sans-serif;
+      font-size: clamp(6rem, 15vw, 9rem);
+      font-weight: 400;
+      color: var(--pink);
+      line-height: 0.8;
+      margin-bottom: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .error-message {
+      font-size: 1.05rem;
+      color: #cccccc;
+      margin-bottom: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .btn-home {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid var(--pink);
+      color: var(--text);
+      font-family: 'League Gothic', sans-serif;
+      font-weight: 400;
+      padding: 0.6rem 2.2rem;
+      font-size: 1.5rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-home:hover {
+      background: var(--pink);
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="error-card">
+    <div class="error-code">404</div>
+    <div class="error-message">LOGICAL ERROR // Page not found</div>
+    <a href="index.html" class="btn-home">BACK TO MAIN PAGE</a>
+  </div>
+
+</body>
+</html>
