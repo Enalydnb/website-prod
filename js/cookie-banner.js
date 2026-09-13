@@ -65,7 +65,7 @@ const bannerHTML = `
       <div class="cookie-screen active" id="screenMain">
         <h2>Datenschutzeinstellungen</h2>
         <div class="cookie-modal-text">
-          Wir nutzen essenzielle Techniken für den Betrieb dieser Website sowie optionale externe Medien (z. B. Musik-Player von SoundCloud und YouTube-Videos). Bei der Aktivierung externer Medien können Daten an Drittanbieter übertragen werden. Weitere Informationen finden Sie in unserer <a href="datenschutz.html">Datenschutzerklärung</a>.
+          Wir nutzen essenzielle Techniken für den Betrieb dieser Website sowie optionale externe Medien (z. B. Musik-Player von SoundCloud und YouTube-Videos). Bei der Aktivierung externer Medien können Daten an Drittanbieter übertragen werden. Weitere Informationen finden Sie in unserer <a href="datenschutz">Datenschutzerklärung</a>.
         </div>
         <div class="cookie-checkboxes">
           <label><input type="checkbox" checked disabled> Essenziell</label>
@@ -79,8 +79,8 @@ const bannerHTML = `
         </div>
         <div class="cookie-modal-footer">
           <button class="id-settings-trigger">Cookie Details</button> | 
-          <a href="datenschutz.html">Datenschutzerklärung</a> | 
-          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz">Datenschutzerklärung</a> | 
+          <a href="impressum">Impressum</a>
         </div>
       </div>
 
@@ -110,7 +110,7 @@ const bannerHTML = `
           <div class="cookie-cat-details-content" id="detailsEssential">
             <strong>Name:</strong> cookie_essential, cookie_external, cookiesAccepted<br>
             <strong>Zweck:</strong> Speichert die getroffenen Auswahlen der Privatsphäre-Einstellungen.<br>
-            <strong>Rechtliche Infos:</strong> Alle Angaben finden Sie im <a href="impressum.html">Impressum</a>.
+            <strong>Rechtliche Infos:</strong> Alle Angaben finden Sie im <a href="impressum">Impressum</a>.
           </div>
         </div>
 
@@ -134,7 +134,7 @@ const bannerHTML = `
           </div>
         </div>
         <div class="cookie-modal-footer" style="margin-top: 1.5rem;">
-          <a href="datenschutz.html">Datenschutzerklärung</a> | <a href="impressum.html">Impressum</a>
+          <a href="datenschutz">Datenschutzerklärung</a> | <a href="impressum">Impressum</a>
         </div>
       </div>
     </div>
