@@ -1,23 +1,58 @@
 [
   {
-    "date": "2026-08-30",
+    "date": "01.08.2026",
+    "title": "PLAY! Open Air",
+    "venue": "Bootshaus",
+    "city": "Cologne, DE",
+    "tickets": ""
+  },
+  {
+    "date": "01.08.2026",
+    "title": "Nature One Festival",
+    "venue": "Raketenbasis Pydna",
+    "city": "Kastellaun, DE",
+    "tickets": ""
+  },
+  {
+    "date": "15.08.2026",
+    "title": "BREAKZONE Festival (B2B FLOWZ)",
+    "venue": "Odonien",
+    "city": "Cologne, DE",
+    "tickets": ""
+  },
+  {
+    "date": "22.08.2026",
+    "title": "Lass es Rollen Festival",
+    "venue": "",
+    "city": "Schaafheim, DE",
+    "tickets": ""
+  },
+  {
+    "date": "29.08.2026",
     "title": "Nibirii Festival 2026",
     "venue": "Badesee Düren",
     "city": "Düren, DE",
     "tickets": ""
   },
   {
-    "date": "2026-10-15",
-    "title": "BOOTSHAUS w/ Andy C",
-    "venue": "Bootshaus",
-    "city": "Cologne, DE",
-    "tickets": "https://bootshaus.tv"
+    "date": "05.09.2026",
+    "title": "DREAMLAND Warm Up",
+    "venue": "NFF Club",
+    "city": "Bremen, DE",
+    "tickets": ""
   },
   {
-    "date": "2026-11-20",
-    "title": "ODONIEN NIGHT",
-    "venue": "Odonien",
+    "date": "19.09.2026",
+    "title": "Sommerfest Closing",
+    "venue": "Bootshaus",
     "city": "Cologne, DE",
-    "tickets": "https://odonien.de"
+    "tickets": "https://bootshaus.tv/tickets"
+  },
+  {
+    "date": "22.01.2027",
+    "title": "Indecent Bass",
+    "venue": "Club Katze",
+    "city": "Cologne, DE",
+    "tickets": "https://indecentbass.nightowl.app/de-DE"
   }
 ]
