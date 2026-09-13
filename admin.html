@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ADMIN DASHBOARD · ENALY</title>
+  
+  <!-- FAVICON -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡️</text></svg>">
+
+  <style>
+    /* ── FONTS ── */
+    @font-face { font-family: 'League Gothic'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/league-gothic-v13-latin-regular.woff2') format('woff2'); }
+    @font-face { font-family: 'Manrope'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/manrope-v20-latin-regular.woff2') format('woff2'); }
+
+    /* ── THEMING (ENALY DESIGN SYSTEM) ── */
+    :root {
+      --bg: #060607;
+      --card-bg: #0E0E10;
+      --input-bg: rgba(0, 0, 0, 0.4);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --text: #F2F2F2;
+      --pink: #FF006E;
+      --pink-hover: #d4005b;
+      --muted: #888888;
+      --green: #00E676;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+      position: relative;
+      touch-action: pan-x pan-y;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      min-height: 100vh;
+      padding-bottom: 6rem;
+      line-height: 1.5;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; width: 100%; }
+
+    /* ── HEADER ── */
+    header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding-bottom: 1.2rem; 
+      margin-bottom: 2rem; 
+      border-bottom: 1px solid var(--card-border); 
+      flex-wrap: wrap; 
+      gap: 1rem; 
+    }
+    header h1 { 
+      font-family: 'League Gothic', sans-serif; 
+      font-weight: 400;
+      font-size: 2.5rem; 
+      letter-spacing: 0.05em; 
+      color: var(--text); 
+      text-transform: uppercase;
+    }
+    .header-right { display: flex; align-items: center; gap: 1rem; }
+    .status-indicator { 
+      font-size: 0.85rem; 
+      color: var(--green); 
+      letter-spacing: 0.05em; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.5rem; 
+      font-weight: 500; 
+    }
+
+    /* ── TABS ── */
+    .nav-tabs { 
+      display: flex; 
+      gap: 0.75rem; 
+      margin-bottom: 2rem; 
+      overflow-x: auto; 
+      padding-bottom: 0.4rem;
+      scrollbar-width: none; 
+      -webkit-overflow-scrolling: touch;
+    }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .nav-tab { 
+      background: var(--card-bg); 
+      border: 1px solid var(--card-border); 
+      color: var(--muted); 
+      padding: 0.6rem 1.6rem; 
+      font-family: 'League Gothic', sans-serif;
+      font-size: 1.4rem; 
+      letter-spacing: 0.08em; 
+      text-transform: uppercase; 
+      font-weight: 400; 
+      cursor: pointer; 
+      transition: all 0.2s ease; 
+      flex-shrink: 0; 
+      border-radius: 4px;
+    }
+    .nav-tab:hover { color: var(--text); }
+    .nav-tab.active { background: var(--pink); color: #fff; border-color: var(--pink); }
+
+    /* ── CARDS & FORMS ── */
+    .card { 
+      background: var(--card-bg); 
+      border: 1px solid var(--card-border); 
+      border-radius: 6px; 
+      padding: 1.75rem; 
+      margin-bottom: 1.5rem; 
+    }
+    .card-title { 
+      font-family: 'Manrope', sans-serif; 
+      font-size: 0.9rem; 
+      color: var(--pink); 
+      margin-bottom: 1.5rem; 
+      font-weight: 600; 
+      text-transform: uppercase; 
+      letter-spacing: 0.05em; 
+    }
+    
+    .grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+
+    input[type="text"], input[type="password"], input[type="url"], select, textarea {
+      width: 100%; 
+      background: var(--input-bg); 
+      border: 1px solid var(--card-border); 
+      color: var(--text);
+      padding: 0.7rem 0.9rem; 
+      font-family: 'Manrope', sans-serif; 
+      font-size: 0.95rem; 
+      border-radius: 4px;
+      outline: none; 
+      transition: border-color 0.2s ease;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--pink); }
+
+    /* ── BUTTONS ── */
+    button { 
+      font-family: 'League Gothic', sans-serif; 
+      font-weight: 400;
+      font-size: 1.3rem; 
+      letter-spacing: 0.08em; 
+      text-transform: uppercase; 
+      border: none; 
+      cursor: pointer; 
+      transition: all 0.2s ease; 
+      border-radius: 4px; 
+    }
+    .btn-pink { background: transparent; border: 1px solid var(--pink); color: var(--text); padding: 0.4rem 1.4rem; }
+    .btn-pink:hover { background: var(--pink); color: #fff; }
+    .btn-dark { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); color: var(--text); padding: 0.4rem 1rem; }
+    .btn-dark:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--muted); }
+    .btn-delete { background: transparent; border: 1px solid rgba(255, 0, 110, 0.3); color: var(--pink); padding: 0.4rem 0.8rem; }
+    .btn-delete:hover { background: var(--pink); color: #fff; }
+    
+    .btn-save-sticky { 
+      position: fixed; 
+      bottom: 1.5rem; 
+      left: 50%; 
+      transform: translateX(-50%); 
+      width: calc(100% - 3rem); 
+      max-width: 650px; 
+      background: var(--pink); 
+      color: #fff; 
+      font-size: 1.4rem; 
+      padding: 0.75rem; 
+      text-align: center; 
+      box-shadow: 0 8px 30px rgba(0,0,0,0.8); 
+      z-index: 99; 
+      border-radius: 4px;
+      border: 1px solid var(--pink);
+    }
+    .btn-save-sticky:hover { background: var(--pink-hover); }
+
+    /* ── ITEM LISTS ── */
+    .list-item { background: var(--input-bg); border: 1px solid var(--card-border); padding: 1rem 1.25rem; border-radius: 4px; margin-bottom: 0.6rem; }
+    .list-row-view { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .list-item-info strong { font-size: 1rem; display: block; margin-bottom: 0.2rem; color: var(--text); }
+    .list-item-info span { font-size: 0.85rem; color: var(--muted); }
+    .controls { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    
+    .edit-form { display: none; background: rgba(0, 0, 0, 0.6); padding: 1.25rem; margin-top: 0.75rem; border-left: 3px solid var(--pink); border-radius: 4px; }
+
+    /* ── ASSETS ── */
+    .assets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+    .asset-card { background: var(--input-bg); border: 1px solid var(--card-border); padding: 0.6rem; border-radius: 4px; text-align: center; }
+    .asset-card img { width: 100%; height: 95px; object-fit: cover; border-radius: 2px; margin-bottom: 0.4rem; }
+    .asset-card span { display: block; font-size: 0.75rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    @media (max-width: 768px) {
+      body { font-size: 14px; padding-bottom: 5rem; }
+      .container { padding: 1rem 0.8rem; }
+      header h1 { font-size: 2rem; }
+      .nav-tab { padding: 0.5rem 1.1rem; font-size: 1.2rem; }
+      .card { padding: 1.25rem; }
+      .grid-form { grid-template-columns: 1fr; gap: 0.75rem; }
+      input[type="text"], input[type="password"], input[type="url"], select, textarea { padding: 0.6rem 0.8rem; font-size: 16px; }
+      .list-row-view { flex-direction: column; align-items: flex-start; }
+      .controls { width: 100%; justify-content: flex-start; margin-top: 0.5rem; }
+      .assets-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.75rem; }
+      .asset-card img { height: 75px; }
+      .btn-save-sticky { width: calc(100% - 2rem); padding: 0.65rem; font-size: 1.2rem; }
+    }
+  </style>
+
+  <!-- CONFIG DATEI EINBINDEN -->
+  <script src="js/config.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>ENALY · ADMIN DASHBOARD</h1>
+      <div class="header-right">
+        <span class="status-indicator">● Online</span>
+      </div>
+    </header>
+
+    <!-- TABS NAVIGATION -->
+    <div class="nav-tabs">
+      <button class="nav-tab active" id="tabBtnEvents" onclick="switchTab('events')">Events</button>
+      <button class="nav-tab" id="tabBtnContent" onclick="switchTab('content')">Content / Texte</button>
+      <button class="nav-tab" id="tabBtnAssets" onclick="switchTab('assets')">Assets</button>
+    </div>
+
+    <!-- ── TAB 1: EVENTS ── -->
+    <div id="tabEvents">
+      <div class="card">
+        <div class="card-title">Neues Event Hinzufügen</div>
+        <div class="grid-form">
+          <input type="text" id="newDate" placeholder="Datum (TT.MM.JJJJ)">
+          <input type="text" id="newTitle" placeholder="Event Name / Line-Up">
+          <input type="text" id="newVenue" placeholder="Location / Club">
+          <input type="text" id="newCity" placeholder="Stadt">
+          <input type="url"  id="newTickets" placeholder="Ticket Link (Optional)">
+        </div>
+        <div style="display:flex; justify-content:flex-end; align-items:center; margin-top:1.25rem;">
+          <button class="btn-pink" onclick="addEvent()">+ Event Hinzufügen</button>
+        </div>
+      </div>
+
+      <div class="card-title" style="margin-top:1.5rem;">ALLE EVENTS</div>
+      <div id="adminList">Lade Events...</div>
+      <button class="btn-save-sticky" id="btnSaveEvents" onclick="saveEventsToGitHub()">Events Speichern</button>
+    </div>
+
+    <!-- ── TAB 2: CONTENT / TEXTE ── -->
+    <div id="tabContent" style="display:none;">
+      <div class="card">
+        <div class="card-title">ABOUT / BIO</div>
+        <textarea id="textContentAbout" rows="6" placeholder="Bio / Über mich Text..."></textarea>
+      </div>
+
+      <div class="card">
+        <div class="card-title">SHARED THE STAGE WITH</div>
+        <textarea id="textContentSharedStage" rows="4" placeholder="Künstler / Acts (kommagetrennt oder mehrzeilig)..."></textarea>
+      </div>
+
+      <div class="card">
+        <div class="card-title">SELECTED SHOWS</div>
+        <textarea id="textContentSelectedShows" rows="4" placeholder="Highlights / Vergangene Top Shows..."></textarea>
+      </div>
+
+      <button class="btn-save-sticky" id="btnSaveContent" onclick="saveContentToGitHub()" style="display:none;">Texte Speichern</button>
+    </div>
+
+    <!-- ── TAB 3: ASSETS ── -->
+    <div id="tabAssets" style="display:none;">
+      <div class="card" style="text-align:center; padding:2.5rem 1rem; border:2px dashed var(--card-border); cursor:pointer;" onclick="document.getElementById('fileInput').click()">
+        📁 <strong>Datei hochladen (Direkt auf GitHub)</strong>
+        <p style="font-size:0.8rem; color:var(--muted); margin-top:0.4rem;">Unterstützt: JPG, PNG, WEBP, SVG</p>
+        <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFileUpload(this.files)">
+      </div>
+
+      <div class="card-title">VORHANDENE BILDER</div>
+      <div class="assets-grid" id="assetsGrid">Lade Assets...</div>
+    </div>
+
+  </div>
+
+  <script>
+    // Mobile Zoom Protection
+    document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
+
+    const filePathEvents = "data/events.json";
+    const filePathContent = "data/content.json";
+    const assetFolderPath = "assets";
+
+    // Standardinhalte als Fallback für leeres content.json
+    const defaultAbout = "Enaly is a drum and bass DJ known for her dark and heavy sound, shaped by her roots in rock and metal. Blending powerful, hard-hitting elements with melodic passages, she creates emotionally driven sets that take listeners on a dynamic musical journey.\n\nHaving shared stages with artists such as Andy C, Culture Shock, Dimension and Wilkinson, and performed at venues like Bootshaus and Odonien as well as festivals including Nibirii and Nature One, Enaly continues to build strong momentum within the scene.\n\nAwarded Best Newcomer at the Drum and Bass Awards Germany 23/24, she is rapidly establishing herself as a rising force in drum and bass.";
+    const defaultSharedStage = "ANDY C, BLACK SUN EMPIRE, CULTURE SHOCK, DELTA HEAVY, DIMENSION, FRICTION, K MOTIONZ, KANINE, MEFJUS, PENDULUM, WILKINSON, ZOMBIE CATS";
+    const defaultSelectedShows = "NIBIRII FESTIVAL, NATURE ONE, BOOTSHAUS, ODONIEN, PROTON";
+
+    let localEvents = [];
+    let localContent = { about: defaultAbout, sharedStage: defaultSharedStage, selectedShows: defaultSelectedShows };
+    let fileShaMap = {};
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof proxyApiUrl === 'undefined') {
+        document.getElementById('adminList').innerHTML = '<p style="color:var(--pink)">Fehler: proxyApiUrl ist in js/config.js nicht definiert!</p>';
+        return;
+      }
+      loadEventsFromGitHub();
+      loadContentFromGitHub();
+      loadAssetsFromGitHub();
+    });
+
+    function switchTab(tab) {
+      const tabs = ['events', 'content', 'assets'];
+      tabs.forEach(t => {
+        const tabEl = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+        const tabBtn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (tabEl) tabEl.style.display = (t === tab) ? 'block' : 'none';
+        if (tabBtn) tabBtn.classList.toggle('active', t === tab);
+      });
+
+      // Sticky Save Button je nach gewähltem Tab anpassen
+      document.getElementById('btnSaveEvents').style.display = (tab === 'events') ? 'block' : 'none';
+      document.getElementById('btnSaveContent').style.display = (tab === 'content') ? 'block' : 'none';
+
+      if (tab === 'assets') loadAssetsFromGitHub();
+    }
+
+    function cleanPath(path) {
+      return (path || '').replace(/^\/+/, '');
+    }
+
+    function parseDateToTimestamp(dateStr) {
+      if (!dateStr) return 0;
+      const cleanStr = dateStr.trim();
+
+      if (/^\d{1,2}[\.\-]\d{1,2}[\.\-]\d{4}$/.test(cleanStr)) {
+        const parts = cleanStr.split(/[\.\-]/);
+        return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
+      }
+
+      if (/^\d{4}[\.\-]\d{1,2}[\.\-]\d{1,2}$/.test(cleanStr)) {
+        const parts = cleanStr.split(/[\.\-]/);
+        return new Date(parts[0], parts[1] - 1, parts[2]).getTime();
+      }
+
+      return 0;
+    }
+
+    // ── API HELPERS ÜBER CLOUDFLARE WORKER PROXY ──
+    async function getGitHubFile(path, defaultFallback = "[]") {
+      const safePath = cleanPath(path);
+      const res = await fetch(`${proxyApiUrl}/${safePath}`);
+      
+      if (res.status === 404) {
+        return { isNew: true, content: utf8_to_b64(defaultFallback) };
+      }
+      
+      if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
+      
+      const data = await res.json();
+      fileShaMap[safePath] = data.sha;
+      fileShaMap[path] = data.sha;
+      return data;
+    }
+
+    async function saveGitHubFile(path, contentBase64, commitMessage) {
+      const safePath = cleanPath(path);
+      
+      if (!fileShaMap[safePath]) {
+        try {
+          const existingFile = await getGitHubFile(safePath);
+          if (existingFile && existingFile.sha) {
+            fileShaMap[safePath] = existingFile.sha;
+          }
+        } catch (e) {}
+      }
+
+      const body = {
+        message: commitMessage,
+        content: contentBase64,
+        sha: fileShaMap[safePath] || undefined
+      };
+
+      const res = await fetch(`${proxyApiUrl}/${safePath}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || `HTTP ${res.status}`);
+      }
+
+      const data = await res.json();
+      if (data.content && data.content.sha) {
+        fileShaMap[safePath] = data.content.sha;
+        fileShaMap[path] = data.content.sha;
+      }
+      return data;
+    }
+
+    async function deleteGitHubFile(path, commitMessage) {
+      const safePath = cleanPath(path);
+
+      if (!fileShaMap[safePath]) {
+        try {
+          const existingFile = await getGitHubFile(safePath);
+          if (existingFile && existingFile.sha) {
+            fileShaMap[safePath] = existingFile.sha;
+          }
+        } catch (e) {}
+      }
+
+      const body = {
+        message: commitMessage,
+        sha: fileShaMap[safePath]
+      };
+
+      const res = await fetch(`${proxyApiUrl}/${safePath}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || `HTTP ${res.status}`);
+      }
+    }
+
+    function utf8_to_b64(str) {
+      return btoa(String.fromCharCode.apply(null, new TextEncoder().encode(str)));
+    }
+
+    function b64_to_utf8(str) {
+      const cleanStr = str.replace(/\s/g, '');
+      return new TextDecoder().decode(Uint8Array.from(atob(cleanStr), c => c.charCodeAt(0)));
+    }
+
+    // ── EVENTS LOGIK ──
+    async function loadEventsFromGitHub() {
+      try {
+        const data = await getGitHubFile(filePathEvents, "[]");
+        const decodedContent = b64_to_utf8(data.content);
+        localEvents = JSON.parse(decodedContent);
+        if (!Array.isArray(localEvents)) localEvents = [];
+        sortAndRenderEvents();
+      } catch (err) {
+        document.getElementById('adminList').innerHTML = `<p style="color:var(--pink)">Fehler beim Laden: ${err.message}</p>`;
+      }
+    }
+
+    function sortAndRenderEvents() {
+      const now = new Date().setHours(0, 0, 0, 0);
+      
+      localEvents.sort((a, b) => {
+        const timeA = parseDateToTimestamp(a.date);
+        const timeB = parseDateToTimestamp(b.date);
+        const aIsFuture = timeA >= now;
+        const bIsFuture = timeB >= now;
+
+        if (aIsFuture && !bIsFuture) return -1;
+        if (!aIsFuture && bIsFuture) return 1;
+        if (aIsFuture && bIsFuture) return timeA - timeB;
+        return timeB - timeA;
+      });
+
+      renderEventsList();
+    }
+
+    function renderEventsList() {
+      const list = document.getElementById('adminList');
+      list.innerHTML = localEvents.length ? '' : '<p style="color:var(--muted)">Keine Events vorhanden.</p>';
+
+      const now = new Date().setHours(0, 0, 0, 0);
+
+      localEvents.forEach((ev, index) => {
+        const ticketInfo = ev.tickets ? `| Ticket: <a href="${escapeHtml(ev.tickets)}" target="_blank" style="color:var(--pink)">[Link]</a>` : '';
+        const eventTime = parseDateToTimestamp(ev.date);
+        const isPast = eventTime < now;
+        const opacity = isPast ? '0.5' : '1';
+        
+        list.innerHTML += `
+          <div class="list-item" id="item-${index}" style="opacity: ${opacity};">
+            <div class="list-row-view" id="view-${index}">
+              <div class="list-item-info">
+                <strong>${escapeHtml(ev.date)} – ${escapeHtml(ev.title)}</strong>
+                <span>Location: ${escapeHtml(ev.venue || 'TBA')} (${escapeHtml(ev.city || 'TBA')}) ${ticketInfo} ${isPast ? ' <i>(Vergangen)</i>' : ''}</span>
+              </div>
+              <div class="controls">
+                <button class="btn-dark" onclick="openEditForm(${index})">Bearbeiten</button>
+                <button class="btn-delete" onclick="deleteEvent(${index})">✕</button>
+              </div>
+            </div>
+
+            <div class="edit-form" id="editForm-${index}">
+              <h4 style="color:var(--pink); margin-bottom:0.8rem; font-size:0.9rem; text-transform:uppercase;">Event bearbeiten</h4>
+              <div class="grid-form" style="margin-bottom:0.75rem;">
+                <input type="text" id="editDate-${index}" value="${escapeHtml(ev.date || '')}" placeholder="Datum (TT-MM-JJJJ)">
+                <input type="text" id="editTitle-${index}" value="${escapeHtml(ev.title || '')}" placeholder="Event Name">
+                <input type="text" id="editVenue-${index}" value="${escapeHtml(ev.venue || '')}" placeholder="Location / Club">
+                <input type="text" id="editCity-${index}" value="${escapeHtml(ev.city || '')}" placeholder="Stadt">
+                <input type="url"  id="editTickets-${index}" value="${escapeHtml(ev.tickets || '')}" placeholder="Ticket Link">
+              </div>
+              <div style="display:flex; gap:0.5rem;">
+                <button class="btn-pink" onclick="saveLocalEdit(${index})">Übernehmen</button>
+                <button class="btn-dark" onclick="closeEditForm(${index})">Abbrechen</button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function openEditForm(index) {
+      document.getElementById(`editForm-${index}`).style.display = "block";
+      document.getElementById(`view-${index}`).style.display = "none";
+    }
+
+    function closeEditForm(index) {
+      document.getElementById(`editForm-${index}`).style.display = "none";
+      document.getElementById(`view-${index}`).style.display = "flex";
+    }
+
+    function saveLocalEdit(index) {
+      localEvents[index].date = document.getElementById(`editDate-${index}`).value;
+      localEvents[index].title = document.getElementById(`editTitle-${index}`).value;
+      localEvents[index].venue = document.getElementById(`editVenue-${index}`).value;
+      localEvents[index].city = document.getElementById(`editCity-${index}`).value;
+      localEvents[index].tickets = document.getElementById(`editTickets-${index}`).value;
+      sortAndRenderEvents();
+    }
+
+    function deleteEvent(index) {
+      if (confirm("Event wirklich löschen?")) {
+        localEvents.splice(index, 1);
+        sortAndRenderEvents();
+      }
+    }
+
+    function addEvent() {
+      const date = document.getElementById('newDate').value;
+      const title = document.getElementById('newTitle').value;
+      if (!date || !title) return alert("Datum & Event-Name ausfüllen!");
+
+      localEvents.push({
+        date: date,
+        title: title,
+        venue: document.getElementById('newVenue').value || "",
+        city: document.getElementById('newCity').value || "",
+        tickets: document.getElementById('newTickets').value || ""
+      });
+
+      sortAndRenderEvents();
+
+      document.getElementById('newDate').value = '';
+      document.getElementById('newTitle').value = '';
+      document.getElementById('newVenue').value = '';
+      document.getElementById('newCity').value = '';
+      document.getElementById('newTickets').value = '';
+    }
+
+    async function saveEventsToGitHub() {
+      try {
+        localEvents.sort((a, b) => parseDateToTimestamp(a.date) - parseDateToTimestamp(b.date));
+        const jsonString = JSON.stringify(localEvents, null, 2);
+        const base64Content = utf8_to_b64(jsonString);
+        await saveGitHubFile(filePathEvents, base64Content, "Update events.json via Admin Dashboard");
+        alert("Events erfolgreich auf GitHub gespeichert!");
+      } catch (err) {
+        alert("Fehler beim Speichern: " + err.message);
+      }
+    }
+
+    // ── CONTENT / TEXTE LOGIK ──
+    async function loadContentFromGitHub() {
+      try {
+        const defaultJSON = JSON.stringify({ about: defaultAbout, sharedStage: defaultSharedStage, selectedShows: defaultSelectedShows });
+        const data = await getGitHubFile(filePathContent, defaultJSON);
+        const decodedContent = b64_to_utf8(data.content);
+        localContent = JSON.parse(decodedContent);
+        
+        document.getElementById('textContentAbout').value = localContent.about || defaultAbout;
+        document.getElementById('textContentSharedStage').value = localContent.sharedStage || defaultSharedStage;
+        document.getElementById('textContentSelectedShows').value = localContent.selectedShows || defaultSelectedShows;
+      } catch (err) {
+        console.error("Content Fehler beim Laden:", err);
+        document.getElementById('textContentAbout').value = defaultAbout;
+        document.getElementById('textContentSharedStage').value = defaultSharedStage;
+        document.getElementById('textContentSelectedShows').value = defaultSelectedShows;
+      }
+    }
+
+    async function saveContentToGitHub() {
+      try {
+        localContent = {
+          about: document.getElementById('textContentAbout').value,
+          sharedStage: document.getElementById('textContentSharedStage').value,
+          selectedShows: document.getElementById('textContentSelectedShows').value
+        };
+
+        const jsonString = JSON.stringify(localContent, null, 2);
+        const base64Content = utf8_to_b64(jsonString);
+        await saveGitHubFile(filePathContent, base64Content, "Update content.json via Admin Dashboard");
+        alert("Texte erfolgreich auf GitHub gespeichert!");
+      } catch (err) {
+        alert("Fehler beim Speichern der Texte: " + err.message);
+      }
+    }
+
+    // ── ASSETS LOGIK ──
+    async function loadAssetsFromGitHub() {
+      try {
+        const safePath = cleanPath(assetFolderPath);
+        const res = await fetch(`${proxyApiUrl}/${safePath}`);
+        
+        if (res.status === 404) {
+           document.getElementById('assetsGrid').innerHTML = '<p style="color:var(--muted)">Ordner /assets existiert noch nicht auf GitHub.</p>';
+           return;
+        }
+        
+        if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
+        
+        const files = await res.json();
+        const grid = document.getElementById('assetsGrid');
+        grid.innerHTML = files.length ? '' : '<p style="color:var(--muted)">Keine Bilder vorhanden.</p>';
+        
+        files.forEach(file => {
+          if (file.type === 'file') {
+            const fileSafePath = cleanPath(file.path);
+            fileShaMap[fileSafePath] = file.sha;
+            fileShaMap[file.path] = file.sha;
+            grid.innerHTML += `
+              <div class="asset-card">
+                <img src="${file.download_url}">
+                <span>${file.name}</span>
+                <button class="btn-delete" style="width:100%; margin-top:0.3rem; padding:0.2rem;" onclick="deleteAssetFile('${file.path}')">✕ Löschen</button>
+              </div>
+            `;
+          }
+        });
+      } catch (err) {
+        console.error("Assets Fehler:", err);
+        document.getElementById('assetsGrid').innerHTML = `<p style="color:var(--pink)">Fehler beim Laden: ${err.message}</p>`;
+      }
+    }
+
+    function handleFileUpload(files) {
+      if (!files.length) return;
+      const file = files[0];
+      const reader = new FileReader();
+
+      reader.onload = async (e) => {
+        try {
+          const rawBase64 = e.target.result.split(',')[1];
+          const path = `${assetFolderPath}/${file.name}`;
+          await saveGitHubFile(path, rawBase64, `Upload asset ${file.name} via Admin Dashboard`);
+          alert("Bild erfolgreich hochgeladen!");
+          loadAssetsFromGitHub();
+        } catch (err) {
+          alert("Upload-Fehler: " + err.message);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function deleteAssetFile(path) {
+      if (!confirm(`Bild "${path}" wirklich löschen?`)) return;
+      try {
+        await deleteGitHubFile(path, `Delete asset ${path} via Admin Dashboard`);
+        alert("Bild gelöscht!");
+        loadAssetsFromGitHub();
+      } catch (err) {
+        alert("Lösch-Fehler: " + err.message);
+      }
+    }
+
+    function escapeHtml(text) { return (text || '').replace(/"/g, "&quot;"); }
+  </script>
+</body>
+</html>
