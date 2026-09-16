@@ -191,6 +191,11 @@
     .asset-card img { width: 100%; height: 95px; object-fit: cover; border-radius: 2px; margin-bottom: 0.4rem; }
     .asset-card span { display: block; font-size: 0.75rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
+    /* ── IMAGE SELECTOR STYLES ── */
+    .image-select-row { display: grid; grid-template-columns: 1fr 120px; gap: 1.5rem; align-items: center; margin-bottom: 1.5rem; }
+    .image-preview-box { width: 120px; height: 70px; border-radius: 4px; overflow: hidden; border: 1px solid var(--card-border); background: var(--input-bg); display: flex; align-items: center; justify-content: center; }
+    .image-preview-box img { width: 100%; height: 100%; object-fit: cover; }
+
     @media (max-width: 768px) {
       body { font-size: 14px; padding-bottom: 5rem; }
       .container { padding: 1rem 0.8rem; }
@@ -204,6 +209,8 @@
       .assets-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.75rem; }
       .asset-card img { height: 75px; }
       .btn-save-sticky { width: calc(100% - 2rem); padding: 0.65rem; font-size: 1.2rem; }
+      .image-select-row { grid-template-columns: 1fr; gap: 0.75rem; }
+      .image-preview-box { width: 100%; height: 120px; }
     }
   </style>
 
@@ -224,7 +231,8 @@
     <div class="nav-tabs">
       <button class="nav-tab active" id="tabBtnEvents" onclick="switchTab('events')">Events</button>
       <button class="nav-tab" id="tabBtnContent" onclick="switchTab('content')">Content / Texte</button>
-      <button class="nav-tab" id="tabBtnAssets" onclick="switchTab('assets')">Assets</button>
+      <button class="nav-tab" id="tabBtnImages" onclick="switchTab('images')">Bilder / Layout</button>
+      <button class="nav-tab" id="tabBtnAssets" onclick="switchTab('assets')">Assets Upload</button>
     </div>
 
     <!-- ── TAB 1: EVENTS ── -->
@@ -268,7 +276,49 @@
       <button class="btn-save-sticky" id="btnSaveContent" onclick="saveContentToGitHub()" style="display:none;">Texte Speichern</button>
     </div>
 
-    <!-- ── TAB 3: ASSETS ── -->
+    <!-- ── TAB 3: BILDER ZUORDNUNG ── -->
+    <div id="tabImages" style="display:none;">
+      <div class="card">
+        <div class="card-title">LAYOUT BILDER ZUORDNEN</div>
+
+        <!-- Header Bild Dropdown -->
+        <div class="image-select-row">
+          <div>
+            <label style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Header Banner Bild</label>
+            <select id="selectImgHeader" onchange="updatePreview('selectImgHeader', 'prevHeader')"></select>
+          </div>
+          <div class="image-preview-box">
+            <img id="prevHeader" src="assets/header.jpg" alt="Header Preview">
+          </div>
+        </div>
+
+        <!-- About Portrait Dropdown -->
+        <div class="image-select-row">
+          <div>
+            <label style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:0.4rem;">About Portrait Bild</label>
+            <select id="selectImgAbout" onchange="updatePreview('selectImgAbout', 'prevAbout')"></select>
+          </div>
+          <div class="image-preview-box">
+            <img id="prevAbout" src="assets/about.jpg" alt="About Preview">
+          </div>
+        </div>
+
+        <!-- Booking Bild Dropdown -->
+        <div class="image-select-row">
+          <div>
+            <label style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Booking Bereich Bild</label>
+            <select id="selectImgWorking" onchange="updatePreview('selectImgWorking', 'prevWorking')"></select>
+          </div>
+          <div class="image-preview-box">
+            <img id="prevWorking" src="assets/working.jpg" alt="Working Preview">
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-save-sticky" id="btnSaveImages" onclick="saveContentToGitHub()" style="display:none;">Bilder-Zuordnung Speichern</button>
+    </div>
+
+    <!-- ── TAB 4: ASSETS ── -->
     <div id="tabAssets" style="display:none;">
       <div class="card" style="text-align:center; padding:2.5rem 1rem; border:2px dashed var(--card-border); cursor:pointer;" onclick="document.getElementById('fileInput').click()">
         📁 <strong>Datei hochladen (Direkt auf GitHub)</strong>
@@ -290,14 +340,17 @@
     const filePathContent = "data/content.json";
     const assetFolderPath = "assets";
 
-    // Standardinhalte als Fallback für leeres content.json
-    const defaultAbout = "Enaly is a drum and bass DJ known for her dark and heavy sound, shaped by her roots in rock and metal. Blending powerful, hard-hitting elements with melodic passages, she creates emotionally driven sets that take listeners on a dynamic musical journey.\n\nHaving shared stages with artists such as Andy C, Culture Shock, Dimension and Wilkinson, and performed at venues like Bootshaus and Odonien as well as festivals including Nibirii and Nature One, Enaly continues to build strong momentum within the scene.\n\nAwarded Best Newcomer at the Drum and Bass Awards Germany 23/24, she is rapidly establishing herself as a rising force in drum and bass.";
-    const defaultSharedStage = "ANDY C, BLACK SUN EMPIRE, CULTURE SHOCK, DELTA HEAVY, DIMENSION, FRICTION, K MOTIONZ, KANINE, MEFJUS, PENDULUM, WILKINSON, ZOMBIE CATS";
-    const defaultSelectedShows = "NIBIRII FESTIVAL, NATURE ONE, BOOTSHAUS, ODONIEN, PROTON";
-
     let localEvents = [];
-    let localContent = { about: defaultAbout, sharedStage: defaultSharedStage, selectedShows: defaultSelectedShows };
+    let localContent = { 
+      about: "", 
+      sharedStage: "", 
+      selectedShows: "",
+      imgHeader: "assets/header.jpg",
+      imgAbout: "assets/about.jpg",
+      imgWorking: "assets/working.jpg"
+    };
     let fileShaMap = {};
+    let availableAssets = [];
 
     window.addEventListener('DOMContentLoaded', () => {
       if (typeof proxyApiUrl === 'undefined') {
@@ -310,7 +363,7 @@
     });
 
     function switchTab(tab) {
-      const tabs = ['events', 'content', 'assets'];
+      const tabs = ['events', 'content', 'images', 'assets'];
       tabs.forEach(t => {
         const tabEl = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
         const tabBtn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
@@ -321,8 +374,9 @@
       // Sticky Save Button je nach gewähltem Tab anpassen
       document.getElementById('btnSaveEvents').style.display = (tab === 'events') ? 'block' : 'none';
       document.getElementById('btnSaveContent').style.display = (tab === 'content') ? 'block' : 'none';
+      document.getElementById('btnSaveImages').style.display = (tab === 'images') ? 'block' : 'none';
 
-      if (tab === 'assets') loadAssetsFromGitHub();
+      if (tab === 'assets' || tab === 'images') loadAssetsFromGitHub();
     }
 
     function cleanPath(path) {
@@ -347,7 +401,7 @@
     }
 
     // ── API HELPERS ÜBER CLOUDFLARE WORKER PROXY ──
-    async function getGitHubFile(path, defaultFallback = "[]") {
+    async function getGitHubFile(path, defaultFallback = "{}") {
       const safePath = cleanPath(path);
       const res = await fetch(`${proxyApiUrl}/${safePath}`);
       
@@ -576,19 +630,15 @@
     // ── CONTENT / TEXTE LOGIK ──
     async function loadContentFromGitHub() {
       try {
-        const defaultJSON = JSON.stringify({ about: defaultAbout, sharedStage: defaultSharedStage, selectedShows: defaultSelectedShows });
-        const data = await getGitHubFile(filePathContent, defaultJSON);
+        const data = await getGitHubFile(filePathContent, "{}");
         const decodedContent = b64_to_utf8(data.content);
         localContent = JSON.parse(decodedContent);
         
-        document.getElementById('textContentAbout').value = localContent.about || defaultAbout;
-        document.getElementById('textContentSharedStage').value = localContent.sharedStage || defaultSharedStage;
-        document.getElementById('textContentSelectedShows').value = localContent.selectedShows || defaultSelectedShows;
+        document.getElementById('textContentAbout').value = localContent.about || "";
+        document.getElementById('textContentSharedStage').value = localContent.sharedStage || "";
+        document.getElementById('textContentSelectedShows').value = localContent.selectedShows || "";
       } catch (err) {
         console.error("Content Fehler beim Laden:", err);
-        document.getElementById('textContentAbout').value = defaultAbout;
-        document.getElementById('textContentSharedStage').value = defaultSharedStage;
-        document.getElementById('textContentSelectedShows').value = defaultSelectedShows;
       }
     }
 
@@ -597,19 +647,22 @@
         localContent = {
           about: document.getElementById('textContentAbout').value,
           sharedStage: document.getElementById('textContentSharedStage').value,
-          selectedShows: document.getElementById('textContentSelectedShows').value
+          selectedShows: document.getElementById('textContentSelectedShows').value,
+          imgHeader: document.getElementById('selectImgHeader').value || localContent.imgHeader || "assets/header.jpg",
+          imgAbout: document.getElementById('selectImgAbout').value || localContent.imgAbout || "assets/about.jpg",
+          imgWorking: document.getElementById('selectImgWorking').value || localContent.imgWorking || "assets/working.jpg"
         };
 
         const jsonString = JSON.stringify(localContent, null, 2);
         const base64Content = utf8_to_b64(jsonString);
         await saveGitHubFile(filePathContent, base64Content, "Update content.json via Admin Dashboard");
-        alert("Texte erfolgreich auf GitHub gespeichert!");
+        alert("Änderungen erfolgreich auf GitHub gespeichert!");
       } catch (err) {
-        alert("Fehler beim Speichern der Texte: " + err.message);
+        alert("Fehler beim Speichern: " + err.message);
       }
     }
 
-    // ── ASSETS LOGIK ──
+    // ── ASSETS LOGIK & DROPDOWNS ──
     async function loadAssetsFromGitHub() {
       try {
         const safePath = cleanPath(assetFolderPath);
@@ -623,26 +676,65 @@
         if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
         
         const files = await res.json();
-        const grid = document.getElementById('assetsGrid');
-        grid.innerHTML = files.length ? '' : '<p style="color:var(--muted)">Keine Bilder vorhanden.</p>';
+        availableAssets = files.filter(f => f.type === 'file');
         
-        files.forEach(file => {
-          if (file.type === 'file') {
-            const fileSafePath = cleanPath(file.path);
-            fileShaMap[fileSafePath] = file.sha;
-            fileShaMap[file.path] = file.sha;
-            grid.innerHTML += `
-              <div class="asset-card">
-                <img src="${file.download_url}">
-                <span>${file.name}</span>
-                <button class="btn-delete" style="width:100%; margin-top:0.3rem; padding:0.2rem;" onclick="deleteAssetFile('${file.path}')">✕ Löschen</button>
-              </div>
-            `;
-          }
-        });
+        renderAssetsGrid();
+        populateImageDropdowns();
       } catch (err) {
         console.error("Assets Fehler:", err);
         document.getElementById('assetsGrid').innerHTML = `<p style="color:var(--pink)">Fehler beim Laden: ${err.message}</p>`;
+      }
+    }
+
+    function renderAssetsGrid() {
+      const grid = document.getElementById('assetsGrid');
+      grid.innerHTML = availableAssets.length ? '' : '<p style="color:var(--muted)">Keine Bilder vorhanden.</p>';
+      
+      availableAssets.forEach(file => {
+        const fileSafePath = cleanPath(file.path);
+        fileShaMap[fileSafePath] = file.sha;
+        fileShaMap[file.path] = file.sha;
+        grid.innerHTML += `
+          <div class="asset-card">
+            <img src="${file.download_url}">
+            <span>${file.name}</span>
+            <button class="btn-delete" style="width:100%; margin-top:0.3rem; padding:0.2rem;" onclick="deleteAssetFile('${file.path}')">✕ Löschen</button>
+          </div>
+        `;
+      });
+    }
+
+    function populateImageDropdowns() {
+      const dropdowns = [
+        { id: 'selectImgHeader', current: localContent.imgHeader || 'assets/header.jpg', prevId: 'prevHeader' },
+        { id: 'selectImgAbout', current: localContent.imgAbout || 'assets/about.jpg', prevId: 'prevAbout' },
+        { id: 'selectImgWorking', current: localContent.imgWorking || 'assets/working.jpg', prevId: 'prevWorking' }
+      ];
+
+      dropdowns.forEach(item => {
+        const select = document.getElementById(item.id);
+        select.innerHTML = '';
+
+        availableAssets.forEach(file => {
+          const filePath = file.path;
+          const selected = (filePath === item.current || file.name === item.current) ? 'selected' : '';
+          select.innerHTML += `<option value="${filePath}" ${selected}>${file.name}</option>`;
+        });
+
+        updatePreview(item.id, item.prevId);
+      });
+    }
+
+    function updatePreview(selectId, previewImgId) {
+      const select = document.getElementById(selectId);
+      const img = document.getElementById(previewImgId);
+      if (select && img && select.value) {
+        const file = availableAssets.find(f => f.path === select.value);
+        if (file) {
+          img.src = file.download_url;
+        } else {
+          img.src = select.value;
+        }
       }
     }
 
