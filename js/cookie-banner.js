@@ -139,7 +139,7 @@
     banner.innerHTML = `
       <div class="cookie-title">Privacy Settings</div>
       <p class="cookie-text">
-        We use essential cookies to ensure the basic functionality of the website. For more details, please check our <a href="datenschutz">Privacy Policy</a>.
+        We use essential cookies to ensure the basic functionality of the website. For more details, please check our <a href="privacy-policies">Privacy Policy</a>.
       </p>
       <div class="cookie-buttons">
         <button class="cookie-btn cookie-btn-decline" id="cookieDecline">Essential Only</button>
