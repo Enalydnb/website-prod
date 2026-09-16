@@ -137,13 +137,13 @@
     const banner = document.createElement('div');
     banner.id = 'cookie-banner-overlay';
     banner.innerHTML = `
-      <div class="cookie-title">Datenschutzeinstellungen</div>
+      <div class="cookie-title">Privacy Settings</div>
       <p class="cookie-text">
-        Wir nutzen technisch notwendige Cookies, um die Funktion der Website zu gewährleisten. Weitere Infos findest du in unserer <a href="datenschutz">Datenschutzerklärung</a>.
+        We use essential cookies to ensure the basic functionality of the website. For more details, please check our <a href="datenschutz">Privacy Policy</a>.
       </p>
       <div class="cookie-buttons">
-        <button class="cookie-btn cookie-btn-decline" id="cookieDecline">Nur Essenzielle</button>
-        <button class="cookie-btn cookie-btn-accept" id="cookieAccept">Alle Akzeptieren</button>
+        <button class="cookie-btn cookie-btn-decline" id="cookieDecline">Essential Only</button>
+        <button class="cookie-btn cookie-btn-accept" id="cookieAccept">Accept All</button>
       </div>
     `;
 
