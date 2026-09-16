@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ADMIN DASHBOARD · Enaly</title>
   
-  <!-- ── FAVICON INJEKTION (WEISSER BLITZ) ── -->
+  <!-- ── FAVICON INJECTION (WHITE LIGHTNING) ── -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><polygon points=%2260,0 15,55 45,55 35,100 85,45 55,45%22 fill=%22%23ffffff%22/></svg>">
 
   <style>
@@ -214,7 +214,7 @@
     }
   </style>
 
-  <!-- CONFIG DATEI EINBINDEN -->
+  <!-- INCLUDE CONFIG FILE -->
   <script src="js/config.js"></script>
 </head>
 <body>
@@ -230,61 +230,61 @@
     <!-- TABS NAVIGATION -->
     <div class="nav-tabs">
       <button class="nav-tab active" id="tabBtnEvents" onclick="switchTab('events')">Events</button>
-      <button class="nav-tab" id="tabBtnContent" onclick="switchTab('content')">Content / Texte</button>
-      <button class="nav-tab" id="tabBtnImages" onclick="switchTab('images')">Bilder / Layout</button>
+      <button class="nav-tab" id="tabBtnContent" onclick="switchTab('content')">Content / Texts</button>
+      <button class="nav-tab" id="tabBtnImages" onclick="switchTab('images')">Images / Layout</button>
       <button class="nav-tab" id="tabBtnAssets" onclick="switchTab('assets')">Assets Upload</button>
     </div>
 
     <!-- ── TAB 1: EVENTS ── -->
     <div id="tabEvents">
       <div class="card">
-        <div class="card-title">Neues Event Hinzufügen</div>
+        <div class="card-title">Add New Event</div>
         <div class="grid-form">
-          <input type="text" id="newDate" placeholder="Datum (TT.MM.JJJJ)">
+          <input type="text" id="newDate" placeholder="Date (DD.MM.YYYY)">
           <input type="text" id="newTitle" placeholder="Event Name / Line-Up">
           <input type="text" id="newVenue" placeholder="Location / Club">
-          <input type="text" id="newCity" placeholder="Stadt">
+          <input type="text" id="newCity" placeholder="City">
           <input type="url"  id="newTickets" placeholder="Ticket Link (Optional)">
         </div>
         <div style="display:flex; justify-content:flex-end; align-items:center; margin-top:1.25rem;">
-          <button class="btn-pink" onclick="addEvent()">+ Event Hinzufügen</button>
+          <button class="btn-pink" onclick="addEvent()">+ Add Event</button>
         </div>
       </div>
 
-      <div class="card-title" style="margin-top:1.5rem;">ALLE EVENTS</div>
-      <div id="adminList">Lade Events...</div>
-      <button class="btn-save-sticky" id="btnSaveEvents" onclick="saveEventsToGitHub()">Events Speichern</button>
+      <div class="card-title" style="margin-top:1.5rem;">ALL EVENTS</div>
+      <div id="adminList">Loading Events...</div>
+      <button class="btn-save-sticky" id="btnSaveEvents" onclick="saveEventsToGitHub()">Save Events</button>
     </div>
 
-    <!-- ── TAB 2: CONTENT / TEXTE ── -->
+    <!-- ── TAB 2: CONTENT / TEXTS ── -->
     <div id="tabContent" style="display:none;">
       <div class="card">
         <div class="card-title">ABOUT / BIO</div>
-        <textarea id="textContentAbout" rows="6" placeholder="Bio / Über mich Text..."></textarea>
+        <textarea id="textContentAbout" rows="6" placeholder="Bio / About me text..."></textarea>
       </div>
 
       <div class="card">
         <div class="card-title">SHARED THE STAGE WITH</div>
-        <textarea id="textContentSharedStage" rows="4" placeholder="Künstler / Acts (kommagetrennt oder mehrzeilig)..."></textarea>
+        <textarea id="textContentSharedStage" rows="4" placeholder="Artists / Acts (comma-separated or multiline)..."></textarea>
       </div>
 
       <div class="card">
         <div class="card-title">SELECTED SHOWS</div>
-        <textarea id="textContentSelectedShows" rows="4" placeholder="Highlights / Vergangene Top Shows..."></textarea>
+        <textarea id="textContentSelectedShows" rows="4" placeholder="Highlights / Past Top Shows..."></textarea>
       </div>
 
-      <button class="btn-save-sticky" id="btnSaveContent" onclick="saveContentToGitHub()" style="display:none;">Texte Speichern</button>
+      <button class="btn-save-sticky" id="btnSaveContent" onclick="saveContentToGitHub()" style="display:none;">Save Texts</button>
     </div>
 
-    <!-- ── TAB 3: BILDER ZUORDNUNG ── -->
+    <!-- ── TAB 3: IMAGE ASSIGNMENT ── -->
     <div id="tabImages" style="display:none;">
       <div class="card">
-        <div class="card-title">LAYOUT BILDER ZUORDNEN</div>
+        <div class="card-title">ASSIGN LAYOUT IMAGES</div>
 
-        <!-- Header Bild Dropdown -->
+        <!-- Header Image Dropdown -->
         <div class="image-select-row">
           <div>
-            <label style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Header Banner Bild</label>
+            <label style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Header Banner Image</label>
             <select id="selectImgHeader" onchange="updatePreview('selectImgHeader', 'prevHeader')"></select>
           </div>
           <div class="image-preview-box">
@@ -295,7 +295,7 @@
         <!-- About Portrait Dropdown -->
         <div class="image-select-row">
           <div>
-            <label style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:0.4rem;">About Portrait Bild</label>
+            <label style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:0.4rem;">About Portrait Image</label>
             <select id="selectImgAbout" onchange="updatePreview('selectImgAbout', 'prevAbout')"></select>
           </div>
           <div class="image-preview-box">
@@ -303,10 +303,10 @@
           </div>
         </div>
 
-        <!-- Booking Bild Dropdown -->
+        <!-- Booking Image Dropdown -->
         <div class="image-select-row">
           <div>
-            <label style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Booking Bereich Bild</label>
+            <label style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Booking Area Image</label>
             <select id="selectImgWorking" onchange="updatePreview('selectImgWorking', 'prevWorking')"></select>
           </div>
           <div class="image-preview-box">
@@ -315,19 +315,19 @@
         </div>
       </div>
 
-      <button class="btn-save-sticky" id="btnSaveImages" onclick="saveContentToGitHub()" style="display:none;">Bilder-Zuordnung Speichern</button>
+      <button class="btn-save-sticky" id="btnSaveImages" onclick="saveContentToGitHub()" style="display:none;">Save Image Assignments</button>
     </div>
 
     <!-- ── TAB 4: ASSETS ── -->
     <div id="tabAssets" style="display:none;">
       <div class="card" style="text-align:center; padding:2.5rem 1rem; border:2px dashed var(--card-border); cursor:pointer;" onclick="document.getElementById('fileInput').click()">
-        📁 <strong>Datei hochladen (Direkt auf GitHub)</strong>
-        <p style="font-size:0.8rem; color:var(--muted); margin-top:0.4rem;">Unterstützt: JPG, PNG, WEBP, SVG</p>
+        📁 <strong>Upload File (Directly to GitHub)</strong>
+        <p style="font-size:0.8rem; color:var(--muted); margin-top:0.4rem;">Supported: JPG, PNG, WEBP, SVG</p>
         <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFileUpload(this.files)">
       </div>
 
-      <div class="card-title">VORHANDENE BILDER</div>
-      <div class="assets-grid" id="assetsGrid">Lade Assets...</div>
+      <div class="card-title">EXISTING IMAGES</div>
+      <div class="assets-grid" id="assetsGrid">Loading Assets...</div>
     </div>
 
   </div>
@@ -354,7 +354,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       if (typeof proxyApiUrl === 'undefined') {
-        document.getElementById('adminList').innerHTML = '<p style="color:var(--pink)">Fehler: proxyApiUrl ist in js/config.js nicht definiert!</p>';
+        document.getElementById('adminList').innerHTML = '<p style="color:var(--pink)">Error: proxyApiUrl is not defined in js/config.js!</p>';
         return;
       }
       loadEventsFromGitHub();
@@ -371,7 +371,6 @@
         if (tabBtn) tabBtn.classList.toggle('active', t === tab);
       });
 
-      // Sticky Save Button je nach gewähltem Tab anpassen
       document.getElementById('btnSaveEvents').style.display = (tab === 'events') ? 'block' : 'none';
       document.getElementById('btnSaveContent').style.display = (tab === 'content') ? 'block' : 'none';
       document.getElementById('btnSaveImages').style.display = (tab === 'images') ? 'block' : 'none';
@@ -400,7 +399,7 @@
       return 0;
     }
 
-    // ── API HELPERS ÜBER CLOUDFLARE WORKER PROXY ──
+    // ── API HELPERS VIA CLOUDFLARE WORKER PROXY ──
     async function getGitHubFile(path, defaultFallback = "{}") {
       const safePath = cleanPath(path);
       const res = await fetch(`${proxyApiUrl}/${safePath}`);
@@ -492,7 +491,7 @@
       return new TextDecoder().decode(Uint8Array.from(atob(cleanStr), c => c.charCodeAt(0)));
     }
 
-    // ── EVENTS LOGIK ──
+    // ── EVENTS LOGIC ──
     async function loadEventsFromGitHub() {
       try {
         const data = await getGitHubFile(filePathEvents, "[]");
@@ -501,7 +500,7 @@
         if (!Array.isArray(localEvents)) localEvents = [];
         sortAndRenderEvents();
       } catch (err) {
-        document.getElementById('adminList').innerHTML = `<p style="color:var(--pink)">Fehler beim Laden: ${err.message}</p>`;
+        document.getElementById('adminList').innerHTML = `<p style="color:var(--pink)">Error loading: ${err.message}</p>`;
       }
     }
 
@@ -525,7 +524,7 @@
 
     function renderEventsList() {
       const list = document.getElementById('adminList');
-      list.innerHTML = localEvents.length ? '' : '<p style="color:var(--muted)">Keine Events vorhanden.</p>';
+      list.innerHTML = localEvents.length ? '' : '<p style="color:var(--muted)">No events available.</p>';
 
       const now = new Date().setHours(0, 0, 0, 0);
 
@@ -540,26 +539,26 @@
             <div class="list-row-view" id="view-${index}">
               <div class="list-item-info">
                 <strong>${escapeHtml(ev.date)} – ${escapeHtml(ev.title)}</strong>
-                <span>Location: ${escapeHtml(ev.venue || 'TBA')} (${escapeHtml(ev.city || 'TBA')}) ${ticketInfo} ${isPast ? ' <i>(Vergangen)</i>' : ''}</span>
+                <span>Location: ${escapeHtml(ev.venue || 'TBA')} (${escapeHtml(ev.city || 'TBA')}) ${ticketInfo} ${isPast ? ' <i>(Past)</i>' : ''}</span>
               </div>
               <div class="controls">
-                <button class="btn-dark" onclick="openEditForm(${index})">Bearbeiten</button>
+                <button class="btn-dark" onclick="openEditForm(${index})">Edit</button>
                 <button class="btn-delete" onclick="deleteEvent(${index})">✕</button>
               </div>
             </div>
 
             <div class="edit-form" id="editForm-${index}">
-              <h4 style="color:var(--pink); margin-bottom:0.8rem; font-size:0.9rem; text-transform:uppercase;">Event bearbeiten</h4>
+              <h4 style="color:var(--pink); margin-bottom:0.8rem; font-size:0.9rem; text-transform:uppercase;">Edit Event</h4>
               <div class="grid-form" style="margin-bottom:0.75rem;">
-                <input type="text" id="editDate-${index}" value="${escapeHtml(ev.date || '')}" placeholder="Datum (TT-MM-JJJJ)">
+                <input type="text" id="editDate-${index}" value="${escapeHtml(ev.date || '')}" placeholder="Date (DD-MM-YYYY)">
                 <input type="text" id="editTitle-${index}" value="${escapeHtml(ev.title || '')}" placeholder="Event Name">
                 <input type="text" id="editVenue-${index}" value="${escapeHtml(ev.venue || '')}" placeholder="Location / Club">
-                <input type="text" id="editCity-${index}" value="${escapeHtml(ev.city || '')}" placeholder="Stadt">
+                <input type="text" id="editCity-${index}" value="${escapeHtml(ev.city || '')}" placeholder="City">
                 <input type="url"  id="editTickets-${index}" value="${escapeHtml(ev.tickets || '')}" placeholder="Ticket Link">
               </div>
               <div style="display:flex; gap:0.5rem;">
-                <button class="btn-pink" onclick="saveLocalEdit(${index})">Übernehmen</button>
-                <button class="btn-dark" onclick="closeEditForm(${index})">Abbrechen</button>
+                <button class="btn-pink" onclick="saveLocalEdit(${index})">Apply</button>
+                <button class="btn-dark" onclick="closeEditForm(${index})">Cancel</button>
               </div>
             </div>
           </div>
@@ -587,7 +586,7 @@
     }
 
     function deleteEvent(index) {
-      if (confirm("Event wirklich löschen?")) {
+      if (confirm("Are you sure you want to delete this event?")) {
         localEvents.splice(index, 1);
         sortAndRenderEvents();
       }
@@ -596,7 +595,7 @@
     function addEvent() {
       const date = document.getElementById('newDate').value;
       const title = document.getElementById('newTitle').value;
-      if (!date || !title) return alert("Datum & Event-Name ausfüllen!");
+      if (!date || !title) return alert("Please fill in Date & Event Name!");
 
       localEvents.push({
         date: date,
@@ -621,13 +620,13 @@
         const jsonString = JSON.stringify(localEvents, null, 2);
         const base64Content = utf8_to_b64(jsonString);
         await saveGitHubFile(filePathEvents, base64Content, "Update events.json via Admin Dashboard");
-        alert("Events erfolgreich auf GitHub gespeichert!");
+        alert("Events successfully saved to GitHub!");
       } catch (err) {
-        alert("Fehler beim Speichern: " + err.message);
+        alert("Error saving: " + err.message);
       }
     }
 
-    // ── CONTENT / TEXTE LOGIK ──
+    // ── CONTENT / TEXTS LOGIC ──
     async function loadContentFromGitHub() {
       try {
         const data = await getGitHubFile(filePathContent, "{}");
@@ -638,7 +637,7 @@
         document.getElementById('textContentSharedStage').value = localContent.sharedStage || "";
         document.getElementById('textContentSelectedShows').value = localContent.selectedShows || "";
       } catch (err) {
-        console.error("Content Fehler beim Laden:", err);
+        console.error("Content Error loading:", err);
       }
     }
 
@@ -656,20 +655,20 @@
         const jsonString = JSON.stringify(localContent, null, 2);
         const base64Content = utf8_to_b64(jsonString);
         await saveGitHubFile(filePathContent, base64Content, "Update content.json via Admin Dashboard");
-        alert("Änderungen erfolgreich auf GitHub gespeichert!");
+        alert("Changes successfully saved to GitHub!");
       } catch (err) {
-        alert("Fehler beim Speichern: " + err.message);
+        alert("Error saving: " + err.message);
       }
     }
 
-    // ── ASSETS LOGIK & DROPDOWNS ──
+    // ── ASSETS LOGIC & DROPDOWNS ──
     async function loadAssetsFromGitHub() {
       try {
         const safePath = cleanPath(assetFolderPath);
         const res = await fetch(`${proxyApiUrl}/${safePath}`);
         
         if (res.status === 404) {
-           document.getElementById('assetsGrid').innerHTML = '<p style="color:var(--muted)">Ordner /assets existiert noch nicht auf GitHub.</p>';
+           document.getElementById('assetsGrid').innerHTML = '<p style="color:var(--muted)">Folder /assets does not exist on GitHub yet.</p>';
            return;
         }
         
@@ -681,14 +680,14 @@
         renderAssetsGrid();
         populateImageDropdowns();
       } catch (err) {
-        console.error("Assets Fehler:", err);
-        document.getElementById('assetsGrid').innerHTML = `<p style="color:var(--pink)">Fehler beim Laden: ${err.message}</p>`;
+        console.error("Assets Error:", err);
+        document.getElementById('assetsGrid').innerHTML = `<p style="color:var(--pink)">Error loading: ${err.message}</p>`;
       }
     }
 
     function renderAssetsGrid() {
       const grid = document.getElementById('assetsGrid');
-      grid.innerHTML = availableAssets.length ? '' : '<p style="color:var(--muted)">Keine Bilder vorhanden.</p>';
+      grid.innerHTML = availableAssets.length ? '' : '<p style="color:var(--muted)">No images available.</p>';
       
       availableAssets.forEach(file => {
         const fileSafePath = cleanPath(file.path);
@@ -698,7 +697,7 @@
           <div class="asset-card">
             <img src="${file.download_url}">
             <span>${file.name}</span>
-            <button class="btn-delete" style="width:100%; margin-top:0.3rem; padding:0.2rem;" onclick="deleteAssetFile('${file.path}')">✕ Löschen</button>
+            <button class="btn-delete" style="width:100%; margin-top:0.3rem; padding:0.2rem;" onclick="deleteAssetFile('${file.path}')">✕ Delete</button>
           </div>
         `;
       });
@@ -748,23 +747,23 @@
           const rawBase64 = e.target.result.split(',')[1];
           const path = `${assetFolderPath}/${file.name}`;
           await saveGitHubFile(path, rawBase64, `Upload asset ${file.name} via Admin Dashboard`);
-          alert("Bild erfolgreich hochgeladen!");
+          alert("Image uploaded successfully!");
           loadAssetsFromGitHub();
         } catch (err) {
-          alert("Upload-Fehler: " + err.message);
+          alert("Upload error: " + err.message);
         }
       };
       reader.readAsDataURL(file);
     }
 
     async function deleteAssetFile(path) {
-      if (!confirm(`Bild "${path}" wirklich löschen?`)) return;
+      if (!confirm(`Are you sure you want to delete image "${path}"?`)) return;
       try {
         await deleteGitHubFile(path, `Delete asset ${path} via Admin Dashboard`);
-        alert("Bild gelöscht!");
+        alert("Image deleted!");
         loadAssetsFromGitHub();
       } catch (err) {
-        alert("Lösch-Fehler: " + err.message);
+        alert("Deletion error: " + err.message);
       }
     }
 
