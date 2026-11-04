@@ -1,98 +1,176 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>404 · Page Not Found</title>
-  
-  <!-- Favicon -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>404 · Page Not Found · Enaly</title>
+  <meta name="description" content="This page does not exist. Head back to the Enaly homepage.">
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Favicon (white lightning) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><polygon points=%2260,0 15,55 45,55 35,100 85,45 55,45%22 fill=%22%23ffffff%22/></svg>">
-  
+
+  <!-- Absolute paths: GitHub Pages serves this file for any missing URL, including nested ones -->
+  <link rel="stylesheet" href="/css/enaly.css?v=20261104c">
+
   <style>
-    @font-face { font-family: 'League Gothic'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/league-gothic-v13-latin-regular.woff2') format('woff2'); }
-    @font-face { font-family: 'Manrope'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/manrope-v20-latin-regular.woff2') format('woff2'); }
-
-    :root {
-      --bg: #060607;
-      --card-bg: #0E0E10;
-      --card-border: rgba(255, 255, 255, 0.05);
-      --text: #F2F2F2;
-      --pink: #FF006E;
-      --muted: #888888;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
+    /* ==================== 404 · signal lost ==================== */
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Manrope', sans-serif;
-      min-height: 100vh;
+      min-height: 100svh;
       display: flex;
       flex-direction: column;
+    }
+    .err-top {
+      display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
+      justify-content: space-between;
+      padding: 1.5rem var(--gutter);
+    }
+    .err-top img { height: 22px; width: auto; filter: brightness(0) invert(1); }
+    .err-top .code-chip {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      padding: 0.35rem 0.8rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--glass-border);
+    }
+
+    .err-main {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: 2rem var(--gutter) 4rem;
       text-align: center;
     }
 
-    .error-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 6px;
-      padding: 3.5rem 2rem;
-      max-width: 500px;
-      width: 100%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    .error-code {
+      position: relative;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(11rem, 42vw, 28rem);
+      line-height: 0.78;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      user-select: none;
+    }
+    .error-code::before,
+    .error-code::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .error-code::before {
+      color: var(--pink);
+      mix-blend-mode: screen;
+      animation: glitchA 3.2s infinite steps(1);
+    }
+    .error-code::after {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.35);
+      animation: glitchB 3.2s infinite steps(1);
+    }
+    @keyframes glitchA {
+      0%, 86%, 100% { transform: translate(0, 0); clip-path: inset(0 0 0 0); opacity: 0; }
+      87% { transform: translate(-6px, 2px); clip-path: inset(12% 0 60% 0); opacity: 1; }
+      90% { transform: translate(5px, -3px); clip-path: inset(55% 0 20% 0); opacity: 1; }
+      93% { transform: translate(-3px, 1px); clip-path: inset(30% 0 45% 0); opacity: 1; }
+      96% { transform: translate(0, 0); opacity: 0; }
+    }
+    @keyframes glitchB {
+      0%, 86%, 100% { transform: translate(0, 0); }
+      88% { transform: translate(8px, -2px); }
+      91% { transform: translate(-7px, 3px); }
+      94% { transform: translate(3px, 0); }
     }
 
-    .error-code {
-      font-family: 'League Gothic', sans-serif;
-      font-size: clamp(6rem, 15vw, 9rem);
-      font-weight: 400;
+    /* Waveform flatline */
+    .flatline {
+      width: min(520px, 90%);
+      height: 48px;
+      margin: 1.5rem auto 0;
       color: var(--pink);
-      line-height: 0.8;
-      margin-bottom: 1rem;
-      letter-spacing: 0.02em;
     }
+    .flatline path {
+      stroke-dasharray: 900;
+      stroke-dashoffset: 900;
+      animation: draw 2.2s 0.3s ease-out forwards;
+    }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
 
     .error-message {
-      font-size: 1.05rem;
-      color: #cccccc;
-      margin-bottom: 2rem;
-      font-weight: 300;
-      letter-spacing: 0.05em;
+      margin-top: 1.25rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      letter-spacing: 0.06em;
       text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .error-sub {
+      margin: 0.5rem auto 2.25rem;
+      max-width: 42ch;
+      color: var(--text-secondary);
+      font-size: 0.98rem;
     }
 
-    .btn-home {
-      display: inline-block;
-      background: transparent;
-      border: 1px solid var(--pink);
-      color: var(--text);
-      font-family: 'League Gothic', sans-serif;
-      font-weight: 400;
-      padding: 0.6rem 2.2rem;
-      font-size: 1.5rem;
-      letter-spacing: 0.08em;
+    .err-actions { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+    .err-links {
+      margin-top: 2.25rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .err-links a {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-secondary);
       text-decoration: none;
-      border-radius: 4px;
-      transition: background 0.2s, color 0.2s;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--hairline);
+      cursor: pointer;
+      transition: color var(--transition-fast), border-color var(--transition-fast);
     }
-
-    .btn-home:hover {
-      background: var(--pink);
-      color: #ffffff;
-    }
+    .err-links a:hover { color: var(--text-primary); border-color: var(--pink-line); }
   </style>
 </head>
 <body>
+  <div class="ambient" aria-hidden="true"></div>
 
-  <div class="error-card">
-    <div class="error-code">404</div>
-    <div class="error-message">LOGICAL ERROR // Page not found</div>
-    <a href="index.html" class="btn-home">BACK TO MAIN PAGE</a>
-  </div>
+  <header class="err-top">
+    <a href="/" aria-label="Enaly Home"><img src="/assets/logo.png" alt="Enaly Logo"></a>
+    <span class="code-chip">Error 404</span>
+  </header>
 
+  <main class="err-main">
+    <div>
+      <h1 class="error-code" data-text="404" aria-label="404">404</h1>
+
+      <svg class="flatline" viewBox="0 0 520 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M0 24h150l10-16 12 32 10-28 8 20 6-8h324"/>
+      </svg>
+
+      <p class="error-message">Logical Error // Page not found</p>
+      <p class="error-sub">The page you are looking for does not exist or has moved.</p>
+
+      <div class="err-actions">
+        <a href="/" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 22V12h6v10"/></svg>
+          Back to Main Page
+        </a>
+        <a href="/booking" class="btn btn-ghost">Booking</a>
+      </div>
+
+      <nav class="err-links" aria-label="Quick links">
+        <a href="/#about">About</a>
+        <a href="/#events">Events</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacy-policies">Privacy Policies</a>
+      </nav>
+    </div>
+  </main>
 </body>
 </html>

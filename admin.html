@@ -2,348 +2,721 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ADMIN DASHBOARD · Enaly</title>
-  
-  <!-- ── FAVICON INJECTION (WHITE LIGHTNING) ── -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Admin Dashboard · Enaly</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Favicon (white lightning) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><polygon points=%2260,0 15,55 45,55 35,100 85,45 55,45%22 fill=%22%23ffffff%22/></svg>">
 
+  <link rel="stylesheet" href="css/enaly.css?v=20261104c">
+
   <style>
-    /* ── FONTS ── */
-    @font-face { font-family: 'League Gothic'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/league-gothic-v13-latin-regular.woff2') format('woff2'); }
-    @font-face { font-family: 'Manrope'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/manrope-v20-latin-regular.woff2') format('woff2'); }
+    /* ==================== ADMIN · app shell ==================== */
+    body { padding-bottom: 7rem; }
 
-    /* ── THEMING (ENALY DESIGN SYSTEM) ── */
-    :root {
-      --bg: #060607;
-      --card-bg: #0E0E10;
-      --input-bg: rgba(0, 0, 0, 0.4);
-      --card-border: rgba(255, 255, 255, 0.05);
-      --text: #F2F2F2;
-      --pink: #FF006E;
-      --pink-hover: #d4005b;
-      --muted: #888888;
-      --green: #00E676;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    html, body {
-      overflow-x: hidden;
-      width: 100%;
-      max-width: 100vw;
-      position: relative;
-      touch-action: pan-x pan-y;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Manrope', sans-serif;
-      font-size: 15px;
+    .app {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 1.5rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1.25rem var(--gutter);
       min-height: 100vh;
-      padding-bottom: 6rem;
-      line-height: 1.5;
     }
 
-    .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; width: 100%; }
-
-    /* ── HEADER ── */
-    header { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      padding-bottom: 1.2rem; 
-      margin-bottom: 2rem; 
-      border-bottom: 1px solid var(--card-border); 
-      flex-wrap: wrap; 
-      gap: 1rem; 
+    /* Sidebar */
+    .sidebar {
+      position: sticky;
+      top: 1.25rem;
+      align-self: start;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 1.25rem;
+      max-height: calc(100vh - 2.5rem);
     }
-    header h1 { 
-      font-family: 'League Gothic', sans-serif; 
+    .brand { display: flex; align-items: center; gap: 0.75rem; padding: 0.25rem 0.4rem; }
+    .brand-mark {
+      width: 38px; height: 38px; border-radius: 10px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--pink); color: #fff;
+    }
+    .brand-mark svg { width: 18px; height: 18px; }
+    .brand h1 {
+      font-family: var(--font-display);
       font-weight: 400;
-      font-size: 2.5rem; 
-      letter-spacing: 0.05em; 
-      color: var(--text); 
+      font-size: 1.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .brand small { display: block; font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.15rem; }
+
+    .nav-tabs { display: flex; flex-direction: column; gap: 0.25rem; }
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      padding: 0.75rem 0.85rem;
+      border: 1px solid transparent;
+      border-radius: var(--radius-inner);
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+    }
+    .nav-tab svg { width: 19px; height: 19px; flex-shrink: 0; }
+    .nav-tab:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
+    .nav-tab.active { background: var(--pink-soft); border-color: var(--pink-line); color: var(--text-primary); }
+    .nav-tab.active svg { color: var(--pink); }
+
+    .sidebar-foot { margin-top: auto; display: grid; gap: 0.75rem; }
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--green);
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-pill);
+      background: rgba(0,230,118,0.08);
+      border: 1px solid rgba(0,230,118,0.25);
+      align-self: flex-start;
+    }
+    .status-indicator .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+    .view-site {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.85rem; color: var(--text-secondary); text-decoration: none; cursor: pointer;
+      transition: color var(--transition-fast);
+    }
+    .view-site svg { width: 16px; height: 16px; }
+    .view-site:hover { color: var(--pink); }
+
+    /* Main */
+    .main { min-width: 0; padding-top: 0.5rem; }
+    .page-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .page-head h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2.6rem, 5vw, 3.6rem);
+      line-height: 0.9;
+      letter-spacing: 0.03em;
       text-transform: uppercase;
     }
-    .header-right { display: flex; align-items: center; gap: 1rem; }
-    .status-indicator { 
-      font-size: 0.85rem; 
-      color: var(--green); 
-      letter-spacing: 0.05em; 
-      display: flex; 
-      align-items: center; 
-      gap: 0.5rem; 
-      font-weight: 500; 
-    }
+    .page-head p { color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.4rem; }
 
-    /* ── TABS ── */
-    .nav-tabs { 
-      display: flex; 
-      gap: 0.75rem; 
-      margin-bottom: 2rem; 
-      overflow-x: auto; 
-      padding-bottom: 0.4rem;
-      scrollbar-width: none; 
-      -webkit-overflow-scrolling: touch;
+    .card { padding: clamp(1.15rem, 3vw, 1.75rem); margin-bottom: 1.25rem; }
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
     }
-    .nav-tabs::-webkit-scrollbar { display: none; }
-    .nav-tab { 
-      background: var(--card-bg); 
-      border: 1px solid var(--card-border); 
-      color: var(--muted); 
-      padding: 0.6rem 1.6rem; 
-      font-family: 'League Gothic', sans-serif;
-      font-size: 1.4rem; 
-      letter-spacing: 0.08em; 
-      text-transform: uppercase; 
-      font-weight: 400; 
-      cursor: pointer; 
-      transition: all 0.2s ease; 
-      flex-shrink: 0; 
-      border-radius: 4px;
-    }
-    .nav-tab:hover { color: var(--text); }
-    .nav-tab.active { background: var(--pink); color: #fff; border-color: var(--pink); }
+    .card-title svg { width: 18px; height: 18px; color: var(--pink); }
+    .card-title .hint { margin-left: auto; font-weight: 400; font-size: 0.8rem; color: var(--text-secondary); }
 
-    /* ── CARDS & FORMS ── */
-    .card { 
-      background: var(--card-bg); 
-      border: 1px solid var(--card-border); 
-      border-radius: 6px; 
-      padding: 1.75rem; 
-      margin-bottom: 1.5rem; 
-    }
-    .card-title { 
-      font-family: 'Manrope', sans-serif; 
-      font-size: 0.9rem; 
-      color: var(--pink); 
-      margin-bottom: 1.5rem; 
-      font-weight: 600; 
-      text-transform: uppercase; 
-      letter-spacing: 0.05em; 
-    }
-    
-    .grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; }
 
     input[type="text"], input[type="password"], input[type="url"], select, textarea {
-      width: 100%; 
-      background: var(--input-bg); 
-      border: 1px solid var(--card-border); 
-      color: var(--text);
-      padding: 0.7rem 0.9rem; 
-      font-family: 'Manrope', sans-serif; 
-      font-size: 0.95rem; 
-      border-radius: 4px;
-      outline: none; 
-      transition: border-color 0.2s ease;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-inner);
+      padding: 0.8rem 0.95rem;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
     }
-    input:focus, select:focus, textarea:focus { border-color: var(--pink); }
-
-    /* ── BUTTONS ── */
-    button { 
-      font-family: 'League Gothic', sans-serif; 
-      font-weight: 400;
-      font-size: 1.3rem; 
-      letter-spacing: 0.08em; 
-      text-transform: uppercase; 
-      border: none; 
-      cursor: pointer; 
-      transition: all 0.2s ease; 
-      border-radius: 4px; 
+    textarea { resize: vertical; line-height: 1.6; }
+    select {
+      appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      background-size: 18px;
+      padding-right: 2.5rem;
     }
-    .btn-pink { background: transparent; border: 1px solid var(--pink); color: var(--text); padding: 0.4rem 1.4rem; }
-    .btn-pink:hover { background: var(--pink); color: #fff; }
-    .btn-dark { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); color: var(--text); padding: 0.4rem 1rem; }
-    .btn-dark:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--muted); }
-    .btn-delete { background: transparent; border: 1px solid rgba(255, 0, 110, 0.3); color: var(--pink); padding: 0.4rem 0.8rem; }
-    .btn-delete:hover { background: var(--pink); color: #fff; }
-    
-    .btn-save-sticky { 
-      position: fixed; 
-      bottom: 1.5rem; 
-      left: 50%; 
-      transform: translateX(-50%); 
-      width: calc(100% - 3rem); 
-      max-width: 650px; 
-      background: var(--pink); 
-      color: #fff; 
-      font-size: 1.4rem; 
-      padding: 0.75rem; 
-      text-align: center; 
-      box-shadow: 0 8px 30px rgba(0,0,0,0.8); 
-      z-index: 99; 
-      border-radius: 4px;
-      border: 1px solid var(--pink);
+    input:focus, select:focus, textarea:focus { border-color: var(--pink); box-shadow: 0 0 0 4px var(--pink-soft); }
+    ::placeholder { color: #555; }
+
+    .label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 0.45rem;
     }
-    .btn-save-sticky:hover { background: var(--pink-hover); }
 
-    /* ── ITEM LISTS ── */
-    .list-item { background: var(--input-bg); border: 1px solid var(--card-border); padding: 1rem 1.25rem; border-radius: 4px; margin-bottom: 0.6rem; }
-    .list-row-view { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-    .list-item-info strong { font-size: 1rem; display: block; margin-bottom: 0.2rem; color: var(--text); }
-    .list-item-info span { font-size: 0.85rem; color: var(--muted); }
-    .controls { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-    
-    .edit-form { display: none; background: rgba(0, 0, 0, 0.6); padding: 1.25rem; margin-top: 0.75rem; border-left: 3px solid var(--pink); border-radius: 4px; }
+    /* Small buttons in admin */
+    .btn-icon {
+      width: 38px; height: 38px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: var(--radius-inner);
+      border: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+    }
+    .btn-icon svg { width: 17px; height: 17px; }
+    .btn-icon:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); }
+    .btn-icon.danger { color: var(--pink); border-color: var(--pink-line); background: transparent; }
+    .btn-icon.danger:hover { background: var(--pink); color: #fff; border-color: var(--pink); }
 
-    /* ── ASSETS ── */
-    .assets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; margin-top: 1.2rem; }
-    .asset-card { background: var(--input-bg); border: 1px solid var(--card-border); padding: 0.6rem; border-radius: 4px; text-align: center; }
-    .asset-card img { width: 100%; height: 95px; object-fit: cover; border-radius: 2px; margin-bottom: 0.4rem; }
-    .asset-card span { display: block; font-size: 0.75rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .btn-save-sticky:active { transform: translateX(-50%) translateY(1px); }
+    .btn-save-sticky {
+      position: fixed;
+      bottom: 1.25rem;
+      left: calc(50% + 125px);
+      transform: translateX(-50%);
+      width: min(560px, calc(100% - 2rem - 250px));
+      z-index: 99;
+      justify-content: center;
+      font-size: 1.4rem;
+      padding: 1rem;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.7), 0 6px 24px rgba(255,0,110,0.3);
+    }
 
-    /* ── IMAGE SELECTOR STYLES ── */
-    .image-select-row { display: grid; grid-template-columns: 1fr 120px; gap: 1.5rem; align-items: center; margin-bottom: 1.5rem; }
-    .image-preview-box { width: 120px; height: 70px; border-radius: 4px; overflow: hidden; border: 1px solid var(--card-border); background: var(--input-bg); display: flex; align-items: center; justify-content: center; }
+    /* Event list */
+    .list-item {
+      border-radius: calc(var(--radius-card) - 4px);
+      background: rgba(0,0,0,0.45);
+      border: 1px solid var(--hairline);
+      margin-bottom: 0.55rem;
+      transition: border-color var(--transition-fast);
+    }
+    .list-item:hover { border-color: rgba(255,255,255,0.14); }
+    .list-item.is-past { opacity: 0.55; }
+    .list-row-view {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem;
+    }
+    .date-chip {
+      aspect-ratio: 1;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border-radius: var(--radius-inner);
+      background: var(--bg-surface-accent);
+      border: 1px solid var(--glass-border);
+      line-height: 1;
+    }
+    .date-chip .d { font-family: var(--font-display); font-size: 1.9rem; color: var(--pink); }
+    .date-chip .m { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; color: var(--text-secondary); margin-top: 0.15rem; }
+    .list-item.is-past .date-chip .d { color: var(--text-secondary); }
+    .list-item-info strong { display: block; font-size: 1rem; font-weight: 600; margin-bottom: 0.15rem; overflow-wrap: anywhere; }
+    .list-item-info .meta { display: flex; flex-wrap: wrap; gap: 0.2rem 0.8rem; font-size: 0.84rem; color: var(--text-secondary); }
+    .list-item-info .meta a { color: var(--pink); text-decoration: none; }
+    .list-item-info .meta a:hover { text-decoration: underline; }
+    .badge-past {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;
+      padding: 0.1rem 0.5rem; border-radius: var(--radius-pill);
+      border: 1px solid var(--glass-border); color: var(--text-secondary);
+    }
+    .controls { display: flex; align-items: center; gap: 0.4rem; }
+
+    .edit-form {
+      display: none;
+      padding: 1.1rem;
+      border-top: 1px solid var(--hairline);
+      background: rgba(255,0,110,0.04);
+      border-radius: 0 0 calc(var(--radius-card) - 4px) calc(var(--radius-card) - 4px);
+    }
+    .edit-form h4 { font-size: 0.85rem; font-weight: 600; color: var(--pink); margin-bottom: 0.8rem; }
+    .edit-actions { display: flex; gap: 0.5rem; margin-top: 0.85rem; }
+
+    .empty, .loading { color: var(--text-secondary); font-size: 0.92rem; padding: 1rem 0.25rem; }
+    .error-text { color: #ff5c9e; font-size: 0.92rem; padding: 1rem 0.25rem; }
+
+    /* Toggle switch & checkboxes */
+    .switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 1rem;
+      border-radius: var(--radius-inner);
+      background: rgba(0,0,0,0.45);
+      border: 1px solid var(--hairline);
+      margin-bottom: 1rem;
+    }
+    .switch-row strong { display: block; font-size: 0.95rem; }
+    .switch-row small { color: var(--text-secondary); font-size: 0.8rem; }
+    .switch { position: relative; width: 52px; height: 30px; flex-shrink: 0; cursor: pointer; }
+    .switch input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; z-index: 1; }
+    .switch .track {
+      position: absolute; inset: 0;
+      border-radius: var(--radius-pill);
+      background: rgba(255,255,255,0.12);
+      border: 1px solid var(--glass-border);
+      transition: background var(--transition-fast), border-color var(--transition-fast);
+    }
+    .switch .track::after {
+      content: ""; position: absolute; top: 3px; left: 3px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #fff;
+      transition: transform var(--transition-fast);
+    }
+    .switch input:checked + .track { background: var(--pink); border-color: var(--pink); }
+    .switch input:checked + .track::after { transform: translateX(22px); }
+    .switch input:focus-visible + .track { outline: 2px solid var(--pink); outline-offset: 3px; }
+    .fields-disabled { opacity: 0.45; }
+
+    .check-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.8rem; }
+    .check {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.6rem 0.9rem;
+      border-radius: var(--radius-pill);
+      background: rgba(0,0,0,0.45);
+      border: 1px solid var(--glass-border);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+      transition: border-color var(--transition-fast), color var(--transition-fast);
+    }
+    .check input { width: 16px; height: 16px; accent-color: var(--pink); cursor: pointer; }
+    .check:has(input:checked) { border-color: var(--pink-line); color: var(--text-primary); }
+    .badge-soldout, .badge-door {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;
+      padding: 0.1rem 0.5rem; border-radius: var(--radius-pill);
+    }
+    .badge-soldout { color: var(--pink); border: 1px solid var(--pink-line); background: var(--pink-soft); }
+    .badge-door { color: var(--text-muted); border: 1px solid var(--glass-border); }
+
+    /* Image assignment */
+    .image-select-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 180px;
+      gap: 1.25rem;
+      align-items: center;
+      padding: 1rem;
+      border-radius: calc(var(--radius-card) - 4px);
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--hairline);
+    }
+    .image-select-row + .image-select-row { margin-top: 0.75rem; }
+    .image-preview-box {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: var(--radius-inner);
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+      background: var(--bg-surface-accent);
+    }
     .image-preview-box img { width: 100%; height: 100%; object-fit: cover; }
 
-    @media (max-width: 768px) {
-      body { font-size: 14px; padding-bottom: 5rem; }
-      .container { padding: 1rem 0.8rem; }
-      header h1 { font-size: 2rem; }
-      .nav-tab { padding: 0.5rem 1.1rem; font-size: 1.2rem; }
-      .card { padding: 1.25rem; }
-      .grid-form { grid-template-columns: 1fr; gap: 0.75rem; }
-      input[type="text"], input[type="password"], input[type="url"], select, textarea { padding: 0.6rem 0.8rem; font-size: 16px; }
-      .list-row-view { flex-direction: column; align-items: flex-start; }
-      .controls { width: 100%; justify-content: flex-start; margin-top: 0.5rem; }
-      .assets-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.75rem; }
-      .asset-card img { height: 75px; }
-      .btn-save-sticky { width: calc(100% - 2rem); padding: 0.65rem; font-size: 1.2rem; }
-      .image-select-row { grid-template-columns: 1fr; gap: 0.75rem; }
-      .image-preview-box { width: 100%; height: 120px; }
+    /* Assets */
+    .dropzone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      text-align: center;
+      padding: 2.5rem 1rem;
+      border: 1.5px dashed rgba(255,255,255,0.18);
+      border-radius: var(--radius-card);
+      background: rgba(0,0,0,0.35);
+      cursor: pointer;
+      transition: border-color var(--transition-fast), background var(--transition-fast);
+      margin-bottom: 1.5rem;
     }
+    .dropzone:hover, .dropzone.is-over { border-color: var(--pink); background: rgba(255,0,110,0.06); }
+    .dropzone .dz-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--pink-soft); border: 1px solid var(--pink-line); color: var(--pink);
+    }
+    .dropzone .dz-icon svg { width: 24px; height: 24px; }
+    .dropzone strong { font-size: 1rem; }
+    .dropzone p { font-size: 0.82rem; color: var(--text-secondary); }
+
+    .assets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.85rem; }
+    .asset-card {
+      position: relative;
+      border-radius: calc(var(--radius-card) - 4px);
+      overflow: hidden;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid var(--hairline);
+      transition: border-color var(--transition-fast);
+    }
+    .asset-card:hover { border-color: rgba(255,255,255,0.18); }
+    .asset-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--bg-surface-accent); }
+    .asset-meta { display: flex; align-items: center; gap: 0.5rem; padding: 0.55rem 0.55rem 0.55rem 0.75rem; }
+    .asset-meta span { flex: 1; min-width: 0; font-size: 0.78rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .asset-meta .btn-icon { width: 32px; height: 32px; }
+    .asset-meta .btn-icon svg { width: 15px; height: 15px; }
+
+    /* Toasts */
+    .toasts {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 2000;
+      display: grid;
+      gap: 0.5rem;
+      width: min(360px, calc(100% - 2rem));
+    }
+    .toast {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      padding: 0.9rem 1rem;
+      border-radius: var(--radius-inner);
+      background: rgba(0,0,0,0.88);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+      font-size: 0.92rem;
+      animation: toastIn 250ms ease-out both;
+    }
+    .toast svg { width: 19px; height: 19px; flex-shrink: 0; margin-top: 0.1rem; }
+    .toast.success { border-color: rgba(0,230,118,0.4); }
+    .toast.success svg { color: var(--green); }
+    .toast.error { border-color: var(--pink-line); }
+    .toast.error svg { color: var(--pink); }
+    .toast.hide { opacity: 0; transform: translateY(-6px); transition: opacity 250ms, transform 250ms; }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; gap: 1rem; padding-top: 0.75rem; }
+      .sidebar {
+        position: sticky;
+        top: 0.5rem;
+        z-index: 50;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        max-height: none;
+      }
+      .brand { justify-content: space-between; }
+      .sidebar-foot { display: none; }
+      .nav-tabs {
+        flex-direction: row;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav-tabs::-webkit-scrollbar { display: none; }
+      .nav-tab { width: auto; flex-shrink: 0; padding: 0.6rem 0.85rem; font-size: 0.88rem; border-radius: var(--radius-pill); }
+      .btn-save-sticky { left: 50%; width: calc(100% - 2rem); }
+      .mobile-status { display: inline-flex !important; }
+    }
+    @media (max-width: 600px) {
+      input[type="text"], input[type="password"], input[type="url"], select, textarea { font-size: 16px; }
+      .grid-form { grid-template-columns: 1fr; }
+      .list-row-view { grid-template-columns: 52px minmax(0, 1fr); }
+      .list-row-view .controls { grid-column: 1 / -1; justify-content: flex-end; }
+      .date-chip .d { font-size: 1.6rem; }
+      .image-select-row { grid-template-columns: 1fr; }
+      .assets-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    }
+    .mobile-status { display: none !important; }
   </style>
 
-  <!-- INCLUDE CONFIG FILE -->
+  <!-- Include config file -->
   <script src="js/config.js"></script>
 </head>
 <body>
+  <div class="ambient" aria-hidden="true"></div>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
 
-  <div class="container">
-    <header>
-      <h1>Enaly · ADMIN DASHBOARD</h1>
-      <div class="header-right">
-        <span class="status-indicator">● Online</span>
-      </div>
-    </header>
+  <div class="app">
 
-    <!-- TABS NAVIGATION -->
-    <div class="nav-tabs">
-      <button class="nav-tab active" id="tabBtnEvents" onclick="switchTab('events')">Events</button>
-      <button class="nav-tab" id="tabBtnContent" onclick="switchTab('content')">Content / Texts</button>
-      <button class="nav-tab" id="tabBtnImages" onclick="switchTab('images')">Images / Layout</button>
-      <button class="nav-tab" id="tabBtnAssets" onclick="switchTab('assets')">Assets Upload</button>
-    </div>
-
-    <!-- ── TAB 1: EVENTS ── -->
-    <div id="tabEvents">
-      <div class="card">
-        <div class="card-title">Add New Event</div>
-        <div class="grid-form">
-          <input type="text" id="newDate" placeholder="Date (DD.MM.YYYY)">
-          <input type="text" id="newTitle" placeholder="Event Name / Line-Up">
-          <input type="text" id="newVenue" placeholder="Location / Club">
-          <input type="text" id="newCity" placeholder="City">
-          <input type="url"  id="newTickets" placeholder="Ticket Link (Optional)">
-        </div>
-        <div style="display:flex; justify-content:flex-end; align-items:center; margin-top:1.25rem;">
-          <button class="btn-pink" onclick="addEvent()">+ Add Event</button>
-        </div>
-      </div>
-
-      <div class="card-title" style="margin-top:1.5rem;">ALL EVENTS</div>
-      <div id="adminList">Loading Events...</div>
-      <button class="btn-save-sticky" id="btnSaveEvents" onclick="saveEventsToGitHub()">Save Events</button>
-    </div>
-
-    <!-- ── TAB 2: CONTENT / TEXTS ── -->
-    <div id="tabContent" style="display:none;">
-      <div class="card">
-        <div class="card-title">ABOUT / BIO</div>
-        <textarea id="textContentAbout" rows="6" placeholder="Bio / About me text..."></textarea>
-      </div>
-
-      <div class="card">
-        <div class="card-title">SHARED THE STAGE WITH</div>
-        <textarea id="textContentSharedStage" rows="4" placeholder="Artists / Acts (comma-separated or multiline)..."></textarea>
-      </div>
-
-      <div class="card">
-        <div class="card-title">SELECTED SHOWS</div>
-        <textarea id="textContentSelectedShows" rows="4" placeholder="Highlights / Past Top Shows..."></textarea>
-      </div>
-
-      <button class="btn-save-sticky" id="btnSaveContent" onclick="saveContentToGitHub()" style="display:none;">Save Texts</button>
-    </div>
-
-    <!-- ── TAB 3: IMAGE ASSIGNMENT ── -->
-    <div id="tabImages" style="display:none;">
-      <div class="card">
-        <div class="card-title">ASSIGN LAYOUT IMAGES</div>
-
-        <!-- Header Image Dropdown -->
-        <div class="image-select-row">
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="sidebar glass">
+      <div class="brand">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <span class="brand-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></span>
           <div>
-            <label style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Header Banner Image</label>
-            <select id="selectImgHeader" onchange="updatePreview('selectImgHeader', 'prevHeader')"></select>
+            <h1>Enaly</h1>
+            <small>Admin Dashboard</small>
           </div>
-          <div class="image-preview-box">
-            <img id="prevHeader" src="assets/header.jpg" alt="Header Preview">
+        </div>
+        <span class="status-indicator mobile-status"><span class="dot"></span>Online</span>
+      </div>
+
+      <!-- Tabs navigation -->
+      <nav class="nav-tabs" aria-label="Sections">
+        <button class="nav-tab active" id="tabBtnEvents" onclick="switchTab('events')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Events
+        </button>
+        <button class="nav-tab" id="tabBtnContent" onclick="switchTab('content')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+          Content / Texts
+        </button>
+        <button class="nav-tab" id="tabBtnImages" onclick="switchTab('images')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Images / Layout
+        </button>
+        <button class="nav-tab" id="tabBtnAssets" onclick="switchTab('assets')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          Assets Upload
+        </button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <span class="status-indicator"><span class="dot"></span>Online</span>
+        <a href="/" target="_blank" rel="noopener" class="view-site">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+          View website
+        </a>
+      </div>
+    </aside>
+
+    <!-- ==================== MAIN ==================== -->
+    <main class="main">
+
+      <!-- ── TAB 1: EVENTS ── -->
+      <div id="tabEvents">
+        <div class="page-head">
+          <div>
+            <h2>Events</h2>
+            <p>Add, edit or remove shows. Changes go live after "Save Events".</p>
           </div>
         </div>
 
-        <!-- About Portrait Dropdown -->
-        <div class="image-select-row">
-          <div>
-            <label style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:0.4rem;">About Portrait Image</label>
-            <select id="selectImgAbout" onchange="updatePreview('selectImgAbout', 'prevAbout')"></select>
+        <div class="card glass">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            Add New Event
           </div>
-          <div class="image-preview-box">
-            <img id="prevAbout" src="assets/about.jpg" alt="About Preview">
+          <div class="grid-form">
+            <input type="text" id="newDate" placeholder="Date (DD.MM.YYYY)">
+            <input type="text" id="newTitle" placeholder="Event Name / Line-Up">
+            <input type="text" id="newVenue" placeholder="Location / Club (Optional)">
+            <input type="text" id="newCity" placeholder="City (Optional)">
+            <input type="url"  id="newTickets" placeholder="Ticket Link (Optional)">
+          </div>
+          <div class="check-row">
+            <label class="check"><input type="checkbox" id="newDoorsale"> Doorsale</label>
+            <label class="check"><input type="checkbox" id="newSoldOut"> Sold Out</label>
+          </div>
+          <div style="display:flex; justify-content:flex-end; margin-top:1rem;">
+            <button class="btn btn-ghost btn-sm" onclick="addEvent()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              Add Event
+            </button>
           </div>
         </div>
 
-        <!-- Booking Image Dropdown -->
-        <div class="image-select-row">
+        <div class="card glass">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+            All Events
+            <span class="hint" id="eventCount"></span>
+          </div>
+          <div id="adminList"><p class="loading">Loading Events...</p></div>
+        </div>
+
+        <button class="btn btn-primary btn-save-sticky" id="btnSaveEvents" onclick="saveEventsToGitHub()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+          Save Events
+        </button>
+      </div>
+
+      <!-- ── TAB 2: CONTENT / TEXTS ── -->
+      <div id="tabContent" style="display:none;">
+        <div class="page-head">
           <div>
-            <label style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Booking Area Image</label>
-            <select id="selectImgWorking" onchange="updatePreview('selectImgWorking', 'prevWorking')"></select>
+            <h2>Content / Texts</h2>
+            <p>One paragraph per line. References: comma-separated or one per line.</p>
           </div>
-          <div class="image-preview-box">
-            <img id="prevWorking" src="assets/working.jpg" alt="Working Preview">
+        </div>
+
+        <div class="card glass">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+            What's New (below header image)
           </div>
+          <div class="switch-row">
+            <div>
+              <strong>Show on website</strong>
+              <small>Off: the strip is hidden completely.</small>
+            </div>
+            <label class="switch" aria-label="Show What's New on website">
+              <input type="checkbox" id="whatsNewActive" onchange="syncWhatsNewState()">
+              <span class="track"></span>
+            </label>
+          </div>
+          <div class="grid-form" id="whatsNewFields">
+            <div>
+              <label class="label" for="whatsNewTitle">Title</label>
+              <input type="text" id="whatsNewTitle" placeholder="What's New?">
+            </div>
+            <div>
+              <label class="label" for="whatsNewHeadline">Headline (shown in pink)</label>
+              <input type="text" id="whatsNewHeadline" placeholder="e.g. New video set out now">
+            </div>
+            <div>
+              <label class="label" for="whatsNewLink">Link</label>
+              <input type="url" id="whatsNewLink" placeholder="https://...">
+            </div>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            About / Bio
+          </div>
+          <textarea id="textContentAbout" rows="7" placeholder="Bio / About me text..."></textarea>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>
+            Shared the Stage With
+          </div>
+          <textarea id="textContentSharedStage" rows="4" placeholder="Artists / Acts (comma-separated or multiline)..."></textarea>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>
+            Played At
+          </div>
+          <textarea id="textContentSelectedShows" rows="4" placeholder="Venues / Festivals (comma-separated or multiline)..."></textarea>
+        </div>
+
+        <button class="btn btn-primary btn-save-sticky" id="btnSaveContent" onclick="saveContentToGitHub()" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+          Save Texts
+        </button>
+      </div>
+
+      <!-- ── TAB 3: IMAGE ASSIGNMENT ── -->
+      <div id="tabImages" style="display:none;">
+        <div class="page-head">
+          <div>
+            <h2>Images / Layout</h2>
+            <p>Choose which uploaded image appears in each area of the website.</p>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>
+            Assign Layout Images
+          </div>
+
+          <div class="image-select-row">
+            <div>
+              <label class="label" for="selectImgHeader">Header Banner Image</label>
+              <select id="selectImgHeader" onchange="updatePreview('selectImgHeader', 'prevHeader')"></select>
+            </div>
+            <div class="image-preview-box"><img id="prevHeader" src="assets/header.jpg" alt="Header Preview"></div>
+          </div>
+
+          <div class="image-select-row">
+            <div>
+              <label class="label" for="selectImgAbout">About Portrait Image</label>
+              <select id="selectImgAbout" onchange="updatePreview('selectImgAbout', 'prevAbout')"></select>
+            </div>
+            <div class="image-preview-box"><img id="prevAbout" src="assets/about.jpg" alt="About Preview"></div>
+          </div>
+
+          <div class="image-select-row">
+            <div>
+              <label class="label" for="selectImgWorking">Booking Area Image</label>
+              <select id="selectImgWorking" onchange="updatePreview('selectImgWorking', 'prevWorking')"></select>
+            </div>
+            <div class="image-preview-box"><img id="prevWorking" src="assets/working.jpg" alt="Working Preview"></div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-save-sticky" id="btnSaveImages" onclick="saveContentToGitHub()" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+          Save Image Assignments
+        </button>
+      </div>
+
+      <!-- ── TAB 4: ASSETS ── -->
+      <div id="tabAssets" style="display:none;">
+        <div class="page-head">
+          <div>
+            <h2>Assets Upload</h2>
+            <p>Images are committed directly to the GitHub repository.</p>
+          </div>
+        </div>
+
+        <div class="dropzone" id="dropzone" role="button" tabindex="0" onclick="document.getElementById('fileInput').click()">
+          <span class="dz-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          </span>
+          <strong>Upload File (Directly to GitHub)</strong>
+          <p>Click or drop an image here · Supported: JPG, PNG, WEBP, SVG</p>
+          <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFileUpload(this.files)">
+        </div>
+
+        <div class="card glass">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>
+            Existing Images
+          </div>
+          <div class="assets-grid" id="assetsGrid"><p class="loading">Loading Assets...</p></div>
         </div>
       </div>
 
-      <button class="btn-save-sticky" id="btnSaveImages" onclick="saveContentToGitHub()" style="display:none;">Save Image Assignments</button>
-    </div>
-
-    <!-- ── TAB 4: ASSETS ── -->
-    <div id="tabAssets" style="display:none;">
-      <div class="card" style="text-align:center; padding:2.5rem 1rem; border:2px dashed var(--card-border); cursor:pointer;" onclick="document.getElementById('fileInput').click()">
-        📁 <strong>Upload File (Directly to GitHub)</strong>
-        <p style="font-size:0.8rem; color:var(--muted); margin-top:0.4rem;">Supported: JPG, PNG, WEBP, SVG</p>
-        <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFileUpload(this.files)">
-      </div>
-
-      <div class="card-title">EXISTING IMAGES</div>
-      <div class="assets-grid" id="assetsGrid">Loading Assets...</div>
-    </div>
-
+    </main>
   </div>
 
   <script>
-    // Mobile Zoom Protection
+    // Mobile zoom protection (admin only)
     document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
 
     const filePathEvents = "data/events.json";
     const filePathContent = "data/content.json";
     const assetFolderPath = "assets";
+    const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+    const ICON = {
+      edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+      trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>',
+      ok: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>',
+      err: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>',
+      pin: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>'
+    };
 
     let localEvents = [];
-    let localContent = { 
-      about: "", 
-      sharedStage: "", 
+    let eventIdCounter = 0;
+    // Each event gets an in-memory _id so edits always hit the right entry (never saved to events.json)
+    function withId(ev) { return Object.assign({}, ev, { _id: 'ev' + (++eventIdCounter) }); }
+    function findEvent(id) { return localEvents.find(ev => ev._id === id); }
+    function stripIds(list) { return list.map(({ _id, ...rest }) => rest); }
+    function isTrue(v) { return v === true || v === 'true'; }
+    let localContent = {
+      about: "",
+      sharedStage: "",
       selectedShows: "",
       imgHeader: "assets/header.jpg",
       imgAbout: "assets/about.jpg",
@@ -354,13 +727,34 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       if (typeof proxyApiUrl === 'undefined') {
-        document.getElementById('adminList').innerHTML = '<p style="color:var(--pink)">Error: proxyApiUrl is not defined in js/config.js!</p>';
+        document.getElementById('adminList').innerHTML = '<p class="error-text">Error: proxyApiUrl is not defined in js/config.js!</p>';
         return;
       }
       loadEventsFromGitHub();
       loadContentFromGitHub();
       loadAssetsFromGitHub();
+      setupDropzone();
     });
+
+    // ── TOASTS (replace blocking alerts) ──
+    function toast(message, type = 'success') {
+      const wrap = document.getElementById('toasts');
+      const el = document.createElement('div');
+      el.className = 'toast ' + type;
+      el.innerHTML = (type === 'success' ? ICON.ok : ICON.err) + '<span></span>';
+      el.querySelector('span').textContent = message;
+      wrap.appendChild(el);
+      setTimeout(() => { el.classList.add('hide'); setTimeout(() => el.remove(), 300); }, type === 'success' ? 3200 : 6000);
+    }
+
+    async function withBusy(btn, fn) {
+      if (!btn) return fn();
+      const original = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = 'Saving...';
+      try { return await fn(); }
+      finally { btn.disabled = false; btn.innerHTML = original; }
+    }
 
     function switchTab(tab) {
       const tabs = ['events', 'content', 'images', 'assets'];
@@ -371,11 +765,12 @@
         if (tabBtn) tabBtn.classList.toggle('active', t === tab);
       });
 
-      document.getElementById('btnSaveEvents').style.display = (tab === 'events') ? 'block' : 'none';
-      document.getElementById('btnSaveContent').style.display = (tab === 'content') ? 'block' : 'none';
-      document.getElementById('btnSaveImages').style.display = (tab === 'images') ? 'block' : 'none';
+      document.getElementById('btnSaveEvents').style.display = (tab === 'events') ? 'flex' : 'none';
+      document.getElementById('btnSaveContent').style.display = (tab === 'content') ? 'flex' : 'none';
+      document.getElementById('btnSaveImages').style.display = (tab === 'images') ? 'flex' : 'none';
 
       if (tab === 'assets' || tab === 'images') loadAssetsFromGitHub();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function cleanPath(path) {
@@ -403,13 +798,13 @@
     async function getGitHubFile(path, defaultFallback = "{}") {
       const safePath = cleanPath(path);
       const res = await fetch(`${proxyApiUrl}/${safePath}`);
-      
+
       if (res.status === 404) {
         return { isNew: true, content: utf8_to_b64(defaultFallback) };
       }
-      
+
       if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
-      
+
       const data = await res.json();
       fileShaMap[safePath] = data.sha;
       fileShaMap[path] = data.sha;
@@ -418,7 +813,7 @@
 
     async function saveGitHubFile(path, contentBase64, commitMessage) {
       const safePath = cleanPath(path);
-      
+
       if (!fileShaMap[safePath]) {
         try {
           const existingFile = await getGitHubFile(safePath);
@@ -483,7 +878,13 @@
     }
 
     function utf8_to_b64(str) {
-      return btoa(String.fromCharCode.apply(null, new TextEncoder().encode(str)));
+      // Chunked to avoid call-stack limits on long texts
+      const bytes = new TextEncoder().encode(str);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i += 0x8000) {
+        binary += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+      }
+      return btoa(binary);
     }
 
     function b64_to_utf8(str) {
@@ -496,17 +897,17 @@
       try {
         const data = await getGitHubFile(filePathEvents, "[]");
         const decodedContent = b64_to_utf8(data.content);
-        localEvents = JSON.parse(decodedContent);
-        if (!Array.isArray(localEvents)) localEvents = [];
+        const parsed = JSON.parse(decodedContent);
+        localEvents = (Array.isArray(parsed) ? parsed : []).map(withId);
         sortAndRenderEvents();
       } catch (err) {
-        document.getElementById('adminList').innerHTML = `<p style="color:var(--pink)">Error loading: ${err.message}</p>`;
+        document.getElementById('adminList').innerHTML = `<p class="error-text">Error loading: ${escapeHtml(err.message)}</p>`;
       }
     }
 
     function sortAndRenderEvents() {
       const now = new Date().setHours(0, 0, 0, 0);
-      
+
       localEvents.sort((a, b) => {
         const timeA = parseDateToTimestamp(a.date);
         const timeB = parseDateToTimestamp(b.date);
@@ -522,88 +923,127 @@
       renderEventsList();
     }
 
+    function dateChip(dateStr) {
+      const ts = parseDateToTimestamp(dateStr);
+      if (!ts) return `<div class="date-chip"><span class="m">${escapeHtml(dateStr || '?')}</span></div>`;
+      const d = new Date(ts);
+      return `<div class="date-chip"><span class="d">${String(d.getDate()).padStart(2, '0')}</span><span class="m">${MONTHS[d.getMonth()]} ${String(d.getFullYear()).slice(2)}</span></div>`;
+    }
+
     function renderEventsList() {
       const list = document.getElementById('adminList');
-      list.innerHTML = localEvents.length ? '' : '<p style="color:var(--muted)">No events available.</p>';
-
       const now = new Date().setHours(0, 0, 0, 0);
+      const upcoming = localEvents.filter(ev => parseDateToTimestamp(ev.date) >= now).length;
+      document.getElementById('eventCount').textContent = `${upcoming} upcoming · ${localEvents.length} total`;
 
-      localEvents.forEach((ev, index) => {
-        const ticketInfo = ev.tickets ? `| Ticket: <a href="${escapeHtml(ev.tickets)}" target="_blank" style="color:var(--pink)">[Link]</a>` : '';
-        const eventTime = parseDateToTimestamp(ev.date);
-        const isPast = eventTime < now;
-        const opacity = isPast ? '0.5' : '1';
-        
-        list.innerHTML += `
-          <div class="list-item" id="item-${index}" style="opacity: ${opacity};">
-            <div class="list-row-view" id="view-${index}">
+      if (!localEvents.length) {
+        list.innerHTML = '<p class="empty">No events available.</p>';
+        return;
+      }
+
+      list.innerHTML = localEvents.map((ev) => {
+        const id = ev._id;
+        const isPast = parseDateToTimestamp(ev.date) < now;
+        const ticketInfo = ev.tickets ? `<a href="${escapeHtml(ev.tickets)}" target="_blank" rel="noopener">Ticket link</a>` : '';
+        const location = [ev.venue, ev.city].filter(v => v && String(v).trim()).map(escapeHtml).join(', ');
+        return `
+          <div class="list-item ${isPast ? 'is-past' : ''}" id="item-${id}">
+            <div class="list-row-view" id="view-${id}">
+              ${dateChip(ev.date)}
               <div class="list-item-info">
-                <strong>${escapeHtml(ev.date)} – ${escapeHtml(ev.title)}</strong>
-                <span>Location: ${escapeHtml(ev.venue || 'TBA')} (${escapeHtml(ev.city || 'TBA')}) ${ticketInfo} ${isPast ? ' <i>(Past)</i>' : ''}</span>
+                <strong>${escapeHtml(ev.title)}</strong>
+                <div class="meta">
+                  <span>${escapeHtml(ev.date)}</span>
+                  ${location ? `<span>${ICON.pin} ${location}</span>` : ''}
+                  ${ticketInfo}
+                  ${isTrue(ev.doorsale) ? '<span class="badge-door">DOORSALE</span>' : ''}
+                  ${isTrue(ev.soldOut) ? '<span class="badge-soldout">SOLD OUT</span>' : ''}
+                  ${isPast ? '<span class="badge-past">PAST</span>' : ''}
+                </div>
               </div>
               <div class="controls">
-                <button class="btn-dark" onclick="openEditForm(${index})">Edit</button>
-                <button class="btn-delete" onclick="deleteEvent(${index})">✕</button>
+                <button class="btn-icon" onclick="openEditForm('${id}')" aria-label="Edit event">${ICON.edit}</button>
+                <button class="btn-icon danger" onclick="deleteEvent('${id}')" aria-label="Delete event">${ICON.trash}</button>
               </div>
             </div>
 
-            <div class="edit-form" id="editForm-${index}">
-              <h4 style="color:var(--pink); margin-bottom:0.8rem; font-size:0.9rem; text-transform:uppercase;">Edit Event</h4>
-              <div class="grid-form" style="margin-bottom:0.75rem;">
-                <input type="text" id="editDate-${index}" value="${escapeHtml(ev.date || '')}" placeholder="Date (DD-MM-YYYY)">
-                <input type="text" id="editTitle-${index}" value="${escapeHtml(ev.title || '')}" placeholder="Event Name">
-                <input type="text" id="editVenue-${index}" value="${escapeHtml(ev.venue || '')}" placeholder="Location / Club">
-                <input type="text" id="editCity-${index}" value="${escapeHtml(ev.city || '')}" placeholder="City">
-                <input type="url"  id="editTickets-${index}" value="${escapeHtml(ev.tickets || '')}" placeholder="Ticket Link">
+            <div class="edit-form" id="editForm-${id}">
+              <h4>Edit Event</h4>
+              <div class="grid-form">
+                <input type="text" id="editDate-${id}" value="${escapeHtml(ev.date || '')}" placeholder="Date (DD.MM.YYYY)">
+                <input type="text" id="editTitle-${id}" value="${escapeHtml(ev.title || '')}" placeholder="Event Name">
+                <input type="text" id="editVenue-${id}" value="${escapeHtml(ev.venue || '')}" placeholder="Location / Club (Optional)">
+                <input type="text" id="editCity-${id}" value="${escapeHtml(ev.city || '')}" placeholder="City (Optional)">
+                <input type="url"  id="editTickets-${id}" value="${escapeHtml(ev.tickets || '')}" placeholder="Ticket Link">
               </div>
-              <div style="display:flex; gap:0.5rem;">
-                <button class="btn-pink" onclick="saveLocalEdit(${index})">Apply</button>
-                <button class="btn-dark" onclick="closeEditForm(${index})">Cancel</button>
+              <div class="check-row">
+                <label class="check"><input type="checkbox" id="editDoorsale-${id}" ${isTrue(ev.doorsale) ? 'checked' : ''}> Doorsale</label>
+                <label class="check"><input type="checkbox" id="editSoldOut-${id}" ${isTrue(ev.soldOut) ? 'checked' : ''}> Sold Out</label>
+              </div>
+              <div class="edit-actions">
+                <button class="btn btn-primary btn-sm" onclick="saveLocalEdit('${id}')">Apply</button>
+                <button class="btn btn-ghost btn-sm" onclick="closeEditForm('${id}')">Cancel</button>
               </div>
             </div>
-          </div>
-        `;
-      });
+          </div>`;
+      }).join('');
     }
 
-    function openEditForm(index) {
-      document.getElementById(`editForm-${index}`).style.display = "block";
-      document.getElementById(`view-${index}`).style.display = "none";
+    function openEditForm(id) {
+      // only one edit form open at a time
+      localEvents.forEach(ev => { if (ev._id !== id) closeEditForm(ev._id); });
+      document.getElementById(`editForm-${id}`).style.display = "block";
+      document.getElementById(`view-${id}`).style.display = "none";
     }
 
-    function closeEditForm(index) {
-      document.getElementById(`editForm-${index}`).style.display = "none";
-      document.getElementById(`view-${index}`).style.display = "flex";
+    function closeEditForm(id) {
+      const form = document.getElementById(`editForm-${id}`);
+      const view = document.getElementById(`view-${id}`);
+      if (form) form.style.display = "none";
+      if (view) view.style.display = "grid";
     }
 
-    function saveLocalEdit(index) {
-      localEvents[index].date = document.getElementById(`editDate-${index}`).value;
-      localEvents[index].title = document.getElementById(`editTitle-${index}`).value;
-      localEvents[index].venue = document.getElementById(`editVenue-${index}`).value;
-      localEvents[index].city = document.getElementById(`editCity-${index}`).value;
-      localEvents[index].tickets = document.getElementById(`editTickets-${index}`).value;
+    function saveLocalEdit(id) {
+      const ev = findEvent(id);
+      if (!ev) return toast('Event not found, please reload the dashboard.', 'error');
+      const date = document.getElementById(`editDate-${id}`).value.trim();
+      const title = document.getElementById(`editTitle-${id}`).value.trim();
+      if (!date || !title) return toast("Please fill in Date & Event Name!", 'error');
+
+      // Overwrite the existing entry in place (no new entry is created)
+      ev.date = date;
+      ev.title = title;
+      ev.venue = document.getElementById(`editVenue-${id}`).value.trim();
+      ev.city = document.getElementById(`editCity-${id}`).value.trim();
+      ev.tickets = document.getElementById(`editTickets-${id}`).value.trim();
+      ev.doorsale = document.getElementById(`editDoorsale-${id}`).checked;
+      ev.soldOut = document.getElementById(`editSoldOut-${id}`).checked;
       sortAndRenderEvents();
+      toast('Event updated. Click "Save Events" to publish.');
     }
 
-    function deleteEvent(index) {
+    function deleteEvent(id) {
       if (confirm("Are you sure you want to delete this event?")) {
-        localEvents.splice(index, 1);
+        localEvents = localEvents.filter(ev => ev._id !== id);
         sortAndRenderEvents();
+        toast('Event removed. Click "Save Events" to publish.');
       }
     }
 
     function addEvent() {
-      const date = document.getElementById('newDate').value;
-      const title = document.getElementById('newTitle').value;
-      if (!date || !title) return alert("Please fill in Date & Event Name!");
+      const date = document.getElementById('newDate').value.trim();
+      const title = document.getElementById('newTitle').value.trim();
+      if (!date || !title) return toast("Please fill in Date & Event Name!", 'error');
 
-      localEvents.push({
+      localEvents.push(withId({
         date: date,
         title: title,
-        venue: document.getElementById('newVenue').value || "",
-        city: document.getElementById('newCity').value || "",
-        tickets: document.getElementById('newTickets').value || ""
-      });
+        venue: document.getElementById('newVenue').value.trim(),
+        city: document.getElementById('newCity').value.trim(),
+        tickets: document.getElementById('newTickets').value.trim(),
+        doorsale: document.getElementById('newDoorsale').checked,
+        soldOut: document.getElementById('newSoldOut').checked
+      }));
 
       sortAndRenderEvents();
 
@@ -612,18 +1052,24 @@
       document.getElementById('newVenue').value = '';
       document.getElementById('newCity').value = '';
       document.getElementById('newTickets').value = '';
+      document.getElementById('newDoorsale').checked = false;
+      document.getElementById('newSoldOut').checked = false;
+      toast('Event added. Click "Save Events" to publish.');
     }
 
     async function saveEventsToGitHub() {
-      try {
-        localEvents.sort((a, b) => parseDateToTimestamp(a.date) - parseDateToTimestamp(b.date));
-        const jsonString = JSON.stringify(localEvents, null, 2);
-        const base64Content = utf8_to_b64(jsonString);
-        await saveGitHubFile(filePathEvents, base64Content, "Update events.json via Admin Dashboard");
-        alert("Events successfully saved to GitHub!");
-      } catch (err) {
-        alert("Error saving: " + err.message);
-      }
+      await withBusy(document.getElementById('btnSaveEvents'), async () => {
+        try {
+          const toSave = stripIds(localEvents).sort((a, b) => parseDateToTimestamp(a.date) - parseDateToTimestamp(b.date));
+          const jsonString = JSON.stringify(toSave, null, 2);
+          const base64Content = utf8_to_b64(jsonString);
+          await saveGitHubFile(filePathEvents, base64Content, "Update events.json via Admin Dashboard");
+          sortAndRenderEvents();
+          toast("Events successfully saved to GitHub!");
+        } catch (err) {
+          toast("Error saving: " + err.message, 'error');
+        }
+      });
     }
 
     // ── CONTENT / TEXTS LOGIC ──
@@ -632,33 +1078,60 @@
         const data = await getGitHubFile(filePathContent, "{}");
         const decodedContent = b64_to_utf8(data.content);
         localContent = JSON.parse(decodedContent);
-        
+
         document.getElementById('textContentAbout').value = localContent.about || "";
         document.getElementById('textContentSharedStage').value = localContent.sharedStage || "";
         document.getElementById('textContentSelectedShows').value = localContent.selectedShows || "";
+        document.getElementById('whatsNewActive').checked = isTrue(localContent.whatsNewActive);
+        document.getElementById('whatsNewTitle').value = localContent.whatsNewTitle || "What's New?";
+        document.getElementById('whatsNewHeadline').value = localContent.whatsNewHeadline || "";
+        document.getElementById('whatsNewLink').value = localContent.whatsNewLink || "";
+        syncWhatsNewState();
+        if (availableAssets.length) populateImageDropdowns();
       } catch (err) {
         console.error("Content Error loading:", err);
       }
     }
 
     async function saveContentToGitHub() {
-      try {
-        localContent = {
-          about: document.getElementById('textContentAbout').value,
-          sharedStage: document.getElementById('textContentSharedStage').value,
-          selectedShows: document.getElementById('textContentSelectedShows').value,
-          imgHeader: document.getElementById('selectImgHeader').value || localContent.imgHeader || "assets/header.jpg",
-          imgAbout: document.getElementById('selectImgAbout').value || localContent.imgAbout || "assets/about.jpg",
-          imgWorking: document.getElementById('selectImgWorking').value || localContent.imgWorking || "assets/working.jpg"
-        };
+      const btn = document.getElementById('tabImages').style.display === 'none'
+        ? document.getElementById('btnSaveContent')
+        : document.getElementById('btnSaveImages');
+      await withBusy(btn, async () => {
+        try {
+          const whatsNewActive = document.getElementById('whatsNewActive').checked;
+          const whatsNewHeadline = document.getElementById('whatsNewHeadline').value.trim();
+          if (whatsNewActive && !whatsNewHeadline) {
+            toast("What's New is switched on but has no headline. Add one or switch it off.", 'error');
+            return;
+          }
+          localContent = {
+            ...localContent, // keep any keys this dashboard doesn't edit
+            about: document.getElementById('textContentAbout').value,
+            sharedStage: document.getElementById('textContentSharedStage').value,
+            selectedShows: document.getElementById('textContentSelectedShows').value,
+            imgHeader: document.getElementById('selectImgHeader').value || localContent.imgHeader || "assets/header.jpg",
+            imgAbout: document.getElementById('selectImgAbout').value || localContent.imgAbout || "assets/about.jpg",
+            imgWorking: document.getElementById('selectImgWorking').value || localContent.imgWorking || "assets/working.jpg",
+            whatsNewActive: whatsNewActive,
+            whatsNewTitle: document.getElementById('whatsNewTitle').value.trim() || "What's New?",
+            whatsNewHeadline: whatsNewHeadline,
+            whatsNewLink: document.getElementById('whatsNewLink').value.trim()
+          };
 
-        const jsonString = JSON.stringify(localContent, null, 2);
-        const base64Content = utf8_to_b64(jsonString);
-        await saveGitHubFile(filePathContent, base64Content, "Update content.json via Admin Dashboard");
-        alert("Changes successfully saved to GitHub!");
-      } catch (err) {
-        alert("Error saving: " + err.message);
-      }
+          const jsonString = JSON.stringify(localContent, null, 2);
+          const base64Content = utf8_to_b64(jsonString);
+          await saveGitHubFile(filePathContent, base64Content, "Update content.json via Admin Dashboard");
+          toast("Changes successfully saved to GitHub!");
+        } catch (err) {
+          toast("Error saving: " + err.message, 'error');
+        }
+      });
+    }
+
+    function syncWhatsNewState() {
+      const on = document.getElementById('whatsNewActive').checked;
+      document.getElementById('whatsNewFields').classList.toggle('fields-disabled', !on);
     }
 
     // ── ASSETS LOGIC & DROPDOWNS ──
@@ -666,40 +1139,48 @@
       try {
         const safePath = cleanPath(assetFolderPath);
         const res = await fetch(`${proxyApiUrl}/${safePath}`);
-        
+
         if (res.status === 404) {
-           document.getElementById('assetsGrid').innerHTML = '<p style="color:var(--muted)">Folder /assets does not exist on GitHub yet.</p>';
-           return;
+          document.getElementById('assetsGrid').innerHTML = '<p class="empty">Folder /assets does not exist on GitHub yet.</p>';
+          return;
         }
-        
+
         if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
-        
+
         const files = await res.json();
         availableAssets = files.filter(f => f.type === 'file');
-        
+
         renderAssetsGrid();
         populateImageDropdowns();
       } catch (err) {
         console.error("Assets Error:", err);
-        document.getElementById('assetsGrid').innerHTML = `<p style="color:var(--pink)">Error loading: ${err.message}</p>`;
+        document.getElementById('assetsGrid').innerHTML = `<p class="error-text">Error loading: ${escapeHtml(err.message)}</p>`;
       }
     }
 
     function renderAssetsGrid() {
       const grid = document.getElementById('assetsGrid');
-      grid.innerHTML = availableAssets.length ? '' : '<p style="color:var(--muted)">No images available.</p>';
-      
-      availableAssets.forEach(file => {
+      if (!availableAssets.length) {
+        grid.innerHTML = '<p class="empty">No images available.</p>';
+        return;
+      }
+
+      grid.innerHTML = availableAssets.map((file, i) => {
         const fileSafePath = cleanPath(file.path);
         fileShaMap[fileSafePath] = file.sha;
         fileShaMap[file.path] = file.sha;
-        grid.innerHTML += `
+        return `
           <div class="asset-card">
-            <img src="${file.download_url}">
-            <span>${file.name}</span>
-            <button class="btn-delete" style="width:100%; margin-top:0.3rem; padding:0.2rem;" onclick="deleteAssetFile('${file.path}')">✕ Delete</button>
-          </div>
-        `;
+            <img src="${escapeHtml(file.download_url)}" alt="${escapeHtml(file.name)}" loading="lazy">
+            <div class="asset-meta">
+              <span title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</span>
+              <button class="btn-icon danger" data-asset-index="${i}" aria-label="Delete ${escapeHtml(file.name)}">${ICON.trash}</button>
+            </div>
+          </div>`;
+      }).join('');
+
+      grid.querySelectorAll('[data-asset-index]').forEach(btn => {
+        btn.addEventListener('click', () => deleteAssetFile(availableAssets[+btn.dataset.assetIndex].path));
       });
     }
 
@@ -712,14 +1193,10 @@
 
       dropdowns.forEach(item => {
         const select = document.getElementById(item.id);
-        select.innerHTML = '';
-
-        availableAssets.forEach(file => {
-          const filePath = file.path;
-          const selected = (filePath === item.current || file.name === item.current) ? 'selected' : '';
-          select.innerHTML += `<option value="${filePath}" ${selected}>${file.name}</option>`;
-        });
-
+        select.innerHTML = availableAssets.map(file => {
+          const selected = (file.path === item.current || file.name === item.current) ? 'selected' : '';
+          return `<option value="${escapeHtml(file.path)}" ${selected}>${escapeHtml(file.name)}</option>`;
+        }).join('');
         updatePreview(item.id, item.prevId);
       });
     }
@@ -729,45 +1206,57 @@
       const img = document.getElementById(previewImgId);
       if (select && img && select.value) {
         const file = availableAssets.find(f => f.path === select.value);
-        if (file) {
-          img.src = file.download_url;
-        } else {
-          img.src = select.value;
-        }
+        img.src = file ? file.download_url : select.value;
       }
     }
 
     function handleFileUpload(files) {
-      if (!files.length) return;
+      if (!files || !files.length) return;
       const file = files[0];
+      if (!file.type.startsWith('image/')) return toast('Please choose an image file.', 'error');
       const reader = new FileReader();
 
       reader.onload = async (e) => {
         try {
+          toast(`Uploading ${file.name}...`);
           const rawBase64 = e.target.result.split(',')[1];
           const path = `${assetFolderPath}/${file.name}`;
           await saveGitHubFile(path, rawBase64, `Upload asset ${file.name} via Admin Dashboard`);
-          alert("Image uploaded successfully!");
+          toast("Image uploaded successfully!");
           loadAssetsFromGitHub();
         } catch (err) {
-          alert("Upload error: " + err.message);
+          toast("Upload error: " + err.message, 'error');
+        } finally {
+          document.getElementById('fileInput').value = '';
         }
       };
       reader.readAsDataURL(file);
+    }
+
+    function setupDropzone() {
+      const dz = document.getElementById('dropzone');
+      dz.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); document.getElementById('fileInput').click(); }
+      });
+      ['dragenter', 'dragover'].forEach(ev => dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.add('is-over'); }));
+      ['dragleave', 'drop'].forEach(ev => dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.remove('is-over'); }));
+      dz.addEventListener('drop', (e) => handleFileUpload(e.dataTransfer.files));
     }
 
     async function deleteAssetFile(path) {
       if (!confirm(`Are you sure you want to delete image "${path}"?`)) return;
       try {
         await deleteGitHubFile(path, `Delete asset ${path} via Admin Dashboard`);
-        alert("Image deleted!");
+        toast("Image deleted!");
         loadAssetsFromGitHub();
       } catch (err) {
-        alert("Deletion error: " + err.message);
+        toast("Deletion error: " + err.message, 'error');
       }
     }
 
-    function escapeHtml(text) { return (text || '').replace(/"/g, "&quot;"); }
+    function escapeHtml(text) {
+      return String(text || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    }
   </script>
 </body>
 </html>
