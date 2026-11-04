@@ -1,0 +1,24 @@
+{
+  "sections": [
+    {
+      "title": "Privacy at a Glance",
+      "body": "**General Information:** The following notes provide a simple overview of what happens to your personal data when you visit this website. Personal data is any data that can be used to personally identify you.\n\n**Data Collection on This Website:** Data processing on this website is carried out by the website operator. You can find their contact details in the section \"Information on the Responsible Party\" in this privacy policy."
+    },
+    {
+      "title": "Hosting & Content Delivery Networks (CDN)",
+      "body": "We host the content of our website with the following provider:\n\n**GitHub Pages:** The provider is GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA (hereinafter \"GitHub\"). When you visit our website, GitHub collects various log files including your IP address.\n\nFor more information, please refer to GitHub's privacy policy: https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement.\n\nGitHub Pages is used on the basis of Art. 6(1)(f) GDPR. We have a legitimate interest in presenting our website as reliably as possible."
+    },
+    {
+      "title": "General Notes and Mandatory Information",
+      "body": "**Data Protection:** The operators of these pages take the protection of your personal data very seriously. We treat your personal data confidentially and in accordance with the statutory data protection regulations and this privacy policy.\n\n**Information on the Responsible Party:**\nThe responsible party for data processing on this website is:\nEnaly\nHelena Schmidt\nAddress upon request\nE-mail: info@enaly.de\n\n**Storage Duration:** Unless a specific storage period has been mentioned within this privacy policy, your personal data will remain with us until the purpose for data processing no longer applies.\n\n**Revocation of Your Consent to Data Processing:** Many data processing operations are only possible with your express consent. You can revoke consent already given at any time. The legality of the data processing carried out until the revocation remains unaffected by the revocation.\n\n**Right to Object to Data Collection in Special Cases (Art. 21 GDPR):** YOU HAVE THE RIGHT TO OBJECT AT ANY TIME, ON GROUNDS RELATING TO YOUR PARTICULAR SITUATION, TO THE PROCESSING OF YOUR PERSONAL DATA.\n\n**Right to Information, Deletion, and Correction:** Within the framework of the applicable statutory provisions, you have the right at any time to free information about your stored personal data, its origin and recipients, and the purpose of the data processing and, if applicable, a right to correction or deletion of this data."
+    },
+    {
+      "title": "Data Collection on This Website",
+      "body": "**Contact Form (Formspree):** If you send us inquiries via the contact form, your details from the inquiry form, including the contact details you provided there, will be processed for the purpose of processing the inquiry. Processing is handled via the Formspree service (Formspree Inc., USA). Data transmission is encrypted on the basis of Art. 6(1)(b) GDPR (contract fulfillment or pre-contractual measures) or Art. 6(1)(f) GDPR (legitimate interest).\n\n**Cookie Consent Framework:** Our website uses local consent technology to store your privacy preferences (e.g., cookie selection). Necessary settings are stored in your browser's localStorage. The legal basis is Art. 6(1)(f) GDPR."
+    },
+    {
+      "title": "External Services and Media",
+      "body": "External media and services (such as video platforms or music players) are only loaded on our website after you have actively agreed to them via our consent banner (Art. 6(1)(a) GDPR).\n\n- **SoundCloud:** SoundCloud Global Limited & Co. KG, Rheinsberger Str. 76/77, 10115 Berlin, Germany.\n- **YouTube:** Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland."
+    }
+  ]
+}
