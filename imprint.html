@@ -131,6 +131,9 @@
     .contact-row .v { font-weight: 600; color: var(--text-primary); overflow-wrap: anywhere; }
     .contact-row .go { margin-left: auto; color: var(--text-secondary); }
 
+    .bento-card ul { margin: 0.25rem 0 0 1.2rem; color: var(--text-muted); display: grid; gap: 0.3rem; }
+    .bento-card p + p, .bento-card ul + p, .bento-card p + ul { margin-top: 0.75rem; }
+    .bento-card p a, .bento-card li a,
     .inline-link {
       color: var(--pink);
       text-decoration: underline;
@@ -197,7 +200,7 @@
     </header>
 
     <div class="container">
-      <div class="bento">
+      <div class="bento" id="legalBento">
 
         <!-- Information pursuant to § 5 DDG -->
         <section class="bento-card glass c-3 reveal">
@@ -301,5 +304,36 @@
 
   <script src="js/site.js?v=20261104c"></script>
   <script src="js/cookie-banner.js?v=20261104c"></script>
+  <script src="js/legal.js?v=20261104d"></script>
+  <script>
+    // Texts come from data/imprint.json (admin: Legal Texts). The cards above are the fallback.
+    (async function () {
+      const sections = await EnalyLegal.load('imprint');
+      if (!sections) return;
+      const ICON = (d) => `<div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg></div>`;
+      const ICONS = [
+        [/contact|kontakt|e-?mail/i, '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>'],
+        [/responsib|verantwort|editor/i, '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>'],
+        [/dispute|arbitration|streit|schlicht/i, '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>'],
+        [/§|pursuant|angaben|information/i, '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>']
+      ];
+      const DEFAULT_ICON = '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M16 13H8M16 17H8"/>';
+      const iconFor = (title) => (ICONS.find(([re]) => re.test(title)) || [null, DEFAULT_ICON])[1];
+
+      // Card widths on the 6-column grid: rows alternate 3+3 and 2+4, a single last card spans the full row
+      const spans = [];
+      for (let i = 0, row = 0; i < sections.length; row++) {
+        if (sections.length - i === 1) { spans.push(6); i++; }
+        else { spans.push(...(row % 2 ? [2, 4] : [3, 3])); i += 2; }
+      }
+
+      document.getElementById('legalBento').innerHTML = sections.map((sec, i) => `
+        <section class="bento-card glass c-${spans[i]} reveal is-visible">
+          ${ICON(iconFor(sec.title || ''))}
+          <h2>${EnalyLegal.escapeHtml(sec.title)}</h2>
+          ${EnalyLegal.render(sec.body)}
+        </section>`).join('');
+    })();
+  </script>
 </body>
 </html>

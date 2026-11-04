@@ -134,6 +134,8 @@
       border: 1px solid var(--glass-border);
       color: var(--text-primary);
     }
+    .doc ul { margin: 1rem 0 0 1.2rem; display: grid; gap: 0.4rem; }
+    .doc ul + p, .doc p + ul { margin-top: 1rem; }
     .doc a {
       color: var(--pink);
       text-decoration: underline;
@@ -252,7 +254,7 @@
 
         <nav class="toc glass" aria-label="Contents">
           <p class="toc-title">Contents</p>
-          <ol>
+          <ol id="tocList">
             <li><a href="#s1"><span class="n">1</span><span>Privacy at a Glance</span></a></li>
             <li><a href="#s2"><span class="n">2</span><span>Hosting &amp; CDN</span></a></li>
             <li><a href="#s3"><span class="n">3</span><span>General Notes</span></a></li>
@@ -261,7 +263,7 @@
           </ol>
         </nav>
 
-        <article class="doc glass">
+        <article class="doc glass" id="legalDoc">
 
           <section id="s1">
             <h2><span class="n">1.</span> Privacy at a Glance</h2>
@@ -366,9 +368,27 @@
 
   <script src="js/site.js?v=20261104c"></script>
   <script src="js/cookie-banner.js?v=20261104c"></script>
+  <script src="js/legal.js?v=20261104d"></script>
   <script>
+    // Texts come from data/privacy.json (admin: Legal Texts). The HTML above is the fallback.
+    (async function () {
+      const sections = await EnalyLegal.load('privacy');
+      if (sections) {
+        const esc = EnalyLegal.escapeHtml;
+        document.getElementById('legalDoc').innerHTML = sections.map((sec, i) => `
+          <section id="s${i + 1}">
+            <h2><span class="n">${i + 1}.</span> ${esc(sec.title)}</h2>
+            ${EnalyLegal.render(sec.body)}
+          </section>`).join('');
+        document.getElementById('tocList').innerHTML = sections.map((sec, i) =>
+          `<li><a href="#s${i + 1}"><span class="n">${i + 1}</span><span>${esc(sec.title)}</span></a></li>`
+        ).join('');
+      }
+      initToc();
+    })();
+
     // Table of contents scrollspy
-    (function () {
+    function initToc() {
       const links = document.querySelectorAll('.toc a');
       const sections = document.querySelectorAll('.doc section[id]');
       if (!('IntersectionObserver' in window)) return;
@@ -386,7 +406,7 @@
         });
       }, { rootMargin: '-30% 0px -60% 0px' });
       sections.forEach(s => io.observe(s));
-    })();
+    }
   </script>
 </body>
 </html>

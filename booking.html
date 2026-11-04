@@ -52,9 +52,9 @@
       flex-direction: column;
       justify-content: flex-end;
       padding: clamp(1.5rem, 4vw, 3rem);
-      padding-top: calc(var(--nav-h) + 2rem);
+      padding-top: 2rem;
     }
-    .booking-visual img {
+    .booking-visual > img {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -73,6 +73,17 @@
         linear-gradient(90deg, transparent 70%, #000 100%);
     }
     @keyframes imgIn { from { opacity: 0; transform: scale(1.08); } to { opacity: 1; transform: scale(1); } }
+
+    .booking-home {
+      position: absolute;
+      top: clamp(1.25rem, 3vw, 2rem);
+      left: clamp(1.5rem, 4vw, 3rem);
+      display: inline-flex;
+      cursor: pointer;
+      transition: opacity var(--transition-fast);
+    }
+    .booking-home img { height: 24px; width: auto; filter: brightness(0) invert(1); }
+    .booking-home:hover { opacity: 0.75; }
 
     .booking-visual .kicker {
       display: inline-flex;
@@ -104,7 +115,7 @@
 
     /* Right: contact + form */
     .booking-content {
-      padding: calc(var(--nav-h) + clamp(2rem, 5vw, 3.5rem)) clamp(1.25rem, 5vw, 4rem) clamp(2rem, 5vw, 3rem);
+      padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 5vw, 4rem) clamp(2rem, 5vw, 3rem);
       display: flex;
       flex-direction: column;
       gap: 1.75rem;
@@ -248,35 +259,10 @@
   <div class="ambient" aria-hidden="true"></div>
 
   <!-- ==================== NAVIGATION ==================== -->
-  <nav class="site-nav" aria-label="Main">
-    <a href="/" class="nav-logo" aria-label="Enaly Home"><img src="assets/logo.png" alt="Enaly Logo" class="nav-logo-img"></a>
-
-    <div class="nav-right">
-      <ul class="nav-links">
-        <li><a href="/#about" class="nav-link">About</a></li>
-        <li><a href="/#events" class="nav-link">Events</a></li>
-      </ul>
-      <a href="/booking" class="btn btn-primary btn-sm nav-cta nav-link" aria-current="page">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1a2 2 0 0 0 0 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2 2 0 0 0 0-4Z"/><path d="M13 7v2M13 15v2M13 11v2"/></svg>
-        Booking
-      </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navSheet" aria-label="Open menu">
-        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
-        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
-      </button>
-    </div>
-  </nav>
-  <div class="nav-sheet" id="navSheet">
-    <ul>
-      <li><a href="/#about" class="nav-link">About <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
-      <li><a href="/#events" class="nav-link">Events <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
-      <li><a href="/booking" class="nav-link active" aria-current="page">Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
-    </ul>
-  </div>
-
   <main id="main" class="booking-split">
     <header class="booking-visual">
       <img id="imgWorking" src="assets/working.jpg" alt="Enaly Working DJ Set" fetchpriority="high">
+      <a href="/" class="booking-home" aria-label="Enaly Home"><img src="assets/logo.png" alt="Enaly Logo"></a>
       <span class="kicker"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>Booking</span>
       <h1>Want to make some noise together?</h1>
     </header>
