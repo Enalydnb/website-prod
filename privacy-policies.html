@@ -19,7 +19,7 @@
   <!-- Favicon (white lightning) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><polygon points=%2260,0 15,55 45,55 35,100 85,45 55,45%22 fill=%22%23ffffff%22/></svg>">
 
-  <link rel="stylesheet" href="css/enaly.css?v=20261104c">
+  <link rel="stylesheet" href="css/enaly.css?v=20261105c">
 
   <style>
     /* ==================== PRIVACY · reading layout with sticky contents ==================== */
@@ -45,12 +45,12 @@
     .legal-title {
       font-family: var(--font-display);
       font-weight: 400;
-      font-size: clamp(4.2rem, 13vw, 9.5rem);
-      line-height: 0.82;
+      font-size: clamp(3rem, 10vw, 8rem);
+      line-height: 0.85;
       letter-spacing: 0.01em;
       text-transform: uppercase;
+      white-space: nowrap;
     }
-    .legal-title .line2 { display: block; color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.6); }
 
     .doc-layout {
       display: grid;
@@ -135,6 +135,14 @@
       color: var(--text-primary);
     }
     .doc ul { margin: 1rem 0 0 1.2rem; display: grid; gap: 0.4rem; }
+    .doc ol { margin: 1rem 0 0 1.4rem; display: grid; gap: 0.4rem; }
+    .doc ol + p, .doc p + ol { margin-top: 1rem; }
+    .doc b { color: var(--text-primary); font-weight: 600; }
+    .doc i { font-style: italic; }
+    .doc u { text-decoration: underline; text-underline-offset: 3px; }
+    .doc .fs-s { font-size: 0.85em; }
+    .doc .fs-l { font-size: 1.25em; line-height: 1.5; }
+    .doc .fs-xl { font-size: 1.55em; line-height: 1.35; }
     .doc ul + p, .doc p + ul { margin-top: 1rem; }
     .doc a {
       color: var(--pink);
@@ -145,37 +153,6 @@
       transition: text-decoration-color var(--transition-fast);
     }
     .doc a:hover { text-decoration-color: var(--pink); }
-
-    .callout {
-      margin-top: 1rem;
-      padding: 1.1rem 1.25rem;
-      border-radius: var(--radius-inner);
-      background: rgba(0,0,0,0.45);
-      border: 1px solid var(--hairline);
-      border-left: 3px solid var(--pink);
-    }
-    .callout.alert p { color: var(--text-primary); }
-
-    .provider-list { list-style: none; display: grid; gap: 0.6rem; margin-top: 1.25rem; }
-    .provider-list li {
-      display: flex;
-      gap: 0.9rem;
-      align-items: flex-start;
-      padding: 1rem 1.15rem;
-      border-radius: var(--radius-inner);
-      background: rgba(0,0,0,0.45);
-      border: 1px solid var(--hairline);
-      max-width: none;
-    }
-    .provider-list svg { width: 20px; height: 20px; color: var(--pink); flex-shrink: 0; margin-top: 0.25rem; }
-
-    .responsible-card {
-      margin-top: 1rem;
-      padding: 1.25rem;
-      border-radius: var(--radius-inner);
-      background: rgba(0,0,0,0.45);
-      border: 1px solid var(--hairline);
-    }
 
     @media (max-width: 900px) {
       .doc-layout { grid-template-columns: minmax(0, 1fr); }
@@ -219,11 +196,8 @@
       <ul class="nav-links">
         <li><a href="/#about" class="nav-link">About</a></li>
         <li><a href="/#events" class="nav-link">Events</a></li>
+        <li><a href="/booking" class="nav-link">Booking</a></li>
       </ul>
-      <a href="/booking" class="btn btn-primary btn-sm nav-cta nav-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1a2 2 0 0 0 0 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2 2 0 0 0 0-4Z"/><path d="M13 7v2M13 15v2M13 11v2"/></svg>
-        Booking
-      </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navSheet" aria-label="Open menu">
         <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
         <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
@@ -245,7 +219,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
           Back to Homepage
         </a>
-        <h1 class="legal-title">Privacy <span class="line2">Policies</span></h1>
+        <h1 class="legal-title">Privacy Policies</h1>
       </div>
     </header>
 
@@ -256,10 +230,9 @@
           <p class="toc-title">Contents</p>
           <ol id="tocList">
             <li><a href="#s1"><span class="n">1</span><span>Privacy at a Glance</span></a></li>
-            <li><a href="#s2"><span class="n">2</span><span>Hosting &amp; CDN</span></a></li>
-            <li><a href="#s3"><span class="n">3</span><span>General Notes</span></a></li>
-            <li><a href="#s4"><span class="n">4</span><span>Data Collection</span></a></li>
-            <li><a href="#s5"><span class="n">5</span><span>External Services</span></a></li>
+            <li><a href="#s2"><span class="n">2</span><span>Hosting &amp; Content Delivery Networks (CDN)</span></a></li>
+            <li><a href="#s3"><span class="n">3</span><span>General Notes and Mandatory Information</span></a></li>
+            <li><a href="#s4"><span class="n">4</span><span>Data Collection on This Website</span></a></li>
           </ol>
         </nav>
 
@@ -267,60 +240,22 @@
 
           <section id="s1">
             <h2><span class="n">1.</span> Privacy at a Glance</h2>
-            <p><strong>General Information:</strong> The following notes provide a simple overview of what happens to your personal data when you visit this website. Personal data is any data that can be used to personally identify you.</p>
-            <p><strong>Data Collection on This Website:</strong> Data processing on this website is carried out by the website operator. You can find their contact details in the section "Information on the Responsible Party" in this privacy policy.</p>
+            <p><strong>General Information:</strong> The following notes provide a simple overview of what happens to your personal data when you visit this website. Personal data is any data that can be used to personally identify you.</p><p><strong>Data Collection on This Website:</strong> Data processing on this website is carried out by the website operator. You can find their contact details in the section &quot;Information on the Responsible Party&quot; in this privacy policy.</p>
           </section>
 
           <section id="s2">
             <h2><span class="n">2.</span> Hosting &amp; Content Delivery Networks (CDN)</h2>
-            <p>We host the content of our website with the following provider:</p>
-            <div class="callout">
-              <p><strong>GitHub Pages:</strong> The provider is GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA (hereinafter "GitHub"). When you visit our website, GitHub collects various log files including your IP address.</p>
-            </div>
-            <p style="margin-top:1rem">For more information, please refer to GitHub's privacy policy: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener noreferrer">https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement</a>.</p>
-            <p>GitHub Pages is used on the basis of Art. 6(1)(f) GDPR. We have a legitimate interest in presenting our website as reliably as possible.</p>
+            <p>We host the content of our website with the following provider:</p><p><strong>GitHub Pages:</strong> The provider is GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA (hereinafter &quot;GitHub&quot;). When you visit our website, GitHub collects various log files including your IP address.</p><p>For more information, please refer to GitHub&#39;s privacy policy: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener noreferrer">https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement</a>.</p><p>GitHub Pages is used on the basis of Art. 6(1)(f) GDPR. We have a legitimate interest in presenting our website as reliably as possible.</p>
           </section>
 
           <section id="s3">
             <h2><span class="n">3.</span> General Notes and Mandatory Information</h2>
-            <p><strong>Data Protection:</strong> The operators of these pages take the protection of your personal data very seriously. We treat your personal data confidentially and in accordance with the statutory data protection regulations and this privacy policy.</p>
-
-            <div class="responsible-card" id="responsible">
-              <p><strong>Information on the Responsible Party:</strong><br>
-              The responsible party for data processing on this website is:<br>
-              Enaly<br>
-              Helena Schmidt<br>
-              Address upon request<br>
-              E-mail: <a href="mailto:info@enaly.de">info@enaly.de</a></p>
-            </div>
-
-            <p style="margin-top:1.25rem"><strong>Storage Duration:</strong> Unless a specific storage period has been mentioned within this privacy policy, your personal data will remain with us until the purpose for data processing no longer applies.</p>
-            <p><strong>Revocation of Your Consent to Data Processing:</strong> Many data processing operations are only possible with your express consent. You can revoke consent already given at any time. The legality of the data processing carried out until the revocation remains unaffected by the revocation.</p>
-            <div class="callout alert">
-              <p><strong>Right to Object to Data Collection in Special Cases (Art. 21 GDPR):</strong> YOU HAVE THE RIGHT TO OBJECT AT ANY TIME, ON GROUNDS RELATING TO YOUR PARTICULAR SITUATION, TO THE PROCESSING OF YOUR PERSONAL DATA.</p>
-            </div>
-            <p style="margin-top:1rem"><strong>Right to Information, Deletion, and Correction:</strong> Within the framework of the applicable statutory provisions, you have the right at any time to free information about your stored personal data, its origin and recipients, and the purpose of the data processing and, if applicable, a right to correction or deletion of this data.</p>
+            <p><strong>Data Protection:</strong> The operators of these pages take the protection of your personal data very seriously. We treat your personal data confidentially and in accordance with the statutory data protection regulations and this privacy policy.</p><p><strong>Information on the Responsible Party:</strong><br>The responsible party for data processing on this website is:<br>Enaly<br>Helena Schmidt<br>Address upon request<br>E-mail: <a href="mailto:info@enaly.de">info@enaly.de</a></p><p><strong>Storage Duration:</strong> Unless a specific storage period has been mentioned within this privacy policy, your personal data will remain with us until the purpose for data processing no longer applies.</p><p><strong>Revocation of Your Consent to Data Processing:</strong> Many data processing operations are only possible with your express consent. You can revoke consent already given at any time. The legality of the data processing carried out until the revocation remains unaffected by the revocation.</p><p><strong>Right to Object to Data Collection in Special Cases (Art. 21 GDPR):</strong> YOU HAVE THE RIGHT TO OBJECT AT ANY TIME, ON GROUNDS RELATING TO YOUR PARTICULAR SITUATION, TO THE PROCESSING OF YOUR PERSONAL DATA.</p><p><strong>Right to Information, Deletion, and Correction:</strong> Within the framework of the applicable statutory provisions, you have the right at any time to free information about your stored personal data, its origin and recipients, and the purpose of the data processing and, if applicable, a right to correction or deletion of this data.</p>
           </section>
 
           <section id="s4">
             <h2><span class="n">4.</span> Data Collection on This Website</h2>
-            <p><strong>Contact Form (Formspree):</strong> If you send us inquiries via the contact form, your details from the inquiry form, including the contact details you provided there, will be processed for the purpose of processing the inquiry. Processing is handled via the Formspree service (Formspree Inc., USA). Data transmission is encrypted on the basis of Art. 6(1)(b) GDPR (contract fulfillment or pre-contractual measures) or Art. 6(1)(f) GDPR (legitimate interest).</p>
-            <p><strong>Cookie Consent Framework:</strong> Our website uses local consent technology to store your privacy preferences (e.g., cookie selection). Necessary settings are stored in your browser's <code>localStorage</code>. The legal basis is Art. 6(1)(f) GDPR.</p>
-          </section>
-
-          <section id="s5">
-            <h2><span class="n">5.</span> External Services and Media</h2>
-            <p>External media and services (such as video platforms or music players) are only loaded on our website after you have actively agreed to them via our consent banner (Art. 6(1)(a) GDPR).</p>
-            <ul class="provider-list">
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3ZM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3Z"/></svg>
-                <span><strong>SoundCloud:</strong> SoundCloud Global Limited &amp; Co. KG, Rheinsberger Str. 76/77, 10115 Berlin, Germany.</span>
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="m10 9 5 3-5 3Z"/></svg>
-                <span><strong>YouTube:</strong> Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland.</span>
-              </li>
-            </ul>
+            <p><strong>Contact Form (Formspree):</strong> If you send us inquiries via the contact form, your details from the inquiry form, including the contact details you provided there, will be processed for the purpose of processing the inquiry. Processing is handled via the Formspree service (Formspree Inc., USA). Data transmission is encrypted on the basis of Art. 6(1)(b) GDPR (contract fulfillment or pre-contractual measures) or Art. 6(1)(f) GDPR (legitimate interest).</p><p><strong>Spam Protection (Cloudflare Turnstile):</strong> To protect our contact form from spam and automated abuse, we use Cloudflare Turnstile, a service of Cloudflare, Inc., USA. Turnstile checks whether an inquiry is sent by a human. For this purpose, technical data such as your IP address, browser information (user agent) and connection data are transmitted to Cloudflare. The legal basis is Art. 6(1)(f) GDPR; our legitimate interest lies in protecting our contact form from spam and misuse. For more information, please refer to Cloudflare&#39;s Turnstile privacy information: <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer">https://www.cloudflare.com/turnstile-privacy-policy/</a></p><p><strong>Cookie Consent Framework:</strong> Our website uses a consent banner to store your privacy preferences (e.g., cookie selection). Your selection is stored in a cookie named &quot;enaly_cookie_consent&quot; in your browser for 12 months. The legal basis is Art. 6(1)(f) GDPR.</p>
           </section>
 
         </article>
@@ -333,7 +268,6 @@
     <div class="container">
       <div class="footer-inner">
         <div class="footer-top">
-          <p class="footer-tagline">Dark &amp; Heavy Drum &amp; Bass</p>
           <div class="footer-socials">
             <a href="https://www.instagram.com/enaly" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Instagram">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.067 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -363,12 +297,12 @@
         </div>
       </div>
     </div>
-    <div class="footer-word" aria-hidden="true">Enaly</div>
   </footer>
 
-  <script src="js/site.js?v=20261104c"></script>
-  <script src="js/cookie-banner.js?v=20261104c"></script>
-  <script src="js/legal.js?v=20261104d"></script>
+  <script src="js/site.js?v=20261105b"></script>
+  <script src="js/cookie-banner.js?v=20261105b"></script>
+  <script src="js/richtext.js?v=20261105d"></script>
+  <script src="js/legal.js?v=20261105e"></script>
   <script>
     // Texts come from data/privacy.json (admin: Legal Texts). The HTML above is the fallback.
     (async function () {

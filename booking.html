@@ -31,21 +31,20 @@
   <!-- Cloudflare Turnstile captcha -->
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
-  <link rel="stylesheet" href="css/enaly.css?v=20261104c">
+  <link rel="stylesheet" href="css/enaly.css?v=20261105c">
 
   <style>
     /* ==================== BOOKING · split screen ==================== */
     .booking-split {
       display: grid;
       grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-      min-height: 100svh;
     }
 
     /* Left: full-height photo with headline */
     .booking-visual {
-      position: sticky;
-      top: 0;
-      height: 100svh;
+      /* as tall as the form column: photo, headline and form box end on the same line */
+      position: relative;
+      min-height: 560px;
       overflow: hidden;
       isolation: isolate;
       display: flex;
@@ -85,23 +84,6 @@
     .booking-home img { height: 24px; width: auto; filter: brightness(0) invert(1); }
     .booking-home:hover { opacity: 0.75; }
 
-    .booking-visual .kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      align-self: flex-start;
-      margin-bottom: 1.1rem;
-      padding: 0.4rem 0.85rem;
-      border-radius: var(--radius-pill);
-      background: rgba(0,0,0,0.55);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-    .booking-visual .kicker svg { width: 14px; height: 14px; color: var(--pink); }
 
     .booking-visual h1 {
       font-family: var(--font-display);
@@ -115,7 +97,10 @@
 
     /* Right: contact + form */
     .booking-content {
-      padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 5vw, 4rem) clamp(2rem, 5vw, 3rem);
+      /* Desktop: content sits at the bottom of the first screen, so the form box ends
+         level with the headline on the left (same bottom padding as the photo side) */
+      /* top of the text level with the logo, bottom of the form level with the headline */
+      padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
       display: flex;
       flex-direction: column;
       gap: 1.75rem;
@@ -247,7 +232,7 @@
       .booking-visual::after {
         background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 40%, #000 100%);
       }
-      .booking-content { max-width: none; padding-top: 0.5rem; }
+      .booking-content { max-width: none; padding-top: 0.5rem; padding-bottom: clamp(2rem, 5vw, 3rem); }
     }
     @media (max-width: 600px) {
       .booking-form { grid-template-columns: 1fr; }
@@ -263,12 +248,11 @@
     <header class="booking-visual">
       <img id="imgWorking" src="assets/working.jpg" alt="Enaly Working DJ Set" fetchpriority="high">
       <a href="/" class="booking-home" aria-label="Enaly Home"><img src="assets/logo.png" alt="Enaly Logo"></a>
-      <span class="kicker"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>Booking</span>
       <h1>Want to make some noise together?</h1>
     </header>
 
     <div class="booking-content">
-      <p>Send your booking inquiry through the form or email directly to <a href="mailto:info@enaly.de">info@enaly.de</a>.</p>
+      <p>Send your booking inquiry through the form or email directly.</p>
 
       <div class="contact-strip">
         <a href="mailto:info@enaly.de" class="mail-chip">
@@ -334,7 +318,6 @@
     <div class="container">
       <div class="footer-inner">
         <div class="footer-top">
-          <p class="footer-tagline">Dark &amp; Heavy Drum &amp; Bass</p>
           <div class="footer-socials">
             <a href="https://www.instagram.com/enaly" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Instagram">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.067 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -364,12 +347,11 @@
         </div>
       </div>
     </div>
-    <div class="footer-word" aria-hidden="true">Enaly</div>
   </footer>
 
-  <script src="js/site.js?v=20261104c"></script>
-  <script src="js/cookie-banner.js?v=20261104c"></script>
-  <script src="js/booking-form.js?v=20261104c"></script>
+  <script src="js/site.js?v=20261105b"></script>
+  <script src="js/cookie-banner.js?v=20261105b"></script>
+  <script src="js/booking-form.js?v=20261105b"></script>
   <script>
     // Booking image follows the assignment from the admin dashboard
     fetch('data/content.json', { cache: 'no-cache' })

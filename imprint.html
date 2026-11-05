@@ -19,12 +19,12 @@
   <!-- Favicon (white lightning) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><polygon points=%2260,0 15,55 45,55 35,100 85,45 55,45%22 fill=%22%23ffffff%22/></svg>">
 
-  <link rel="stylesheet" href="css/enaly.css?v=20261104c">
+  <link rel="stylesheet" href="css/enaly.css?v=20261105c">
 
   <style>
-    /* ==================== IMPRINT · bento layout ==================== */
+    /* ==================== IMPRINT · same reading layout as the privacy policy ==================== */
     .legal-hero {
-      padding: calc(var(--nav-h) + clamp(3rem, 8vw, 5.5rem)) 0 clamp(2rem, 5vw, 3rem);
+      padding: calc(var(--nav-h) + clamp(3rem, 8vw, 5.5rem)) 0 clamp(2rem, 5vw, 3.5rem);
     }
     .back-link {
       display: inline-flex;
@@ -45,10 +45,11 @@
     .legal-title {
       font-family: var(--font-display);
       font-weight: 400;
-      font-size: clamp(5rem, 16vw, 11rem);
-      line-height: 0.82;
+      font-size: clamp(3rem, 10vw, 8rem);
+      line-height: 0.85;
       letter-spacing: 0.01em;
       text-transform: uppercase;
+      white-space: nowrap;
     }
     .legal-lead {
       margin-top: 1.25rem;
@@ -65,76 +66,99 @@
     }
     .legal-lead svg { width: 16px; height: 16px; color: var(--pink); }
 
-    .bento {
+    .doc-layout {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 1rem;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: clamp(1.5rem, 4vw, 3.5rem);
+      align-items: start;
     }
-    .bento-card { padding: clamp(1.4rem, 3vw, 2rem); }
-    .bento-card.c-3 { grid-column: span 3; }
-    .bento-card.c-2 { grid-column: span 2; }
-    .bento-card.c-4 { grid-column: span 4; }
-    .bento-card.c-6 { grid-column: span 6; }
 
-    .card-icon {
-      width: 44px;
-      height: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-      background: var(--bg-surface);
-      border: 1px solid var(--glass-border);
-      color: var(--pink);
-      margin-bottom: 1.25rem;
+    /* Table of contents */
+    .toc {
+      position: sticky;
+      top: calc(var(--nav-h) + 1.5rem);
+      padding: 1.25rem;
     }
-    .card-icon svg { width: 21px; height: 21px; }
-
-    .bento-card h2 {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: 1.9rem;
-      line-height: 1;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 0.9rem;
+    .toc-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin: 0 0 0.75rem 0.6rem;
     }
-    .bento-card p { color: var(--text-muted); font-size: 0.98rem; line-height: 1.7; }
-    .bento-card p + p { margin-top: 0.75rem; }
-
-    .identity-name {
-      font-family: var(--font-display);
-      font-size: clamp(2.6rem, 5vw, 3.6rem) !important;
-      line-height: 0.95 !important;
-      letter-spacing: 0.03em;
-      color: var(--text-primary) !important;
-      text-transform: uppercase;
-    }
-    .muted-note { color: var(--text-secondary) !important; font-size: 0.9rem !important; }
-
-    .contact-rows { display: grid; gap: 0.5rem; }
-    .contact-row {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-      padding: 0.8rem 1rem;
+    .toc ol { list-style: none; display: grid; gap: 0.15rem; counter-reset: toc; }
+    .toc a {
+      display: grid;
+      grid-template-columns: 1.8rem 1fr;
+      align-items: baseline;
+      gap: 0.25rem;
+      padding: 0.6rem 0.6rem;
       border-radius: var(--radius-inner);
-      background: rgba(0,0,0,0.45);
-      border: 1px solid var(--hairline);
+      font-size: 0.9rem;
+      line-height: 1.35;
+      color: var(--text-secondary);
       text-decoration: none;
       cursor: pointer;
-      transition: border-color var(--transition-fast), background var(--transition-fast);
+      transition: background var(--transition-fast), color var(--transition-fast);
     }
-    .contact-row:hover { border-color: var(--pink-line); background: rgba(255,0,110,0.06); }
-    .contact-row svg { width: 18px; height: 18px; color: var(--pink); flex-shrink: 0; }
-    .contact-row .k { font-size: 0.78rem; color: var(--text-secondary); display: block; }
-    .contact-row .v { font-weight: 600; color: var(--text-primary); overflow-wrap: anywhere; }
-    .contact-row .go { margin-left: auto; color: var(--text-secondary); }
+    .toc a .n {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: #555;
+      transition: color var(--transition-fast);
+    }
+    .toc a:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
+    .toc a.active { background: var(--pink-soft); color: var(--text-primary); }
+    .toc a.active .n { color: var(--pink); }
 
-    .bento-card ul { margin: 0.25rem 0 0 1.2rem; color: var(--text-muted); display: grid; gap: 0.3rem; }
-    .bento-card p + p, .bento-card ul + p, .bento-card p + ul { margin-top: 0.75rem; }
-    .bento-card p a, .bento-card li a,
-    .inline-link {
+    /* Document */
+    .doc { padding: clamp(1.5rem, 4vw, 3rem); }
+    .doc section { scroll-margin-top: calc(var(--nav-h) + 1.5rem); }
+    .doc section + section {
+      margin-top: clamp(2.5rem, 5vw, 3.5rem);
+      padding-top: clamp(2.5rem, 5vw, 3.5rem);
+      border-top: 1px solid var(--hairline);
+    }
+    .doc h2 {
+      display: flex;
+      align-items: baseline;
+      gap: 0.9rem;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2rem, 4vw, 2.7rem);
+      line-height: 1;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+    }
+    .doc h2 .n { color: var(--pink); }
+    .doc p, .doc li {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      max-width: 70ch;
+    }
+    .doc p + p { margin-top: 1rem; }
+    .doc strong { color: var(--text-primary); font-weight: 600; }
+    .doc code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.88em;
+      padding: 0.1rem 0.4rem;
+      border-radius: 6px;
+      background: var(--bg-surface);
+      border: 1px solid var(--glass-border);
+      color: var(--text-primary);
+    }
+    .doc ul { margin: 1rem 0 0 1.2rem; display: grid; gap: 0.4rem; }
+    .doc ol { margin: 1rem 0 0 1.4rem; display: grid; gap: 0.4rem; }
+    .doc ol + p, .doc p + ol { margin-top: 1rem; }
+    .doc b { color: var(--text-primary); font-weight: 600; }
+    .doc i { font-style: italic; }
+    .doc u { text-decoration: underline; text-underline-offset: 3px; }
+    .doc .fs-s { font-size: 0.85em; }
+    .doc .fs-l { font-size: 1.25em; line-height: 1.5; }
+    .doc .fs-xl { font-size: 1.55em; line-height: 1.35; }
+    .doc ul + p, .doc p + ul { margin-top: 1rem; }
+    .doc a {
       color: var(--pink);
       text-decoration: underline;
       text-decoration-color: var(--pink-line);
@@ -142,14 +166,35 @@
       overflow-wrap: anywhere;
       transition: text-decoration-color var(--transition-fast);
     }
-    .inline-link:hover { text-decoration-color: var(--pink); }
+    .doc a:hover { text-decoration-color: var(--pink); }
 
     @media (max-width: 900px) {
-      .bento-card.c-2, .bento-card.c-4 { grid-column: span 3; }
-    }
-    @media (max-width: 640px) {
-      .bento { grid-template-columns: 1fr; }
-      .bento-card.c-2, .bento-card.c-3, .bento-card.c-4, .bento-card.c-6 { grid-column: 1 / -1; }
+      .doc-layout { grid-template-columns: minmax(0, 1fr); }
+      .toc {
+        position: sticky;
+        top: calc(var(--nav-h) + 0.5rem);
+        z-index: 5;
+        padding: 0.5rem;
+        border-radius: var(--radius-pill);
+      }
+      .toc-title { display: none; }
+      .toc ol {
+        display: flex;
+        gap: 0.25rem;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      .toc ol::-webkit-scrollbar { display: none; }
+      .toc a {
+        display: inline-flex;
+        gap: 0.4rem;
+        white-space: nowrap;
+        border-radius: var(--radius-pill);
+        padding: 0.5rem 0.9rem;
+        font-size: 0.85rem;
+      }
+      .toc a .n { font-size: 1.05rem; }
     }
   </style>
 </head>
@@ -165,11 +210,8 @@
       <ul class="nav-links">
         <li><a href="/#about" class="nav-link">About</a></li>
         <li><a href="/#events" class="nav-link">Events</a></li>
+        <li><a href="/booking" class="nav-link">Booking</a></li>
       </ul>
-      <a href="/booking" class="btn btn-primary btn-sm nav-cta nav-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1a2 2 0 0 0 0 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2 2 0 0 0 0-4Z"/><path d="M13 7v2M13 15v2M13 11v2"/></svg>
-        Booking
-      </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navSheet" aria-label="Open menu">
         <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
         <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
@@ -200,66 +242,59 @@
     </header>
 
     <div class="container">
-      <div class="bento" id="legalBento">
+      <div class="doc-layout">
 
-        <!-- Information pursuant to § 5 DDG -->
-        <section class="bento-card glass c-3 reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <h2>Information pursuant to § 5 DDG</h2>
-          <p class="identity-name">Enaly</p>
-          <p>Helena Schmidt<br>Address upon request</p>
-        </section>
+        <nav class="toc glass" aria-label="Contents">
+          <p class="toc-title">Contents</p>
+          <ol id="tocList">
+            <li><a href="#s1"><span class="n">1</span><span>Information pursuant to § 5 DDG</span></a></li>
+            <li><a href="#s2"><span class="n">2</span><span>Contact</span></a></li>
+            <li><a href="#s3"><span class="n">3</span><span>Editorially Responsible</span></a></li>
+            <li><a href="#s4"><span class="n">4</span><span>Consumer Dispute Resolution / Universal Arbitration Board</span></a></li>
+            <li><a href="#s5"><span class="n">5</span><span>Liability for Content</span></a></li>
+            <li><a href="#s6"><span class="n">6</span><span>Liability for Links</span></a></li>
+            <li><a href="#s7"><span class="n">7</span><span>Copyright</span></a></li>
+          </ol>
+        </nav>
 
-        <!-- Contact -->
-        <section class="bento-card glass c-3 reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-          </div>
-          <h2>Contact</h2>
-          <div class="contact-rows">
-            <a class="contact-row" href="mailto:info@enaly.de">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
-              <span><span class="k">E-mail</span><span class="v">info@enaly.de</span></span>
-              <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
-            </a>
-            <a class="contact-row" href="https://enaly.de">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/></svg>
-              <span><span class="k">Website</span><span class="v">https://enaly.de</span></span>
-              <svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
-            </a>
-          </div>
-        </section>
+        <article class="doc glass" id="legalDoc">
 
-        <!-- Editorially Responsible -->
-        <section class="bento-card glass c-2 reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-          </div>
-          <h2>Editorially Responsible</h2>
-          <p>Helena Schmidt<br>Address upon request</p>
-        </section>
+          <section id="s1">
+            <h2><span class="n">1.</span> Information pursuant to § 5 DDG</h2>
+            <p>Enaly<br>Helena Schmidt<br>Address upon request</p>
+          </section>
 
-        <!-- EU Dispute Resolution -->
-        <section class="bento-card glass c-4 reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v.01M12 18v.01M6 12h.01M18 12h.01M7.8 7.8h.01M16.2 16.2h.01M7.8 16.2h.01M16.2 7.8h.01"/></svg>
-          </div>
-          <h2>EU Dispute Resolution</h2>
-          <p>The European Commission provides a platform for online dispute resolution (ODR): <a class="inline-link" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">https://ec.europa.eu/consumers/odr/</a>.</p>
-          <p class="muted-note">You can find our email address in the imprint above.</p>
-        </section>
+          <section id="s2">
+            <h2><span class="n">2.</span> Contact</h2>
+            <p>E-mail: <a href="mailto:info@enaly.de">info@enaly.de</a><br>Website: <a href="https://enaly.de" target="_blank" rel="noopener noreferrer">https://enaly.de</a></p>
+          </section>
 
-        <!-- Consumer Dispute Resolution -->
-        <section class="bento-card glass c-6 reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
-          </div>
-          <h2>Consumer Dispute Resolution / Universal Arbitration Board</h2>
-          <p>We are not willing or obligated to participate in dispute resolution proceedings before a consumer arbitration board.</p>
-        </section>
+          <section id="s3">
+            <h2><span class="n">3.</span> Editorially Responsible</h2>
+            <p>Helena Schmidt<br>Address upon request</p>
+          </section>
 
+          <section id="s4">
+            <h2><span class="n">4.</span> Consumer Dispute Resolution / Universal Arbitration Board</h2>
+            <p>We are not willing or obligated to participate in dispute resolution proceedings before a consumer arbitration board.</p>
+          </section>
+
+          <section id="s5">
+            <h2><span class="n">5.</span> Liability for Content</h2>
+            <p>As a service provider, I am responsible for my own content on these pages in accordance with general laws. However, I am not obliged to monitor transmitted or stored third-party information or to investigate circumstances that indicate unlawful activity.</p><p>Obligations to remove or block the use of information under general laws remain unaffected. However, liability is only possible from the point in time at which I become aware of a specific legal infringement. As soon as I become aware of corresponding infringements, I will remove this content immediately.</p>
+          </section>
+
+          <section id="s6">
+            <h2><span class="n">6.</span> Liability for Links</h2>
+            <p>My website contains links to external third-party websites over whose content I have no influence. Therefore, I cannot accept any liability for this external content. The respective provider or operator of the linked pages is always responsible for their content.</p><p>The linked pages were checked for possible legal violations at the time of linking. No unlawful content was apparent at that time. However, permanent monitoring of the content of linked pages is not reasonable without concrete evidence of a legal violation. If I become aware of any infringements, I will remove such links immediately.</p>
+          </section>
+
+          <section id="s7">
+            <h2><span class="n">7.</span> Copyright</h2>
+            <p>The content and works created by me on these pages are subject to German copyright law. Reproduction, editing, distribution and any kind of use beyond the limits of copyright law require written consent.</p><p>Downloads and copies of this page are only permitted for private, non-commercial use. Insofar as content on this page was not created by me, the copyrights of third parties are respected and such content is marked accordingly. Should you nevertheless become aware of a copyright infringement, please let me know. If I become aware of any infringements, I will remove such content immediately.</p>
+          </section>
+
+        </article>
       </div>
     </div>
   </main>
@@ -269,7 +304,6 @@
     <div class="container">
       <div class="footer-inner">
         <div class="footer-top">
-          <p class="footer-tagline">Dark &amp; Heavy Drum &amp; Bass</p>
           <div class="footer-socials">
             <a href="https://www.instagram.com/enaly" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Instagram">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.067 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -299,41 +333,50 @@
         </div>
       </div>
     </div>
-    <div class="footer-word" aria-hidden="true">Enaly</div>
   </footer>
 
-  <script src="js/site.js?v=20261104c"></script>
-  <script src="js/cookie-banner.js?v=20261104c"></script>
-  <script src="js/legal.js?v=20261104d"></script>
+  <script src="js/site.js?v=20261105b"></script>
+  <script src="js/cookie-banner.js?v=20261105b"></script>
+  <script src="js/richtext.js?v=20261105d"></script>
+  <script src="js/legal.js?v=20261105e"></script>
   <script>
-    // Texts come from data/imprint.json (admin: Legal Texts). The cards above are the fallback.
+    // Texts come from data/imprint.json (admin: Legal Texts). The HTML above is the fallback.
     (async function () {
       const sections = await EnalyLegal.load('imprint');
-      if (!sections) return;
-      const ICON = (d) => `<div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg></div>`;
-      const ICONS = [
-        [/contact|kontakt|e-?mail/i, '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>'],
-        [/responsib|verantwort|editor/i, '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>'],
-        [/dispute|arbitration|streit|schlicht/i, '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>'],
-        [/§|pursuant|angaben|information/i, '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>']
-      ];
-      const DEFAULT_ICON = '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M16 13H8M16 17H8"/>';
-      const iconFor = (title) => (ICONS.find(([re]) => re.test(title)) || [null, DEFAULT_ICON])[1];
-
-      // Card widths on the 6-column grid: rows alternate 3+3 and 2+4, a single last card spans the full row
-      const spans = [];
-      for (let i = 0, row = 0; i < sections.length; row++) {
-        if (sections.length - i === 1) { spans.push(6); i++; }
-        else { spans.push(...(row % 2 ? [2, 4] : [3, 3])); i += 2; }
+      if (sections) {
+        const esc = EnalyLegal.escapeHtml;
+        document.getElementById('legalDoc').innerHTML = sections.map((sec, i) => `
+          <section id="s${i + 1}">
+            <h2><span class="n">${i + 1}.</span> ${esc(sec.title)}</h2>
+            ${EnalyLegal.render(sec.body)}
+          </section>`).join('');
+        document.getElementById('tocList').innerHTML = sections.map((sec, i) =>
+          `<li><a href="#s${i + 1}"><span class="n">${i + 1}</span><span>${esc(sec.title)}</span></a></li>`
+        ).join('');
       }
-
-      document.getElementById('legalBento').innerHTML = sections.map((sec, i) => `
-        <section class="bento-card glass c-${spans[i]} reveal is-visible">
-          ${ICON(iconFor(sec.title || ''))}
-          <h2>${EnalyLegal.escapeHtml(sec.title)}</h2>
-          ${EnalyLegal.render(sec.body)}
-        </section>`).join('');
+      initToc();
     })();
+
+    // Table of contents scrollspy
+    function initToc() {
+      const links = document.querySelectorAll('.toc a');
+      const sections = document.querySelectorAll('.doc section[id]');
+      if (!('IntersectionObserver' in window)) return;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const id = entry.target.id;
+          links.forEach(a => {
+            const on = a.getAttribute('href') === '#' + id;
+            a.classList.toggle('active', on);
+            if (on && window.matchMedia('(max-width: 900px)').matches) {
+              a.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+            }
+          });
+        });
+      }, { rootMargin: '-30% 0px -60% 0px' });
+      sections.forEach(s => io.observe(s));
+    }
   </script>
 </body>
 </html>
