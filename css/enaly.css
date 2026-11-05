@@ -143,33 +143,27 @@ button { font: inherit; color: inherit; }
 }
 
 /* --------------------------------------------------------------------------
-   Navigation (floating glass pill)
+   Navigation
+   Desktop: full-width black bar that stays at the top.
+   Phones (≤760px): floating glass pill (see media query below).
    -------------------------------------------------------------------------- */
 .site-nav {
   position: fixed;
-  top: 0.9rem;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
-  width: calc(100% - 2 * var(--gutter));
-  max-width: var(--container);
+  height: var(--nav-h);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.55rem 0.55rem 0.55rem 1.4rem;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-pill);
-  backdrop-filter: blur(var(--blur-radius)) saturate(140%);
-  -webkit-backdrop-filter: blur(var(--blur-radius)) saturate(140%);
-  transition: background var(--transition-smooth), box-shadow var(--transition-smooth), top var(--transition-smooth);
+  padding: 0 max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter)));
+  background: #000;
+  border-bottom: 1px solid var(--hairline);
+  transition: box-shadow var(--transition-smooth);
 }
-.site-nav.is-scrolled {
-  top: 0.5rem;
-  background: rgba(0, 0, 0, 0.85);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-}
+.site-nav.is-scrolled { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); }
 
 .nav-logo { display: inline-flex; align-items: center; cursor: pointer; }
 .nav-logo-img {
@@ -230,11 +224,25 @@ button { font: inherit; color: inherit; }
 
 @media (max-width: 760px) {
   :root { --nav-h: 64px; }
-  .site-nav { padding: 0.45rem 0.45rem 0.45rem 1.1rem; top: 0.6rem; }
+  .site-nav {
+    top: 0.6rem;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: calc(100% - 2 * var(--gutter));
+    height: auto;
+    padding: 0.45rem 0.45rem 0.45rem 1.1rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(var(--blur-radius)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--blur-radius)) saturate(140%);
+    transition: background var(--transition-smooth), box-shadow var(--transition-smooth);
+  }
+  .site-nav.is-scrolled { background: rgba(0, 0, 0, 0.85); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6); }
   .nav-logo-img { height: 19px; }
   .nav-links { display: none; }
   .nav-toggle { display: inline-flex; }
-  .nav-cta .btn-label-long { display: none; }
 
   .nav-sheet {
     display: block;
@@ -354,19 +362,6 @@ button { font: inherit; color: inherit; }
   border-top: 1px solid var(--hairline);
   overflow: hidden;
 }
-.footer-word {
-  font-family: var(--font-display);
-  font-size: clamp(7rem, 30vw, 22rem);
-  line-height: 0.78;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  text-align: center;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.10);
-  user-select: none;
-  padding-top: 2.5rem;
-  margin-bottom: -0.12em;
-}
 .footer-inner {
   display: grid;
   gap: 2rem;
@@ -374,19 +369,9 @@ button { font: inherit; color: inherit; }
 }
 .footer-top {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
+  justify-content: center;
 }
-.footer-tagline {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-.footer-socials { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.footer-socials { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; }
 .social-icon-link {
   width: 46px;
   height: 46px;
@@ -445,8 +430,8 @@ button { font: inherit; color: inherit; }
 .footer-legal a[aria-current="page"] { color: var(--text-primary); }
 
 @media (max-width: 640px) {
-  .footer-top { flex-direction: column; align-items: flex-start; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .footer-bottom { flex-direction: column; align-items: center; text-align: center; }
+  .footer-legal { justify-content: center; }
 }
 
 /* --------------------------------------------------------------------------
