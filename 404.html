@@ -47,7 +47,7 @@
       flex: 1;
       display: grid;
       place-items: center;
-      padding: 2rem var(--gutter) 4rem;
+      padding: 1.5rem var(--gutter) 3rem;
       text-align: center;
     }
 
@@ -116,31 +116,38 @@
     }
     .error-sub {
       margin: 0.5rem auto 2.25rem;
-      max-width: 42ch;
+      max-width: 60ch;
+      text-wrap: balance; /* if it has to wrap (phones), split the lines evenly – never one lonely word */
       color: var(--text-secondary);
       font-size: 0.98rem;
     }
 
     .err-actions { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
-    .err-links {
-      margin-top: 2.25rem;
+    /* small legal links at the bottom */
+    .err-footer {
       display: flex;
-      justify-content: center;
-      gap: 0.5rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem 1.25rem;
       flex-wrap: wrap;
+      padding: 1.25rem max(var(--gutter), calc((100% - 1180px) / 2 + var(--gutter))) 1.5rem;
+      border-top: 1px solid var(--hairline);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
     }
-    .err-links a {
-      font-size: 0.88rem;
-      font-weight: 600;
+    .err-legal { display: flex; gap: 1.25rem; }
+    @media (max-width: 640px) {
+      .err-footer { flex-direction: column; justify-content: center; text-align: center; }
+    }
+    .err-footer a {
+      font-size: 0.85rem;
       color: var(--text-secondary);
       text-decoration: none;
-      padding: 0.45rem 0.9rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--hairline);
       cursor: pointer;
-      transition: color var(--transition-fast), border-color var(--transition-fast);
+      transition: color var(--transition-fast);
     }
-    .err-links a:hover { color: var(--text-primary); border-color: var(--pink-line); }
+    .err-footer a:hover { color: var(--pink); }
   </style>
 </head>
 <body>
@@ -167,16 +174,16 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 22V12h6v10"/></svg>
           Back to Main Page
         </a>
-        <a href="/booking" class="btn btn-ghost">Booking</a>
       </div>
-
-      <nav class="err-links" aria-label="Quick links">
-        <a href="/#about">About</a>
-        <a href="/#events">Events</a>
-        <a href="/imprint">Imprint</a>
-        <a href="/privacy-policies">Privacy Policies</a>
-      </nav>
     </div>
   </main>
+
+  <footer class="err-footer">
+    <p>© 2026 Enaly. All rights reserved.</p>
+    <nav class="err-legal" aria-label="Legal">
+      <a href="/imprint">Imprint</a>
+      <a href="/privacy-policies">Privacy Policies</a>
+    </nav>
+  </footer>
 </body>
 </html>
