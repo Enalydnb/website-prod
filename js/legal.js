@@ -25,7 +25,41 @@
     return html;
   }
 
+  // Formatted text from the dashboard editor: clean it and make links/e-mails clickable
+  const LINK_RE = /(https?:\/\/[^\s<]+?)([.,;:!?)]*)(?=\s|$)|([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})/g;
+  function linkify(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(node => {
+      const text = node.nodeValue;
+      LINK_RE.lastIndex = 0;
+      if (!LINK_RE.test(text)) return;
+      LINK_RE.lastIndex = 0;
+      const frag = document.createDocumentFragment();
+      let last = 0, m;
+      while ((m = LINK_RE.exec(text))) {
+        frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        const a = document.createElement('a');
+        if (m[3]) { a.href = 'mailto:' + m[3]; a.textContent = m[3]; }
+        else { a.href = m[1]; a.textContent = m[1]; a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+        frag.appendChild(a);
+        if (m[2]) frag.appendChild(document.createTextNode(m[2]));
+        last = m.index + m[0].length;
+      }
+      frag.appendChild(document.createTextNode(text.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
+  function renderHtml(html) {
+    const box = document.createElement('div');
+    box.innerHTML = window.EnalyRich ? EnalyRich.sanitize(html) : escapeHtml(String(html).replace(/<[^>]*>/g, ' '));
+    linkify(box);
+    return box.innerHTML;
+  }
+
   function render(text) {
+    if (window.EnalyRich && EnalyRich.isHtml(text)) return renderHtml(text);
     const blocks = String(text || '').replace(/\r\n?/g, '\n').split(/\n\s*\n/);
     return blocks.map(block => {
       const lines = block.split('\n').filter(l => l.trim() !== '');
