@@ -37,9 +37,22 @@
   <!-- Cloudflare Turnstile captcha -->
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
-  <link rel="stylesheet" href="css/enaly.css?v=20261105c">
+  <link rel="stylesheet" href="css/enaly.css?v=20261106a">
+
+
+  <!-- Start loading content.json right away: it says which images to show,
+       so no old/default picture flashes up before the chosen one -->
+  <script>
+    window.enalyContent = fetch('data/content.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; });
+  </script>
 
   <style>
+
+    /* images chosen in the admin dashboard: invisible until the right picture has loaded */
+    img[data-dynamic] { opacity: 0; transition: opacity 0.5s ease; }
+    img[data-dynamic].is-loaded { opacity: 1; }
     /* ==================== BOOKING · split screen ==================== */
     .booking-split {
       display: grid;
@@ -77,7 +90,7 @@
         linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 35%, rgba(0,0,0,0.85) 100%),
         linear-gradient(90deg, transparent 70%, #000 100%);
     }
-    @keyframes imgIn { from { opacity: 0; transform: scale(1.08); } to { opacity: 1; transform: scale(1); } }
+    @keyframes imgIn { from { transform: scale(1.08); } to { transform: scale(1); } }
 
     .booking-home {
       position: absolute;
@@ -228,6 +241,20 @@
 
     .booking-page .site-footer { margin-top: 0; }
 
+    /* Desktop: everything fits on one screen (like iamflowz.de) –
+       text top-right level with the logo, form box bottom level with the headline */
+    @media (min-width: 901px) {
+      .booking-split { min-height: 100svh; }
+      .booking-content { gap: 1.25rem; }
+      .booking-content .form-card { margin-top: auto; }
+      .booking-form { padding: 1.5rem 1.75rem; gap: 0.8rem 1rem; }
+      .form-intro { margin-bottom: 0; }
+      .form-intro strong { font-size: 1.55rem; }
+      .booking-form .field { gap: 0.35rem; }
+      .booking-form .field input, .booking-form .field textarea { padding: 0.65rem 0.9rem; }
+      .booking-form .field textarea { min-height: 84px; }
+      .booking-form .form-actions { margin-top: 0.15rem; }
+    }
     @media (max-width: 900px) {
       .booking-split { grid-template-columns: 1fr; min-height: 0; }
       .booking-visual {
@@ -252,7 +279,7 @@
   <!-- ==================== NAVIGATION ==================== -->
   <main id="main" class="booking-split">
     <header class="booking-visual">
-      <img id="imgWorking" src="assets/working.jpg" alt="Enaly Working DJ Set" fetchpriority="high">
+      <img id="imgWorking" alt="Enaly Working DJ Set" fetchpriority="high" data-dynamic>
       <a href="/" class="booking-home" aria-label="Enaly Home"><img src="assets/logo.png" alt="Enaly Logo"></a>
       <h1>Want to make some noise together?</h1>
     </header>
@@ -300,7 +327,7 @@
             </div>
             <div class="field span-2">
               <label for="f-message">Message</label>
-              <textarea id="f-message" name="message" rows="4"></textarea>
+              <textarea id="f-message" name="message" rows="3"></textarea>
             </div>
 
             <div class="form-actions">
@@ -355,15 +382,20 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=20261105b"></script>
+  <script src="js/site.js?v=20261106a"></script>
   <script src="js/cookie-banner.js?v=20261105b"></script>
   <script src="js/booking-form.js?v=20261105b"></script>
   <script>
-    // Booking image follows the assignment from the admin dashboard
-    fetch('data/content.json', { cache: 'no-cache' })
-      .then(r => r.ok ? r.json() : null)
-      .then(c => { if (c && c.imgWorking) document.getElementById('imgWorking').src = c.imgWorking; })
-      .catch(() => {});
+    // Booking image: the one chosen in the admin dashboard, faded in once loaded
+    (async function () {
+      const img = document.getElementById('imgWorking');
+      const c = (await window.enalyContent) || {};
+      const done = () => img.classList.add('is-loaded');
+      img.addEventListener('load', done, { once: true });
+      img.addEventListener('error', done, { once: true });
+      img.src = c.imgWorking || 'assets/working.jpg';
+      if (img.complete && img.naturalWidth) done();
+    })();
 
     // Copy e-mail address
     document.getElementById('copyMail').addEventListener('click', async function () {

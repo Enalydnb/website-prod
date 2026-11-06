@@ -16,7 +16,7 @@
   <!-- Favicon (white lightning) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><polygon points=%2260,0 15,55 45,55 35,100 85,45 55,45%22 fill=%22%23ffffff%22/></svg>">
 
-  <link rel="stylesheet" href="css/enaly.css?v=20261105c">
+  <link rel="stylesheet" href="css/enaly.css?v=20261106a">
 
   <style>
     /* ==================== ADMIN · app shell ==================== */
@@ -98,6 +98,74 @@
       align-self: flex-start;
     }
     .status-indicator .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+    /* ── Deploy status (GitHub Pages) ── */
+    .deploy-box { position: relative; }
+    .deploy-chip {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-body); font-size: 0.82rem; font-weight: 600;
+      letter-spacing: normal; text-transform: none;
+      cursor: pointer;
+      border: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-muted);
+      transition: background var(--transition-fast), border-color var(--transition-fast);
+    }
+    .deploy-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-secondary); flex-shrink: 0; }
+    .deploy-chip .chev { width: 14px; height: 14px; transition: transform var(--transition-fast); }
+    .deploy-chip[aria-expanded="true"] .chev { transform: rotate(180deg); }
+    .deploy-chip.is-live { color: var(--green); background: rgba(0,230,118,0.08); border-color: rgba(0,230,118,0.25); }
+    .deploy-chip.is-live .dot { background: var(--green); box-shadow: 0 0 10px var(--green); }
+    .deploy-chip.is-busy { color: #FFC34D; background: rgba(255,195,77,0.08); border-color: rgba(255,195,77,0.3); }
+    .deploy-chip.is-busy .dot { background: #FFC34D; animation: deployPulse 1.2s ease-in-out infinite; }
+    .deploy-chip.is-failed { color: #ff5c9e; background: var(--pink-soft); border-color: var(--pink-line); }
+    .deploy-chip.is-failed .dot { background: var(--pink); }
+    @keyframes deployPulse { 50% { opacity: 0.3; } }
+
+    .deploy-panel {
+      margin-top: 0.6rem;
+      padding: 0.85rem;
+      border-radius: var(--radius-inner);
+      background: rgba(0,0,0,0.75);
+      border: 1px solid var(--glass-border);
+    }
+    .deploy-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+    .deploy-head strong { font-size: 0.85rem; }
+    .deploy-refresh {
+      width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.04);
+      color: var(--text-muted); cursor: pointer;
+    }
+    .deploy-refresh svg { width: 14px; height: 14px; }
+    .deploy-refresh.is-spinning svg { animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .deploy-list { list-style: none; display: grid; gap: 0.15rem; }
+    .deploy-item {
+      display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; align-items: center; gap: 0.2rem 0.75rem;
+      padding: 0.8rem 0.25rem; border-bottom: 1px solid var(--hairline);
+    }
+    .deploy-item .ic { grid-row: span 2; align-self: start; width: 20px !important; height: 20px !important; }
+    .deploy-item .t { font-size: 0.95rem !important; white-space: normal !important; }
+    .deploy-item .m { font-size: 0.8rem !important; }
+    .deploy-item .gh { grid-row: span 2; font-size: 0.78rem; color: var(--text-secondary); text-decoration: none; white-space: nowrap; }
+    .deploy-item .gh:hover { color: var(--pink); }
+    .deploy-help { list-style: none; display: grid; gap: 0.6rem; font-size: 0.88rem; color: var(--text-muted); }
+    .deploy-help b { color: var(--text-primary); }
+    .deploy-item:last-child { border-bottom: none; }
+    .deploy-item .ic { width: 16px; height: 16px; margin-top: 0.1rem; }
+    .deploy-item .ic.ok { color: var(--green); }
+    .deploy-item .ic.busy { color: #FFC34D; animation: spin 1.2s linear infinite; }
+    .deploy-item .ic.fail { color: var(--pink); }
+    .deploy-item .t { font-size: 0.8rem; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .deploy-item .m { grid-column: 2; font-size: 0.72rem; color: var(--text-secondary); }
+    .republish-text { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.9rem; }
+    .republish-row { display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; }
+    .republish-hint { font-size: 0.8rem; color: var(--text-secondary); }
+    #btnRepublish:disabled { opacity: 0.45; cursor: not-allowed; }
+    .deploy-empty { font-size: 0.8rem; color: var(--text-secondary); padding: 0.4rem 0.25rem; }
+    .deploy-note { margin-top: 0.5rem; font-size: 0.72rem; color: var(--text-secondary); }
+
     .view-site {
       display: inline-flex; align-items: center; gap: 0.5rem;
       font-size: 0.85rem; color: var(--text-secondary); text-decoration: none; cursor: pointer;
@@ -242,6 +310,18 @@
       border: 1px solid var(--glass-border); color: var(--text-secondary);
     }
     .controls { display: flex; align-items: center; gap: 0.4rem; }
+
+    /* Past events grouped by year */
+    .past-head { margin: 1.4rem 0 0.6rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
+    .year-group { border: 1px solid var(--hairline); border-radius: calc(var(--radius-card) - 4px); margin-bottom: 0.55rem; background: rgba(255,255,255,0.02); }
+    .year-group > summary { list-style: none; display: flex; align-items: center; gap: 0.75rem; padding: 0.8rem 1rem; cursor: pointer; user-select: none; }
+    .year-group > summary::-webkit-details-marker { display: none; }
+    .year-group .year { font-family: var(--font-display); font-size: 1.5rem; line-height: 1; letter-spacing: 0.02em; }
+    .year-group .year-count { font-size: 0.8rem; color: var(--text-secondary); }
+    .year-group .chev { width: 18px; height: 18px; margin-left: auto; color: var(--text-secondary); transition: transform var(--transition-fast); }
+    .year-group[open] .chev { transform: rotate(180deg); color: var(--pink); }
+    .year-group > summary:hover .year { color: var(--pink); }
+    .year-items { padding: 0 0.55rem 0.05rem; }
 
     .edit-form {
       display: none;
@@ -456,6 +536,7 @@
       background: var(--bg-surface-accent);
     }
     .image-preview-box img { width: 100%; height: 100%; object-fit: cover; }
+    .image-preview-box img:not([src]) { visibility: hidden; }
     .image-preview-box.is-mobile { aspect-ratio: 4 / 5; width: 60%; justify-self: center; }
     .hint-text { margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-secondary); }
 
@@ -560,7 +641,10 @@
       .brand-mark { width: 34px; height: 34px; }
       .brand h1 { font-size: 1.5rem; }
       .sidebar-foot { display: none; }
-      .mobile-status { display: inline-flex !important; }
+      .mobile-status { display: block !important; }
+      /* phones: the status tab is opened via the status chip at the top (bottom bar keeps 5 items) */
+      #tabBtnStatus { display: none; }
+      .deploy-item .gh { display: none; }
 
       /* Tabs become an app-style bottom navigation */
       .nav-tabs {
@@ -661,7 +745,12 @@
             <small>Admin Dashboard</small>
           </div>
         </div>
-        <span class="status-indicator mobile-status"><span class="dot"></span>Online</span>
+        <div class="deploy-box mobile-status">
+        <button type="button" class="deploy-chip is-unknown" data-deploy-chip title="Show website updates">
+          <span class="dot" aria-hidden="true"></span><span class="deploy-label">Checking status…</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        </div>
       </div>
 
       <!-- Tabs navigation -->
@@ -686,10 +775,19 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
           <span class="lbl-long">Assets Upload</span><span class="lbl-short">Upload</span>
         </button>
+        <button class="nav-tab" id="tabBtnStatus" onclick="switchTab('status')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span class="lbl-long">Website Updates</span><span class="lbl-short">Status</span>
+        </button>
       </nav>
 
       <div class="sidebar-foot">
-        <span class="status-indicator"><span class="dot"></span>Online</span>
+        <div class="deploy-box">
+        <button type="button" class="deploy-chip is-unknown" data-deploy-chip title="Show website updates">
+          <span class="dot" aria-hidden="true"></span><span class="deploy-label">Checking status…</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        </div>
         <a href="/" target="_blank" rel="noopener" class="view-site">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
           View website
@@ -863,7 +961,7 @@
               <label class="label" for="selectImgHeader">Header Banner Image · Desktop</label>
               <select id="selectImgHeader" onchange="updatePreview('selectImgHeader', 'prevHeader'); updatePreview('selectImgHeaderMobile', 'prevHeaderMobile')"></select>
             </div>
-            <div class="image-preview-box"><img id="prevHeader" src="assets/header.jpg" alt="Header Preview Desktop"></div>
+            <div class="image-preview-box"><img id="prevHeader" alt="Header Preview Desktop"></div>
           </div>
 
           <div class="image-select-row">
@@ -872,7 +970,7 @@
               <select id="selectImgHeaderMobile" onchange="updatePreview('selectImgHeaderMobile', 'prevHeaderMobile')"></select>
               <p class="hint-text">Shown on phones. A portrait or square image works best. "Same as desktop" uses the desktop image.</p>
             </div>
-            <div class="image-preview-box is-mobile"><img id="prevHeaderMobile" src="assets/header.jpg" alt="Header Preview Mobile"></div>
+            <div class="image-preview-box is-mobile"><img id="prevHeaderMobile" alt="Header Preview Mobile"></div>
           </div>
 
           <div class="image-select-row">
@@ -880,7 +978,7 @@
               <label class="label" for="selectImgAbout">About Portrait Image</label>
               <select id="selectImgAbout" onchange="updatePreview('selectImgAbout', 'prevAbout')"></select>
             </div>
-            <div class="image-preview-box"><img id="prevAbout" src="assets/about.jpg" alt="About Preview"></div>
+            <div class="image-preview-box"><img id="prevAbout" alt="About Preview"></div>
           </div>
 
           <div class="image-select-row">
@@ -888,7 +986,7 @@
               <label class="label" for="selectImgWorking">Booking Area Image</label>
               <select id="selectImgWorking" onchange="updatePreview('selectImgWorking', 'prevWorking')"></select>
             </div>
-            <div class="image-preview-box"><img id="prevWorking" src="assets/working.jpg" alt="Working Preview"></div>
+            <div class="image-preview-box"><img id="prevWorking" alt="Working Preview"></div>
           </div>
         </div>
 
@@ -922,6 +1020,51 @@
             Existing Images
           </div>
           <div class="assets-grid" id="assetsGrid"><p class="loading">Loading Assets...</p></div>
+        </div>
+      </div>
+
+      <!-- ── TAB 6: WEBSITE UPDATES (GitHub Pages deployments) ── -->
+      <div id="tabStatus" style="display:none;">
+        <div class="page-head">
+          <div>
+            <h2>Website Updates</h2>
+            <p>Every save is published to the website automatically. Here you can see when it is live.</p>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            Latest updates
+            <button type="button" class="deploy-refresh" data-deploy-refresh title="Refresh" aria-label="Refresh status" style="margin-left:auto;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8"/><path d="M21 3v5h-5"/></svg>
+            </button>
+          </div>
+          <ul class="deploy-list"><li class="deploy-empty">Loading…</li></ul>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8"/><path d="M21 3v5h-5"/></svg>
+            Publish again
+          </div>
+          <p class="republish-text">If an update failed or seems stuck, you can start publishing again here. Nothing is changed on the website – the current content is simply published once more.</p>
+          <div class="republish-row">
+            <button type="button" class="btn btn-ghost btn-sm" id="btnRepublish" data-republish>Publish again</button>
+            <span class="republish-hint" id="republishHint"></span>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            Good to know
+          </div>
+          <ul class="deploy-help">
+            <li><b>Live</b> – the change is on the website. If you don't see it yet, reload the page.</li>
+            <li><b>Publishing…</b> – usually takes 1–2 minutes, sometimes a bit longer.</li>
+            <li><b>Failed</b> – nothing is lost, your change is saved. GitHub sometimes has hiccups: use <b>Publish again</b> (or tell Florian).</li>
+          </ul>
         </div>
       </div>
 
@@ -1006,6 +1149,7 @@
       loadAssetsFromGitHub();
       setupDropzone();
       loadLegalFromGitHub();
+      Deploy.init();
       RichText.attach(document.getElementById('textContentAbout'));
       RichText.attachToolbar(document.getElementById('textContentAbout').closest('.rt-wrap'));
     });
@@ -1031,7 +1175,7 @@
     }
 
     function switchTab(tab) {
-      const tabs = ['events', 'content', 'images', 'assets', 'legal'];
+      const tabs = ['events', 'content', 'images', 'assets', 'legal', 'status'];
       tabs.forEach(t => {
         const tabEl = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
         const tabBtn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
@@ -1070,6 +1214,204 @@
     }
 
     // ── API HELPERS VIA CLOUDFLARE WORKER PROXY ──
+    // ── DEPLOY STATUS (GitHub Pages workflow "pages build and deployment") ──
+    // Reads the public GitHub API (no login needed). Repo: js/config.js may set githubRepo,
+    // otherwise dev.enaly.de → Enalydnb/website-dev, everything else → Enalydnb/website-prod.
+    const Deploy = (function () {
+      const host = location.hostname;
+      const REPO = (typeof githubRepo !== 'undefined' && githubRepo) ||
+        (/^dev\./.test(host) || host === 'localhost' || host === '127.0.0.1' ? 'Enalydnb/website-dev' : 'Enalydnb/website-prod');
+      const API = `https://api.github.com/repos/${REPO}/actions/runs?per_page=10`;
+      let etag = null, runs = [], apiOk = null, timer = null, tracking = null;
+
+      const ICON = {
+        ok: '<svg class="ic ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
+        busy: '<svg class="ic busy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9"/></svg>',
+        fail: '<svg class="ic fail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>'
+      };
+
+      function ago(iso) {
+        const sec = Math.max(0, Math.round((Date.now() - new Date(iso)) / 1000));
+        if (sec < 60) return 'just now';
+        const min = Math.round(sec / 60); if (min < 60) return `${min} min ago`;
+        const h = Math.round(min / 60); if (h < 24) return `${h} h ago`;
+        const d = Math.round(h / 24); return d === 1 ? 'yesterday' : `${d} days ago`;
+      }
+      // turn commit messages into plain words for the list
+      // the Pages workflow is always called "pages build and deployment" → use the commit message instead
+      function titleOf(run) {
+        const msg = run.head_commit && run.head_commit.message;
+        return String(msg || run.display_title || '').split('\n')[0];
+      }
+      function duration(run) {
+        const sec = Math.round((new Date(run.updated_at) - new Date(run.run_started_at || run.created_at)) / 1000);
+        if (!(sec > 0)) return '';
+        return sec < 60 ? `${sec} s` : `${Math.floor(sec / 60)} min ${sec % 60} s`;
+      }
+      function friendly(title) {
+        const t = String(title || '');
+        let m;
+        if (/publish\.json|publish website again/i.test(t)) return 'Published again (manually)';
+        if (/events\.json/i.test(t)) return 'Events updated';
+        if (/content\.json/i.test(t)) return 'Texts / images updated';
+        if (/imprint\.json/i.test(t)) return 'Imprint updated';
+        if (/privacy\.json/i.test(t)) return 'Privacy policy updated';
+        if ((m = t.match(/^Upload asset (.+?) via/i))) return 'Image uploaded: ' + m[1];
+        if ((m = t.match(/^Delete asset (.+?) via/i))) return 'Image deleted: ' + m[1].replace(/^assets\//, '');
+        return t || 'Website update';
+      }
+      function stateOf(run) {
+        if (!run) return 'unknown';
+        if (run.status !== 'completed') return 'busy';
+        return run.conclusion === 'success' ? 'live' : (run.conclusion === 'cancelled' || run.conclusion === 'skipped' ? 'live' : 'failed');
+      }
+
+      function setChip(state, label) {
+        document.querySelectorAll('[data-deploy-chip]').forEach(chip => {
+          chip.classList.remove('is-live', 'is-busy', 'is-failed', 'is-unknown');
+          chip.classList.add('is-' + state);
+          chip.querySelector('.deploy-label').textContent = label;
+        });
+      }
+      function render() {
+        const html = !runs.length
+          ? `<li class="deploy-empty">${apiOk === false ? 'Status from GitHub is not available right now.' : 'No updates yet.'}</li>`
+          : runs.map(r => {
+              const st = stateOf(r);
+              const icon = st === 'live' ? ICON.ok : st === 'busy' ? ICON.busy : ICON.fail;
+              const took = st !== 'busy' && duration(r) ? ' · took ' + duration(r) : '';
+              const when = st === 'busy' ? 'publishing… · started ' + ago(r.created_at) : (st === 'failed' ? 'failed · ' : 'live · ') + ago(r.updated_at) + took;
+              const title = titleOf(r);
+              return `<li class="deploy-item" title="${escapeHtml(title)}">${icon}<span class="t">${escapeHtml(friendly(title))}</span>` +
+                     (r.html_url ? `<a class="gh" href="${escapeHtml(r.html_url)}" target="_blank" rel="noopener">GitHub ↗</a>` : '') +
+                     `<span class="m">${when}</span></li>`;
+            }).join('');
+        document.querySelectorAll('.deploy-list').forEach(ul => { ul.innerHTML = html; });
+
+        updateRepublish();
+        if (tracking) return; // the chip shows the save that is being published
+        const latest = runs[0];
+        const st = stateOf(latest);
+        if (st === 'busy') setChip('busy', 'Publishing…');
+        else if (st === 'failed') setChip('failed', 'Publishing failed');
+        else if (st === 'live') setChip('live', 'Website live');
+        else setChip(apiOk === false ? 'unknown' : 'live', apiOk === false ? 'Status unknown' : 'Website live');
+      }
+
+      async function fetchRuns() {
+        document.querySelectorAll('[data-deploy-refresh]').forEach(b => b.classList.add('is-spinning'));
+        try {
+          const res = await fetch(API, { headers: etag ? { 'If-None-Match': etag, Accept: 'application/vnd.github+json' } : { Accept: 'application/vnd.github+json' }, cache: 'no-store' });
+          if (res.status === 304) { apiOk = true; return runs; } // unchanged → does not count against GitHub's limit
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          etag = res.headers.get('ETag');
+          const data = await res.json();
+          runs = (data.workflow_runs || []).slice(0, 10);
+          apiOk = true;
+        } catch (e) {
+          apiOk = false;
+        } finally {
+          document.querySelectorAll('[data-deploy-refresh]').forEach(b => b.classList.remove('is-spinning'));
+          render();
+        }
+        return runs;
+      }
+
+      function schedule() {
+        clearTimeout(timer);
+        const busy = tracking || stateOf(runs[0]) === 'busy';
+        timer = setTimeout(async () => { if (!document.hidden || tracking) await fetchRuns(); if (tracking) await checkTracking(); schedule(); },
+                           busy ? 8000 : 120000);
+      }
+
+      // Fallback when GitHub's status is not reachable: compare the live file with what was saved
+      async function liveFileMatches(t) {
+        if (!t || !t.path) return false;
+        try {
+          const res = await fetch('/' + t.path + '?t=' + Date.now(), { cache: 'no-store' });
+          return res.ok && (await res.text()).trim() === t.text.trim();
+        } catch (e) { return false; }
+      }
+
+      async function checkTracking() {
+        if (!tracking) return;
+        const run = tracking.sha && runs.find(r => r.head_sha === tracking.sha);
+        let done = false, failed = false;
+        if (run && run.status === 'completed') { done = run.conclusion === 'success'; failed = !done && run.conclusion === 'failure'; }
+        if (!done && !failed && (!run || apiOk === false)) done = await liveFileMatches(tracking.file);
+        if (done) {
+          tracking = null;
+          setChip('live', 'Website live');
+          toast('Your change is now live on the website.');
+          render();
+        } else if (failed) {
+          tracking = null;
+          setChip('failed', 'Publishing failed');
+          toast('Publishing failed. Please try saving again or contact Florian.', 'error');
+          render();
+        } else if (Date.now() - tracking.start > 15 * 60 * 1000) {
+          tracking = null; render(); // give up quietly after 15 minutes
+        }
+      }
+
+      function track(sha, file) {
+        tracking = { sha: sha || null, file: file || null, start: Date.now() };
+        setChip('busy', 'Publishing…');
+        updateRepublish();
+        setTimeout(async () => { await fetchRuns(); await checkTracking(); schedule(); }, 4000);
+      }
+
+      // "Publish again": blocked while an update is running normally (< 10 min),
+      // allowed when the last one failed, is stuck or the status is unknown
+      const STUCK_AFTER = 10 * 60 * 1000;
+      let republishing = false;
+      function republishBlock() {
+        if (republishing) return 'Starting…';
+        const latest = runs[0];
+        const busyRun = latest && stateOf(latest) === 'busy' && (Date.now() - new Date(latest.created_at)) < STUCK_AFTER;
+        if (busyRun || (tracking && Date.now() - tracking.start < STUCK_AFTER)) return 'An update is being published right now – please wait a moment.';
+        return '';
+      }
+      function updateRepublish() {
+        const btn = document.getElementById('btnRepublish');
+        const hint = document.getElementById('republishHint');
+        if (!btn) return;
+        const block = republishBlock();
+        btn.disabled = !!block;
+        const latest = runs[0];
+        hint.textContent = block || (latest && stateOf(latest) === 'failed' ? 'The last update failed – publishing again should fix it.'
+          : latest && stateOf(latest) === 'busy' ? 'The current update seems stuck – you can start it again.' : '');
+      }
+      async function republish() {
+        if (republishBlock()) return;
+        republishing = true; updateRepublish();
+        try {
+          // a tiny, invisible file: saving it makes GitHub Pages publish the whole website again
+          const stamp = JSON.stringify({ republishedAt: new Date().toISOString() }, null, 2);
+          await saveGitHubFile('data/publish.json', utf8_to_b64(stamp), 'Publish website again via Admin Dashboard');
+          toast('Publishing started. This usually takes 1–2 minutes.');
+        } catch (e) {
+          toast('Could not start publishing: ' + e.message, 'error');
+        } finally {
+          republishing = false; updateRepublish();
+        }
+      }
+
+      function init() {
+        document.querySelectorAll('[data-republish]').forEach(b => b.addEventListener('click', republish));
+        // re-check every 30 s so a stuck update unlocks the button without reloading
+        setInterval(updateRepublish, 30000);
+        document.querySelectorAll('[data-deploy-chip]').forEach(chip => {
+          chip.addEventListener('click', () => { switchTab('status'); fetchRuns(); });
+        });
+        document.querySelectorAll('[data-deploy-refresh]').forEach(b => b.addEventListener('click', fetchRuns));
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) { fetchRuns(); schedule(); } });
+        fetchRuns().then(schedule);
+      }
+
+      return { init, track, fetchRuns };
+    })();
+
     // ── RECENT SAVES ──
     // GitHub's API can return the previous version of a file for a short while after a save
     // (and browsers may cache that answer). Without this, a reload right after saving shows the
@@ -1154,6 +1496,10 @@
         fileShaMap[path] = data.content.sha;
         if (!safePath.startsWith('assets/')) rememberSave(safePath, contentBase64, data.content.sha);
       }
+      // follow the publishing of this save in the status chip
+      try {
+        Deploy.track(data.commit && data.commit.sha, safePath.endsWith('.json') ? { path: safePath, text: b64_to_utf8(contentBase64) } : null);
+      } catch (e) {}
       return data;
     }
 
@@ -1184,6 +1530,8 @@
         const errorData = await res.json().catch(() => ({}));
         throw new Error(errorData.message || `HTTP ${res.status}`);
       }
+      const deleted = await res.json().catch(() => ({}));
+      try { Deploy.track(deleted.commit && deleted.commit.sha, null); } catch (e) {}
     }
 
     function utf8_to_b64(str) {
@@ -1250,9 +1598,47 @@
         return;
       }
 
-      list.innerHTML = localEvents.map((ev) => {
+      const upcomingEvents = localEvents.filter(ev => parseDateToTimestamp(ev.date) >= now);
+      const pastEvents = localEvents.filter(ev => parseDateToTimestamp(ev.date) < now);
+
+      // Past events grouped by year (newest year first); only the newest year is open by default.
+      // Nothing is removed from events.json – this is just a tidier view.
+      const byYear = new Map();
+      pastEvents.forEach(ev => {
+        const ts = parseDateToTimestamp(ev.date);
+        const year = ts ? String(new Date(ts).getFullYear()) : 'Unknown date';
+        if (!byYear.has(year)) byYear.set(year, []);
+        byYear.get(year).push(ev);
+      });
+      const years = [...byYear.keys()].sort((x, y) => (y === 'Unknown date' ? -1 : x === 'Unknown date' ? 1 : y - x));
+      // keep whatever is currently expanded/collapsed
+      list.querySelectorAll('.year-group').forEach(d => { if (d.open) openPastYears.add(d.dataset.year); else openPastYears.delete(d.dataset.year); });
+      if (!pastYearsInit) { if (years[0]) openPastYears.add(years[0]); pastYearsInit = true; }
+
+      list.innerHTML =
+        (upcomingEvents.length ? upcomingEvents.map(ev => eventItemHtml(ev, false)).join('') : '<p class="empty">No upcoming events.</p>') +
+        (years.length ? '<div class="past-head">Past events</div>' : '') +
+        years.map(year => `
+          <details class="year-group" data-year="${escapeHtml(year)}" ${openPastYears.has(year) ? 'open' : ''}>
+            <summary>
+              <span class="year">${escapeHtml(year)}</span>
+              <span class="year-count">${byYear.get(year).length} ${byYear.get(year).length === 1 ? 'event' : 'events'}</span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="year-items">${byYear.get(year).map(ev => eventItemHtml(ev, true)).join('')}</div>
+          </details>`).join('');
+
+      list.querySelectorAll('.year-group').forEach(d => d.addEventListener('toggle', () => {
+        if (d.open) openPastYears.add(d.dataset.year); else openPastYears.delete(d.dataset.year);
+      }));
+    }
+
+    // remembers which past years are expanded while working in the dashboard
+    const openPastYears = new Set();
+    let pastYearsInit = false;
+
+    function eventItemHtml(ev, isPast) {
         const id = ev._id;
-        const isPast = parseDateToTimestamp(ev.date) < now;
         const ticketInfo = ev.tickets ? `<a href="${escapeHtml(ev.tickets)}" target="_blank" rel="noopener">Ticket link</a>` : '';
         const location = [ev.venue, ev.city].filter(v => v && String(v).trim()).map(escapeHtml).join(', ');
         return `
@@ -1295,7 +1681,6 @@
               </div>
             </div>
           </div>`;
-      }).join('');
     }
 
     function openEditForm(id) {
@@ -1424,10 +1809,10 @@
             })(),
             sharedStage: document.getElementById('textContentSharedStage').value,
             selectedShows: document.getElementById('textContentSelectedShows').value,
-            imgHeader: document.getElementById('selectImgHeader').value || localContent.imgHeader || "assets/header.jpg",
-            imgHeaderMobile: document.getElementById('selectImgHeaderMobile').value, // "" = same as desktop
-            imgAbout: document.getElementById('selectImgAbout').value || localContent.imgAbout || "assets/about.jpg",
-            imgWorking: document.getElementById('selectImgWorking').value || localContent.imgWorking || "assets/working.jpg",
+            imgHeader: versionedAsset(document.getElementById('selectImgHeader').value) || localContent.imgHeader || "assets/header.jpg",
+            imgHeaderMobile: versionedAsset(document.getElementById('selectImgHeaderMobile').value), // "" = same as desktop
+            imgAbout: versionedAsset(document.getElementById('selectImgAbout').value) || localContent.imgAbout || "assets/about.jpg",
+            imgWorking: versionedAsset(document.getElementById('selectImgWorking').value) || localContent.imgWorking || "assets/working.jpg",
             whatsNewActive: whatsNewActive,
             whatsNewTitle: document.getElementById('whatsNewTitle').value.trim() || "What's New?",
             whatsNewHeadline: whatsNewHeadline,
@@ -1789,6 +2174,16 @@
       });
     }
 
+    // Image paths are saved with a version tag (?v=…) taken from the file itself.
+    // If a picture is replaced under the same file name, the tag changes → browsers and
+    // GitHub's cache load the new picture immediately instead of showing the old one.
+    function assetPath(p) { return String(p || '').split('?')[0]; }
+    function versionedAsset(path) {
+      if (!path) return '';
+      const file = availableAssets.find(f => f.path === assetPath(path));
+      return file && file.sha ? `${file.path}?v=${file.sha.slice(0, 8)}` : path;
+    }
+
     function populateImageDropdowns() {
       const dropdowns = [
         { id: 'selectImgHeader', current: localContent.imgHeader || 'assets/header.jpg', prevId: 'prevHeader' },
@@ -1799,7 +2194,8 @@
       dropdowns.forEach(item => {
         const select = document.getElementById(item.id);
         select.innerHTML = availableAssets.map(file => {
-          const selected = (file.path === item.current || file.name === item.current) ? 'selected' : '';
+          const cur = assetPath(item.current);
+          const selected = (file.path === cur || file.name === cur) ? 'selected' : '';
           return `<option value="${escapeHtml(file.path)}" ${selected}>${escapeHtml(file.name)}</option>`;
         }).join('');
         updatePreview(item.id, item.prevId);
@@ -1807,7 +2203,7 @@
 
       // Mobile header: optional, first option falls back to the desktop image
       const mobileSelect = document.getElementById('selectImgHeaderMobile');
-      const mobileCurrent = localContent.imgHeaderMobile || '';
+      const mobileCurrent = assetPath(localContent.imgHeaderMobile);
       mobileSelect.innerHTML = '<option value="">Same as desktop</option>' + availableAssets.map(file => {
         const selected = (file.path === mobileCurrent || file.name === mobileCurrent) ? 'selected' : '';
         return `<option value="${escapeHtml(file.path)}" ${selected}>${escapeHtml(file.name)}</option>`;
