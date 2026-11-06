@@ -163,6 +163,8 @@
     .republish-row { display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; }
     .republish-hint { font-size: 0.8rem; color: var(--text-secondary); }
     #btnRepublish:disabled { opacity: 0.45; cursor: not-allowed; }
+    .deploy-stale { color: #FFC34D !important; border-bottom: 1px solid var(--hairline); padding-bottom: 0.7rem !important; }
+    .deploy-stale a { color: inherit; }
     .deploy-empty { font-size: 0.8rem; color: var(--text-secondary); padding: 0.4rem 0.25rem; }
     .deploy-note { margin-top: 0.5rem; font-size: 0.72rem; color: var(--text-secondary); }
 
@@ -1223,6 +1225,13 @@
         (/^dev\./.test(host) || host === 'localhost' || host === '127.0.0.1' ? 'Enalydnb/website-dev' : 'Enalydnb/website-prod');
       const API = `https://api.github.com/repos/${REPO}/actions/runs?per_page=10`;
       let etag = null, runs = [], apiOk = null, timer = null, tracking = null;
+      // GitHub allows only 60 status requests per hour without login (per internet connection).
+      // We poll gently, watch the remaining quota and pause until GitHub's reset time when it runs out.
+      const PAUSE_KEY = 'enalyDeployPausedUntil';
+      let remaining = null, lastOk = null;
+      function pausedUntil() { try { return +localStorage.getItem(PAUSE_KEY) || 0; } catch (e) { return 0; } }
+      function setPaused(ts) { try { localStorage.setItem(PAUSE_KEY, String(ts)); } catch (e) {} }
+      function clock(ts) { return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
 
       const ICON = {
         ok: '<svg class="ic ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
@@ -1274,7 +1283,13 @@
         });
       }
       function render() {
-        const html = !runs.length
+        const paused = pausedUntil() > Date.now();
+        const stale = apiOk === false && runs.length;
+        const note = stale
+          ? `<li class="deploy-empty deploy-stale">Status could not be refreshed${paused ? ` (GitHub limit reached – next check at ${clock(pausedUntil())})` : ''}. The list below may be outdated. ` +
+            `<a href="https://github.com/${REPO}/actions" target="_blank" rel="noopener">Check on GitHub ↗</a></li>`
+          : '';
+        const html = note + (!runs.length
           ? `<li class="deploy-empty">${apiOk === false ? 'Status from GitHub is not available right now.' : 'No updates yet.'}</li>`
           : runs.map(r => {
               const st = stateOf(r);
@@ -1285,29 +1300,40 @@
               return `<li class="deploy-item" title="${escapeHtml(title)}">${icon}<span class="t">${escapeHtml(friendly(title))}</span>` +
                      (r.html_url ? `<a class="gh" href="${escapeHtml(r.html_url)}" target="_blank" rel="noopener">GitHub ↗</a>` : '') +
                      `<span class="m">${when}</span></li>`;
-            }).join('');
+            }).join(''));
         document.querySelectorAll('.deploy-list').forEach(ul => { ul.innerHTML = html; });
 
         updateRepublish();
         if (tracking) return; // the chip shows the save that is being published
         const latest = runs[0];
         const st = stateOf(latest);
-        if (st === 'busy') setChip('busy', 'Publishing…');
+        if (apiOk === false) setChip('unknown', 'Status unknown');
+        else if (st === 'busy') setChip('busy', 'Publishing…');
         else if (st === 'failed') setChip('failed', 'Publishing failed');
         else if (st === 'live') setChip('live', 'Website live');
         else setChip(apiOk === false ? 'unknown' : 'live', apiOk === false ? 'Status unknown' : 'Website live');
       }
 
       async function fetchRuns() {
+        if (Date.now() < pausedUntil()) { apiOk = false; render(); return runs; } // GitHub limit reached → wait for reset
         document.querySelectorAll('[data-deploy-refresh]').forEach(b => b.classList.add('is-spinning'));
         try {
           const res = await fetch(API, { headers: etag ? { 'If-None-Match': etag, Accept: 'application/vnd.github+json' } : { Accept: 'application/vnd.github+json' }, cache: 'no-store' });
-          if (res.status === 304) { apiOk = true; return runs; } // unchanged → does not count against GitHub's limit
+          const rem = res.headers.get('X-RateLimit-Remaining');
+          const reset = +res.headers.get('X-RateLimit-Reset') * 1000;
+          if (rem !== null) remaining = +rem;
+          if (res.status === 403 || res.status === 429) { // limit reached (reset time known → wait exactly until then, otherwise 15 min)
+            const retry = +res.headers.get('Retry-After') * 1000;
+            setPaused(reset > Date.now() ? reset + 5000 : Date.now() + (retry || 15 * 60 * 1000));
+            throw new Error('rate limit');
+          }
+          if (res.status === 304) { apiOk = true; lastOk = Date.now(); return runs; }
           if (!res.ok) throw new Error('HTTP ' + res.status);
           etag = res.headers.get('ETag');
           const data = await res.json();
           runs = (data.workflow_runs || []).slice(0, 10);
-          apiOk = true;
+          apiOk = true; lastOk = Date.now();
+          if (remaining === 0 && reset > Date.now()) setPaused(reset + 5000);
         } catch (e) {
           apiOk = false;
         } finally {
@@ -1319,9 +1345,16 @@
 
       function schedule() {
         clearTimeout(timer);
-        const busy = tracking || stateOf(runs[0]) === 'busy';
-        timer = setTimeout(async () => { if (!document.hidden || tracking) await fetchRuns(); if (tracking) await checkTracking(); schedule(); },
-                           busy ? 8000 : 120000);
+        const latest = runs[0];
+        const busy = tracking || stateOf(latest) === 'busy';
+        // while publishing: every 20 s for the first minutes, then every 45 s; otherwise every 3 min.
+        // Few requests left → slow down further so the quota lasts.
+        const busyFor = latest && stateOf(latest) === 'busy' ? Date.now() - new Date(latest.created_at) : 0;
+        let wait = busy ? (busyFor > 4 * 60 * 1000 ? 45000 : 20000) : 180000;
+        if (remaining !== null && remaining < 15) wait = Math.max(wait, 120000);
+        const pause = pausedUntil() - Date.now();
+        if (pause > 0) wait = pause + 1000;
+        timer = setTimeout(async () => { if (!document.hidden || tracking) await fetchRuns(); if (tracking) await checkTracking(); schedule(); }, wait);
       }
 
       // Fallback when GitHub's status is not reachable: compare the live file with what was saved
@@ -1368,7 +1401,7 @@
       function republishBlock() {
         if (republishing) return 'Starting…';
         const latest = runs[0];
-        const busyRun = latest && stateOf(latest) === 'busy' && (Date.now() - new Date(latest.created_at)) < STUCK_AFTER;
+        const busyRun = apiOk !== false && latest && stateOf(latest) === 'busy' && (Date.now() - new Date(latest.created_at)) < STUCK_AFTER;
         if (busyRun || (tracking && Date.now() - tracking.start < STUCK_AFTER)) return 'An update is being published right now – please wait a moment.';
         return '';
       }
