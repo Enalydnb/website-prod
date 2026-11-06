@@ -74,7 +74,7 @@
   // key = 'imprint' → data/imprint.json, 'privacy' → data/privacy.json
   async function load(key) {
     try {
-      const res = await fetch('data/' + key + '.json', { cache: 'no-cache' });
+      const res = await fetch('data/' + key + '.json?t=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) return null;
       const data = await res.json();
       const sections = data && Array.isArray(data.sections) ? data.sections : [];

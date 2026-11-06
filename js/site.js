@@ -48,6 +48,45 @@
       });
     });
 
+    // Logo alignment: the logo file has empty (transparent) space left of the "E".
+    // Measure it once and pull every logo left by exactly that amount, so the visible
+    // logo lines up with the page edge (nav, header, buttons, boxes – everything flush).
+    (function alignLogos() {
+      var imgs = document.querySelectorAll('.nav-logo-img, .hero-logo img, .booking-home img');
+      if (!imgs.length) return;
+      var ratio = null;
+      function measure(img) {
+        try {
+          var w = img.naturalWidth, h = img.naturalHeight;
+          if (!w || !h) return null;
+          var c = document.createElement('canvas'); c.width = w; c.height = h;
+          var ctx = c.getContext('2d'); ctx.drawImage(img, 0, 0);
+          var data = ctx.getImageData(0, 0, w, h).data, first = w;
+          for (var y = 0; y < h; y++) {
+            for (var x = 0; x < first; x++) {
+              if (data[(y * w + x) * 4 + 3] > 20) { first = x; break; }
+            }
+          }
+          return first < w ? first / w : 0;
+        } catch (e) { return null; } // image not readable → leave logos as they are
+      }
+      function apply() {
+        if (!ratio) return;
+        imgs.forEach(function (img) {
+          img.style.marginLeft = (-Math.round(img.getBoundingClientRect().width * ratio)) + 'px';
+        });
+      }
+      function start(img) {
+        if (ratio === null) ratio = measure(img);
+        apply();
+      }
+      var first = imgs[0];
+      if (first.complete && first.naturalWidth) start(first);
+      else first.addEventListener('load', function () { start(first); });
+      imgs.forEach(function (img) { if (!img.complete) img.addEventListener('load', apply); });
+      window.addEventListener('resize', apply);
+    })();
+
     // Reveal on scroll
     var revealEls = document.querySelectorAll('.reveal');
     if (!('IntersectionObserver' in window)) {
