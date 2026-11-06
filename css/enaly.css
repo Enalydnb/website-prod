@@ -196,6 +196,8 @@ button { font: inherit; color: inherit; }
 }
 .nav-links a:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
 .nav-links a.active { color: var(--pink); }
+/* last link: text ends exactly at the page edge (same line as the header buttons below) */
+.nav-links li:last-child a { margin-right: -0.9rem; }
 
 .nav-right { display: flex; align-items: center; gap: 0.5rem; }
 
