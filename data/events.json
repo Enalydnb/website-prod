@@ -1,30 +1,9 @@
 [
   {
-    "date": "01.08.2026",
-    "title": "PLAY! Open Air",
-    "venue": "Bootshaus",
-    "city": "Cologne, DE",
-    "tickets": ""
-  },
-  {
-    "date": "01.08.2026",
-    "title": "Nature One Festival",
-    "venue": "Raketenbasis Pydna",
-    "city": "Kastellaun, DE",
-    "tickets": ""
-  },
-  {
     "date": "15.08.2026",
     "title": "BREAKZONE Festival (B2B FLOWZ)",
     "venue": "Odonien",
     "city": "Cologne, DE",
-    "tickets": ""
-  },
-  {
-    "date": "22.08.2026",
-    "title": "Lass es Rollen Festival",
-    "venue": "",
-    "city": "Schaafheim, DE",
     "tickets": ""
   },
   {
@@ -49,10 +28,31 @@
     "tickets": "https://bootshaus.tv/tickets"
   },
   {
+    "date": "30.09.2026",
+    "title": "Beats x Bass x Colonge pres. #MITTWOCHENENDE",
+    "venue": "Odonien",
+    "city": "Colonge, DE",
+    "tickets": ""
+  },
+  {
+    "date": "16.10.2026",
+    "title": "Forcefield",
+    "venue": "Mauerpfeiffer",
+    "city": "Saarbrücken, DE",
+    "tickets": ""
+  },
+  {
+    "date": "31.10.2026",
+    "title": "Pathfinder & Basswerk pres. HALLOWEEN BASS ft. Teddy Killerz",
+    "venue": "Gebäude 9",
+    "city": "Cologne, DE",
+    "tickets": "https://www.eventim-light.com/de/a/5790efbae4b0780ff85d71ae/e/6ab64814b7344a6e5c929d9c?lang=de"
+  },
+  {
     "date": "22.01.2027",
     "title": "Indecent Bass",
     "venue": "Club Katze",
-    "city": "Cologne, DE",
+    "city": "Würzburg, DE",
     "tickets": "https://indecentbass.nightowl.app/de-DE"
   }
 ]

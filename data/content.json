@@ -1,13 +1,13 @@
 {
-  "about": "Enaly is a drum and bass DJ known for her dark and heavy sound, shaped by her roots in rock and metal. Blending powerful, hard-hitting elements with melodic passages, she creates emotionally driven sets that take listeners on a dynamic musical journey.\n\nHaving shared stages with artists such as Andy C, Culture Shock, Dimension and Wilkinson, and performed at venues like Bootshaus and Odonien as well as festivals including Nibirii and Nature One, Enaly continues to build strong momentum within the scene.\n\nAwarded Best Newcomer at the Drum and Bass Awards Germany 23/24, she is rapidly establishing herself as a rising force in drum and bass.",
+  "about": "<p>Enaly is a drum and bass DJ known for her dark and heavy sound, shaped by her roots in rock and metal. Blending powerful, hard-hitting elements with melodic passages, she creates emotionally driven sets that take listeners on a dynamic musical journey.</p><p>Having shared stages with artists such as Andy C, Culture Shock, Dimension and Wilkinson, and performed at venues like Bootshaus and Odonien as well as festivals including Nibirii and Nature One, Enaly continues to build strong momentum within the scene.</p><p>Awarded Best Newcomer at the Drum and Bass Awards Germany 23/24, she is rapidly establishing herself as a rising force in drum and bass.</p>",
   "sharedStage": "ANDY C, BLACK SUN EMPIRE, CULTURE SHOCK\nDELTA HEAVY, DIMENSION, FRICTION\nK MOTIONZ, KANINE, MEFJUS, PENDULUM\nWILKINSON, ZOMBIE CATS",
   "selectedShows": "NIBIRII FESTIVAL, NATURE ONE\nBOOTSHAUS, ODONIEN, PROTON",
   "imgHeader": "assets/header.jpg",
   "imgAbout": "assets/about.jpg",
-  "imgWorking": "assets/working.jpg",
-  "whatsNewActive": false,
+  "imgWorking": "assets/04C2DBD7-1CA0-4CE6-84EF-2EFDDEDAD77B.JPEG",
+  "whatsNewActive": true,
   "whatsNewTitle": "What's New?",
-  "whatsNewHeadline": "bloß nicht klicken!!!!",
-  "whatsNewLink": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "whatsNewHeadline": "Enaly @ Boothaus Mainstage",
+  "whatsNewLink": "https://youtu.be/2Na91x-GqLI?si=onot2ky0C2pEc_Fe",
   "imgHeaderMobile": "assets/header-mobile.jpg"
 }
