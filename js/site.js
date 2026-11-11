@@ -70,10 +70,13 @@
           return first < w ? first / w : 0;
         } catch (e) { return null; } // image not readable → leave logos as they are
       }
+      // Shift by a percentage of the logo's own width: always exact, whatever size the logo
+      // currently has (no pixel rounding, no re-measuring while the layout is still settling).
       function apply() {
         if (!ratio) return;
         imgs.forEach(function (img) {
-          img.style.marginLeft = (-Math.round(img.getBoundingClientRect().width * ratio)) + 'px';
+          img.style.marginLeft = '';
+          img.style.translate = (-ratio * 100).toFixed(4) + '% 0';
         });
       }
       function start(img) {
@@ -84,7 +87,6 @@
       if (first.complete && first.naturalWidth) start(first);
       else first.addEventListener('load', function () { start(first); });
       imgs.forEach(function (img) { if (!img.complete) img.addEventListener('load', apply); });
-      window.addEventListener('resize', apply);
     })();
 
     // Reveal on scroll
