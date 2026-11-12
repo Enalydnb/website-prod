@@ -1,4 +1,5 @@
-// js/booking-form.js · booking inquiry (AJAX to Formspree + Cloudflare Turnstile)
+// js/booking-form.js · booking inquiry (own Cloudflare Worker /api/booking + Cloudflare Turnstile)
+// The Worker checks Turnstile and sends the inquiry by e-mail via IONOS – nothing is stored.
 // Used on index.html (#booking) and booking.html
 (function () {
   const ICON_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>';
@@ -42,25 +43,25 @@
       setLoading(true);
       status.className = '';
 
-      const formData = new FormData(form);
+      const payload = Object.fromEntries(new FormData(form));
 
       try {
-        const response = await fetch('https://formspree.io/f/mbgjvgen', {
+        const response = await fetch('/api/booking', {
           method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' }
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload)
         });
+        const data = await response.json().catch(() => ({}));
 
-        if (response.ok) {
-          showStatus('success', 'Thank you! Your inquiry has been sent successfully.');
+        if (response.ok && data.ok) {
+          showStatus('success', 'Thank you! Your inquiry has been sent. You will receive a confirmation by e-mail.');
           form.reset();
           if (window.turnstile) turnstile.reset();
         } else {
-          const data = await response.json().catch(() => ({}));
-          throw new Error(data.error || 'Error sending message.');
+          throw new Error(data.error || 'Your inquiry could not be sent. Please try again later or send an e-mail.');
         }
       } catch (err) {
-        showStatus('error', 'Error sending message: ' + err.message);
+        showStatus('error', err.message === 'Failed to fetch' ? 'Connection problem. Please try again or send an e-mail.' : err.message);
         if (window.turnstile) turnstile.reset();
       } finally {
         setLoading(false);
