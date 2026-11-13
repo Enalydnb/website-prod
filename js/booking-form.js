@@ -12,6 +12,26 @@
     const btn = document.getElementById('submitBtn');
     const status = document.getElementById('formStatus');
 
+    // Date field: phones show a number pad (inputmode="numeric") without a "." key,
+    // so the dots are added automatically while typing: 22012027 → 22.01.2027.
+    // Anything typed differently by hand (e.g. "1.2.2027" or "TBA") is left as it is.
+    const dateInput = form.querySelector('[name="date"]');
+    if (dateInput) {
+      dateInput.addEventListener('input', function (e) {
+        // a typed "." right after an automatic one is swallowed (22. + . → 22.)
+        if (e.data === '.' && /\.\.$/.test(dateInput.value)) dateInput.value = dateInput.value.slice(0, -1);
+        const v = dateInput.value;
+        // only when dots sit where we would put them (so "1.2.2027" or "TBA" typed by hand stay untouched)
+        if (!/^(\d{2}\.){0,2}\d*$/.test(v)) return;
+        if (e.inputType && e.inputType.startsWith('delete')) return; // let backspace work normally
+        const d = v.replace(/\D/g, '').slice(0, 8);
+        let out = d.slice(0, 2);
+        if (d.length >= 2) out += '.' + d.slice(2, 4);
+        if (d.length >= 4) out += '.' + d.slice(4, 8);
+        dateInput.value = out;
+      });
+    }
+
     function showStatus(type, message) {
       status.className = 'is-visible ' + type;
       status.innerHTML = (type === 'success' ? ICON_OK : ICON_ERR) + '<span></span>';
