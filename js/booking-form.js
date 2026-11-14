@@ -1,4 +1,4 @@
-// js/booking-form.js · booking inquiry (own Cloudflare Worker /api/booking + Cloudflare Turnstile)
+// js/booking-form.js · booking inquiry (own Cloudflare Worker /api/booking + Cloudflare Turnstile, loaded on first use)
 // The Worker checks Turnstile and sends the inquiry by e-mail via IONOS – nothing is stored.
 // Used on index.html (#booking) and booking.html
 (function () {
@@ -11,6 +11,25 @@
     if (!form) return;
     const btn = document.getElementById('submitBtn');
     const status = document.getElementById('formStatus');
+
+    // Cloudflare Turnstile (spam protection) is only loaded once someone starts using the form –
+    // visitors who just look at the page have no contact with Cloudflare's captcha service.
+    let turnstileLoading = null;
+    function loadTurnstile() {
+      if (turnstileLoading) return turnstileLoading;
+      turnstileLoading = new Promise(function (resolve, reject) {
+        const s = document.createElement('script');
+        s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+        s.async = true;
+        s.onload = resolve;
+        s.onerror = function () { turnstileLoading = null; reject(new Error('Spam protection could not be loaded.')); };
+        document.head.appendChild(s);
+      });
+      return turnstileLoading;
+    }
+    ['focusin', 'pointerdown', 'touchstart'].forEach(function (ev) {
+      form.addEventListener(ev, function () { loadTurnstile().catch(function () {}); }, { once: true, passive: true });
+    });
 
     // Date field: phones show a number pad (inputmode="numeric") without a "." key,
     // so the dots are added automatically while typing: 22012027 → 22.01.2027.
@@ -56,6 +75,7 @@
 
       const turnstileToken = form.querySelector('[name="cf-turnstile-response"]')?.value;
       if (!turnstileToken) {
+        loadTurnstile().catch(function () {});
         showStatus('error', 'Please confirm the Cloudflare Captcha.');
         return;
       }

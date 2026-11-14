@@ -16,26 +16,31 @@
   <link rel="canonical" href="https://enaly.de/booking" />
 
   <!-- Favicon (white lightning) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><polygon points=%2260,0 15,55 45,55 35,100 85,45 55,45%22 fill=%22%23ffffff%22/></svg>">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
 
   <!-- Open Graph & social previews -->
   <meta property="og:title" content="Booking · Enaly · Drum & Bass DJ" />
   <meta property="og:description" content="Want to make some noise together? Send your booking inquiry to Enaly." />
   <meta property="og:url" content="https://enaly.de/booking" />
-  <meta property="og:image" content="https://enaly.de/assets/working.jpg" />
+  <meta property="og:image" content="https://enaly.de/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Enaly · Drum &amp; Bass DJ" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Enaly" />
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Booking · Enaly · Drum & Bass DJ">
   <meta name="twitter:description" content="Want to make some noise together? Send your booking inquiry to Enaly.">
-  <meta name="twitter:image" content="https://enaly.de/assets/working.jpg">
+  <meta name="twitter:image" content="https://enaly.de/assets/og-image.jpg">
 
   <link rel="preload" href="fonts/league-gothic-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/manrope-v20-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- Cloudflare Turnstile captcha -->
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <!-- Cloudflare Turnstile (spam protection) is loaded by js/booking-form.js only when someone uses the form -->
 
   <link rel="stylesheet" href="css/enaly.css?v=20261106a">
 
@@ -384,7 +389,7 @@
 
   <script src="js/site.js?v=20261113a"></script>
   <script src="js/cookie-banner.js?v=20261105b"></script>
-  <script src="js/booking-form.js?v=20261113a"></script>
+  <script src="js/booking-form.js?v=20261114a"></script>
   <script>
     // Booking image: the one chosen in the admin dashboard, faded in once loaded
     (async function () {

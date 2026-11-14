@@ -14,7 +14,10 @@
   <meta name="theme-color" content="#000000">
 
   <!-- Favicon (white lightning) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><polygon points=%2260,0 15,55 45,55 35,100 85,45 55,45%22 fill=%22%23ffffff%22/></svg>">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
 
   <link rel="stylesheet" href="css/enaly.css?v=20261106a">
 
@@ -165,6 +168,16 @@
     #btnRepublish:disabled { opacity: 0.45; cursor: not-allowed; }
     .deploy-stale { color: #FFC34D !important; border-bottom: 1px solid var(--hairline); padding-bottom: 0.7rem !important; }
     .deploy-stale a { color: inherit; }
+    .session-expired {
+      position: fixed; left: 50%; bottom: 1.5rem; transform: translateX(-50%); z-index: 400;
+      display: flex; align-items: center; gap: 1rem; max-width: min(640px, calc(100vw - 2rem));
+      padding: 0.9rem 1rem 0.9rem 1.2rem; border-radius: 16px;
+      background: #1A1A1A; border: 1px solid var(--pink-line, rgba(255,0,110,.38)); box-shadow: 0 16px 40px rgba(0,0,0,.7);
+    }
+    .session-expired div { display: grid; gap: 0.2rem; font-size: 0.85rem; color: var(--text-muted); }
+    .session-expired strong { color: var(--text-primary); font-size: 0.95rem; }
+    .session-expired .btn { flex-shrink: 0; }
+    @media (max-width: 760px) { .session-expired { bottom: 5.5rem; flex-direction: column; align-items: stretch; text-align: left; } }
     .deploy-empty { font-size: 0.8rem; color: var(--text-secondary); padding: 0.4rem 0.25rem; }
     .deploy-note { margin-top: 0.5rem; font-size: 0.72rem; color: var(--text-secondary); }
 
@@ -1003,7 +1016,7 @@
         <div class="page-head">
           <div>
             <h2>Assets Upload</h2>
-            <p>Images are committed directly to the GitHub repository.</p>
+            <p>Images are optimised automatically (max. 2400 px) and saved to the website.</p>
           </div>
         </div>
 
@@ -1011,9 +1024,9 @@
           <span class="dz-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
           </span>
-          <strong>Upload File (Directly to GitHub)</strong>
-          <p>Click or drop an image here · Supported: JPG, PNG, WEBP, SVG</p>
-          <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFileUpload(this.files)">
+          <strong>Upload Image</strong>
+          <p>Click or drop an image here · JPG, PNG, WebP, GIF · large photos are resized automatically</p>
+          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" aria-label="Choose image to upload" style="display:none;" onchange="handleFileUpload(this.files)">
         </div>
 
         <div class="card glass">
@@ -1192,6 +1205,35 @@
 
       if (tab === 'assets' || tab === 'images') loadAssetsFromGitHub();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // All calls to the admin API go through here. If the Cloudflare Access login has expired,
+    // Access answers with a redirect to its login page (or the Worker with 401) – instead of a
+    // cryptic "Failed to fetch" the dashboard then shows a clear "sign in again" notice.
+    async function apiFetch(url, options = {}) {
+      let res;
+      try {
+        res = await fetch(url, { ...options, redirect: 'manual', credentials: 'same-origin' });
+      } catch (e) {
+        throw new Error('No connection to the website. Please check your internet connection.');
+      }
+      if (res.type === 'opaqueredirect' || res.status === 401) {
+        showSessionExpired();
+        throw new Error('Your login has expired. Please sign in again.');
+      }
+      return res;
+    }
+
+    function showSessionExpired() {
+      if (document.getElementById('sessionExpired')) return;
+      const box = document.createElement('div');
+      box.id = 'sessionExpired';
+      box.className = 'session-expired';
+      box.setAttribute('role', 'alert');
+      box.innerHTML = '<div><strong>Your login has expired.</strong><span>Click “Sign in again” – the page reloads. Changes that were not saved yet will be lost, so copy longer texts first.</span></div>' +
+        '<button type="button" class="btn btn-primary btn-sm">Sign in again</button>';
+      box.querySelector('button').addEventListener('click', () => location.reload());
+      document.body.appendChild(box);
     }
 
     function cleanPath(path) {
@@ -1468,7 +1510,7 @@
 
     async function getGitHubFile(path, defaultFallback = "{}") {
       const safePath = cleanPath(path);
-      const res = await fetch(`${proxyApiUrl}/${safePath}`, { cache: 'no-store' });
+      const res = await apiFetch(`${proxyApiUrl}/${safePath}`, { cache: 'no-store' });
       const recent = recentSave(safePath);
 
       if (res.status === 404) {
@@ -1512,7 +1554,7 @@
         sha: fileShaMap[safePath] || undefined
       };
 
-      const res = await fetch(`${proxyApiUrl}/${safePath}`, {
+      const res = await apiFetch(`${proxyApiUrl}/${safePath}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -1553,7 +1595,7 @@
         sha: fileShaMap[safePath]
       };
 
-      const res = await fetch(`${proxyApiUrl}/${safePath}`, {
+      const res = await apiFetch(`${proxyApiUrl}/${safePath}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -2161,7 +2203,7 @@
     async function loadAssetsFromGitHub() {
       try {
         const safePath = cleanPath(assetFolderPath);
-        const res = await fetch(`${proxyApiUrl}/${safePath}`, { cache: 'no-store' });
+        const res = await apiFetch(`${proxyApiUrl}/${safePath}`, { cache: 'no-store' });
 
         if (res.status === 404) {
           document.getElementById('assetsGrid').innerHTML = '<p class="empty">Folder /assets does not exist on GitHub yet.</p>';
@@ -2260,27 +2302,75 @@
       }
     }
 
-    function handleFileUpload(files) {
+    // Images are made web-ready before uploading: max. 2400 px on the long side, JPG quality 85 %.
+    // A 6 MB photo straight from the phone becomes ~300–600 KB – the website loads much faster.
+    // PNGs keep their transparency, GIFs (animations) and small images stay untouched.
+    const UPLOAD_MAX_EDGE = 2400;
+    const UPLOAD_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'];
+
+    function cleanFileName(name, ext) {
+      const base = String(name).replace(/\.[^.]+$/, '')
+        .normalize('NFKD').replace(/[̀-ͯ]/g, '')        // ü → u
+        .replace(/ß/g, 'ss').toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80) || 'image';
+      return `${base}.${ext}`;
+    }
+
+    async function prepareImage(file) {
+      const origExt = (file.name.split('.').pop() || '').toLowerCase().replace('jpeg', 'jpg');
+      const keep = async () => ({ blob: file, name: cleanFileName(file.name, origExt || 'jpg') });
+      if (file.type === 'image/gif') return keep();
+
+      let bitmap;
+      try { bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+      catch (e) { throw new Error('This image format cannot be read. Please use JPG or PNG.'); }
+      const { width, height } = bitmap;
+      const scale = Math.min(1, UPLOAD_MAX_EDGE / Math.max(width, height));
+      if (scale === 1 && file.size < 1.5 * 1024 * 1024 && UPLOAD_TYPES.includes(file.type)) { bitmap.close(); return keep(); }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(width * scale);
+      canvas.height = Math.round(height * scale);
+      const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+      bitmap.close();
+
+      const asPng = file.type === 'image/png';                      // keep transparency (logos)
+      const type = asPng ? 'image/png' : 'image/jpeg';
+      const blob = await new Promise(res => canvas.toBlob(res, type, 0.85));
+      if (!blob) throw new Error('Image could not be converted.');
+      return { blob, name: cleanFileName(file.name, asPng ? 'png' : 'jpg') };
+    }
+
+    function blobToBase64(blob) {
+      return new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => resolve(String(r.result).split(',')[1]);
+        r.onerror = () => reject(new Error('File could not be read.'));
+        r.readAsDataURL(blob);
+      });
+    }
+
+    async function handleFileUpload(files) {
       if (!files || !files.length) return;
       const file = files[0];
-      if (!file.type.startsWith('image/')) return toast('Please choose an image file.', 'error');
-      const reader = new FileReader();
-
-      reader.onload = async (e) => {
-        try {
-          toast(`Uploading ${file.name}...`);
-          const rawBase64 = e.target.result.split(',')[1];
-          const path = `${assetFolderPath}/${file.name}`;
-          await saveGitHubFile(path, rawBase64, `Upload asset ${file.name} via Admin Dashboard`);
-          toast("Image uploaded successfully!");
-          loadAssetsFromGitHub();
-        } catch (err) {
-          toast("Upload error: " + err.message, 'error');
-        } finally {
-          document.getElementById('fileInput').value = '';
-        }
-      };
-      reader.readAsDataURL(file);
+      // some systems give no file type (e.g. ".JPEG" in capitals) → also check the file extension
+      if (!file.type.startsWith('image/') && !/\.(jpe?g|png|webp|gif|avif|heic|heif)$/i.test(file.name)) return toast('Please choose an image file.', 'error');
+      try {
+        toast(`Preparing ${file.name}...`);
+        const { blob, name } = await prepareImage(file);
+        const kb = Math.round(blob.size / 1024);
+        toast(`Uploading ${name} (${kb >= 1024 ? (kb / 1024).toFixed(1) + ' MB' : kb + ' KB'})...`);
+        const path = `${assetFolderPath}/${name}`;
+        await saveGitHubFile(path, await blobToBase64(blob), `Upload asset ${name} via Admin Dashboard`);
+        toast("Image uploaded successfully!");
+        loadAssetsFromGitHub();
+      } catch (err) {
+        toast("Upload error: " + err.message, 'error');
+      } finally {
+        document.getElementById('fileInput').value = '';
+      }
     }
 
     function setupDropzone() {

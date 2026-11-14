@@ -9,9 +9,9 @@ Artist: Enaly
 Site: https://enaly.de
 
 /* SITE */
-Last update: 2026/11/05
+Last update: 2026/11/14
 Language: English
 Standards: HTML5, CSS3, JavaScript
 Fonts: League Gothic, Manrope (self-hosted)
 Hosting: GitHub Pages
-Components: Cloudflare Workers, Cloudflare Turnstile, Formspree
+Components: Cloudflare Workers, Cloudflare Access, Cloudflare Turnstile
