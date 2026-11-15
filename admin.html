@@ -1088,13 +1088,13 @@
         <div class="page-head">
           <div>
             <h2>Legal Texts</h2>
-            <p>Edit Imprint and Privacy Policies. Each section has a title and a text.</p>
+            <p>Edit Imprint and Privacy Policy. Each section has a title and a text.</p>
           </div>
         </div>
 
         <div class="segmented" role="tablist" aria-label="Document">
           <button type="button" class="seg-btn active" id="legalSegImprint" onclick="switchLegalDoc('imprint')">Imprint</button>
-          <button type="button" class="seg-btn" id="legalSegPrivacy" onclick="switchLegalDoc('privacy')">Privacy Policies</button>
+          <button type="button" class="seg-btn" id="legalSegPrivacy" onclick="switchLegalDoc('privacy')">Privacy Policy</button>
           <a class="view-page" id="legalViewLink" href="imprint" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
             View page
@@ -2073,7 +2073,7 @@
 
     // ── LEGAL TEXTS (data/imprint.json, data/privacy.json) ──
     const LEGAL_FILES = { imprint: 'data/imprint.json', privacy: 'data/privacy.json' };
-    const LEGAL_LABELS = { imprint: 'Imprint', privacy: 'Privacy Policies' };
+    const LEGAL_LABELS = { imprint: 'Imprint', privacy: 'Privacy Policy' };
     const LEGAL_PAGES = { imprint: 'imprint', privacy: 'privacy-policies' };
     let legalDocs = { imprint: [], privacy: [] };
     let legalLoaded = { imprint: false, privacy: false };

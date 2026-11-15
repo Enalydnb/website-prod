@@ -124,6 +124,8 @@
 
     /* Document */
     .doc { padding: clamp(1.5rem, 4vw, 3rem); }
+    /* Manrope turns "(c)" into a © sign – switch that off so "Article 6(1)(c)" stays readable */
+    .doc { font-feature-settings: "calt" 0, "liga" 0; font-variant-ligatures: none; }
     .doc section { scroll-margin-top: calc(var(--nav-h) + 1.5rem); }
     .doc section + section {
       margin-top: clamp(2.5rem, 5vw, 3.5rem);
@@ -259,59 +261,40 @@
         <nav class="toc glass" aria-label="Contents">
           <p class="toc-title">Contents</p>
           <ol id="tocList">
-            <li><a href="#s1"><span class="n">1</span><span>Information pursuant to § 5 DDG</span></a></li>
-            <li><a href="#s2"><span class="n">2</span><span>Contact</span></a></li>
-            <li><a href="#s3"><span class="n">3</span><span>Editorially Responsible</span></a></li>
-            <li><a href="#s4"><span class="n">4</span><span>Consumer Dispute Resolution / Universal Arbitration Board</span></a></li>
-            <li><a href="#s5"><span class="n">5</span><span>Liability for Content</span></a></li>
-            <li><a href="#s6"><span class="n">6</span><span>Liability for Links</span></a></li>
-            <li><a href="#s7"><span class="n">7</span><span>Copyright</span></a></li>
-            <li><a href="#s8"><span class="n">8</span><span>Website</span></a></li>
+            <li><a href="#s1"><span class="n">1</span><span>Information pursuant to Section 5 DDG</span></a></li><li><a href="#s2"><span class="n">2</span><span>Contact</span></a></li><li><a href="#s3"><span class="n">3</span><span>Consumer Dispute Resolution</span></a></li><li><a href="#s4"><span class="n">4</span><span>Liability for Content</span></a></li><li><a href="#s5"><span class="n">5</span><span>Liability for Links</span></a></li><li><a href="#s6"><span class="n">6</span><span>Copyright</span></a></li><li><a href="#s7"><span class="n">7</span><span>Website</span></a></li>
           </ol>
         </nav>
 
         <article class="doc glass" id="legalDoc">
 
           <section id="s1">
-            <h2><span class="n">1.</span> Information pursuant to § 5 DDG</h2>
-            <p>Enaly<br>Helena Schmidt<br>Address upon request</p>
+            <h2><span class="n">1.</span> Information pursuant to Section 5 DDG</h2>
+            <p>Helena Schmidt<br>Enaly<br>Address upon request<br>Germany</p>
           </section>
-
           <section id="s2">
             <h2><span class="n">2.</span> Contact</h2>
-            <p>E-mail: <a href="mailto:info@enaly.de">info@enaly.de</a><br>Website: <a href="https://enaly.de" target="_blank" rel="noopener noreferrer">https://enaly.de</a></p>
+            <p>Email: <a href="mailto:info@enaly.de">info@enaly.de</a><br>Website: <a href="https://enaly.de" target="_blank" rel="noopener noreferrer">https://enaly.de</a></p>
           </section>
-
           <section id="s3">
-            <h2><span class="n">3.</span> Editorially Responsible</h2>
-            <p>Helena Schmidt<br>Address upon request</p>
+            <h2><span class="n">3.</span> Consumer Dispute Resolution</h2>
+            <p>We are neither willing nor obliged to participate in dispute resolution proceedings before a consumer dispute resolution body.</p>
           </section>
-
           <section id="s4">
-            <h2><span class="n">4.</span> Consumer Dispute Resolution / Universal Arbitration Board</h2>
-            <p>We are not willing or obligated to participate in dispute resolution proceedings before a consumer arbitration board.</p>
-          </section>
-
-          <section id="s5">
-            <h2><span class="n">5.</span> Liability for Content</h2>
+            <h2><span class="n">4.</span> Liability for Content</h2>
             <p>As a service provider, I am responsible for my own content on these pages in accordance with general laws. However, I am not obliged to monitor transmitted or stored third-party information or to investigate circumstances that indicate unlawful activity.</p><p>Obligations to remove or block the use of information under general laws remain unaffected. However, liability is only possible from the point in time at which I become aware of a specific legal infringement. As soon as I become aware of corresponding infringements, I will remove this content immediately.</p>
           </section>
-
-          <section id="s6">
-            <h2><span class="n">6.</span> Liability for Links</h2>
+          <section id="s5">
+            <h2><span class="n">5.</span> Liability for Links</h2>
             <p>My website contains links to external third-party websites over whose content I have no influence. Therefore, I cannot accept any liability for this external content. The respective provider or operator of the linked pages is always responsible for their content.</p><p>The linked pages were checked for possible legal violations at the time of linking. No unlawful content was apparent at that time. However, permanent monitoring of the content of linked pages is not reasonable without concrete evidence of a legal violation. If I become aware of any infringements, I will remove such links immediately.</p>
           </section>
-
+          <section id="s6">
+            <h2><span class="n">6.</span> Copyright</h2>
+            <p>The content and works published on this website are subject to applicable copyright laws.</p><p>Some content, including photographs, has been created by third parties. The respective copyrights remain with their original creators and rights holders. Such content is used on the basis of the applicable usage rights and permissions.</p><p>If you believe that any content on this website infringes your rights, please contact me at <a href="mailto:info@enaly.de">info@enaly.de</a>.</p>
+          </section>
           <section id="s7">
-            <h2><span class="n">7.</span> Copyright</h2>
-            <p>The content and works created by me on these pages are subject to German copyright law. Reproduction, editing, distribution and any kind of use beyond the limits of copyright law require written consent.</p><p>Downloads and copies of this page are only permitted for private, non-commercial use. Insofar as content on this page was not created by me, the copyrights of third parties are respected and such content is marked accordingly. Should you nevertheless become aware of a copyright infringement, please let me know. If I become aware of any infringements, I will remove such content immediately.</p>
+            <h2><span class="n">7.</span> Website</h2>
+            <p>Design &amp; Development: Florian Miltz (FLOWZ)<br><a href="https://iamflowz.de" target="_blank" rel="noopener noreferrer">https://iamflowz.de</a></p><p>© 2026 Enaly. All rights reserved.</p><p>Source: eRecht24 (<a href="https://www.e-recht24.de" target="_blank" rel="noopener noreferrer">https://www.e-recht24.de</a>)</p>
           </section>
-
-          <section id="s8">
-            <h2><span class="n">8.</span> Website</h2>
-            <p>Design &amp; development: Florian Miltz (FLOWZ)<br><a href="https://iamflowz.de" target="_blank" rel="noopener noreferrer">https://iamflowz.de</a></p>
-          </section>
-
         </article>
       </div>
     </div>
@@ -344,9 +327,9 @@
         <div class="footer-bottom">
           <p>© 2026 Enaly. All rights reserved.</p>
           <ul class="footer-legal">
-            <li><a href="#" role="button" data-cookie-settings>Cookie Settings</a></li>
+            <!-- Cookie banner hidden (no optional services): <li><a href="#" role="button" data-cookie-settings>Cookie Settings</a></li> -->
             <li><a href="imprint" aria-current="page">Imprint</a></li>
-            <li><a href="privacy-policies">Privacy Policies</a></li>
+            <li><a href="privacy-policies">Privacy Policy</a></li>
           </ul>
         </div>
       </div>
@@ -354,7 +337,9 @@
   </footer>
 
   <script src="js/site.js?v=20261106a"></script>
-  <script src="js/cookie-banner.js?v=20261105b"></script>
+  <!-- Cookie banner hidden for now – the website sets no optional cookies. To show it again, remove this comment wrapper:
+    <script src="js/cookie-banner.js?v=20261105b"></script>
+  -->
   <script src="js/richtext.js?v=20261105d"></script>
   <script src="js/legal.js?v=20261106a"></script>
   <script>

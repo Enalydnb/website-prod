@@ -9,13 +9,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="author" content="Florian Miltz (FLOWZ)">
   <link rel="author" href="/humans.txt">
-  <title>Privacy Policies · Enaly</title>
+  <title>Privacy Policy · Enaly</title>
   <meta name="description" content="Privacy policy of enaly.de: hosting, contact form, cookie consent and external services.">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#000000">
   <link rel="canonical" href="https://enaly.de/privacy-policies">
 
-  <meta property="og:title" content="Privacy Policies · Enaly">
+  <meta property="og:title" content="Privacy Policy · Enaly">
   <meta property="og:description" content="Privacy policy of enaly.de.">
   <meta property="og:url" content="https://enaly.de/privacy-policies">
   <meta property="og:image" content="https://enaly.de/assets/og-image.jpg">
@@ -110,6 +110,8 @@
 
     /* Document */
     .doc { padding: clamp(1.5rem, 4vw, 3rem); }
+    /* Manrope turns "(c)" into a © sign – switch that off so "Article 6(1)(c)" stays readable */
+    .doc { font-feature-settings: "calt" 0, "liga" 0; font-variant-ligatures: none; }
     .doc section { scroll-margin-top: calc(var(--nav-h) + 1.5rem); }
     .doc section + section {
       margin-top: clamp(2.5rem, 5vw, 3.5rem);
@@ -231,7 +233,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
           Back to Homepage
         </a>
-        <h1 class="legal-title">Privacy Policies</h1>
+        <h1 class="legal-title">Privacy Policy</h1>
       </div>
     </header>
 
@@ -241,35 +243,36 @@
         <nav class="toc glass" aria-label="Contents">
           <p class="toc-title">Contents</p>
           <ol id="tocList">
-            <li><a href="#s1"><span class="n">1</span><span>Privacy at a Glance</span></a></li>
-            <li><a href="#s2"><span class="n">2</span><span>Hosting &amp; Content Delivery Networks (CDN)</span></a></li>
-            <li><a href="#s3"><span class="n">3</span><span>General Notes and Mandatory Information</span></a></li>
-            <li><a href="#s4"><span class="n">4</span><span>Data Collection on This Website</span></a></li>
+            <li><a href="#s1"><span class="n">1</span><span>General Information</span></a></li><li><a href="#s2"><span class="n">2</span><span>Hosting and Security</span></a></li><li><a href="#s3"><span class="n">3</span><span>Cookies</span></a></li><li><a href="#s4"><span class="n">4</span><span>Booking Form and Contact</span></a></li><li><a href="#s5"><span class="n">5</span><span>Your Data Protection Rights</span></a></li><li><a href="#s6"><span class="n">6</span><span>Data Security and External Links</span></a></li>
           </ol>
         </nav>
 
         <article class="doc glass" id="legalDoc">
 
           <section id="s1">
-            <h2><span class="n">1.</span> Privacy at a Glance</h2>
-            <p><strong>General Information:</strong> The following notes provide a simple overview of what happens to your personal data when you visit this website. Personal data is any data that can be used to personally identify you.</p><p><strong>Data Collection on This Website:</strong> Data processing on this website is carried out by the website operator. You can find their contact details in the section &quot;Information on the Responsible Party&quot; in this privacy policy.</p>
+            <h2><span class="n">1.</span> General Information</h2>
+            <p>Last updated: November 2026</p><p>We take the protection of your personal data seriously. This Privacy Policy explains what personal data is processed when you visit enaly.de or contact us, why it is processed and what rights you have.</p><p><strong>Data Controller</strong><br>Helena Schmidt<br>Enaly<br>Address upon request<br>Email: <a href="mailto:info@enaly.de">info@enaly.de</a></p><p><strong>Legal Bases for Processing</strong><br>We process personal data primarily on the following legal bases:</p><ul><li>Article 6(1)(b) GDPR: taking steps before entering into a contract and performing a contract.</li><li>Article 6(1)(f) GDPR: providing a secure website, preventing misuse and responding to other enquiries.</li><li>Article 6(1)(c) GDPR: complying with legal obligations.</li><li>Article 6(1)(a) GDPR: where consent is required and has been given.</li></ul><p>Section 25 of the German Telecommunications Digital Services Data Protection Act (TDDDG) also applies to storing information on your device or accessing information stored on it.</p>
           </section>
-
           <section id="s2">
-            <h2><span class="n">2.</span> Hosting &amp; Content Delivery Networks (CDN)</h2>
-            <p>We host the content of our website with the following provider:</p><p><strong>GitHub Pages:</strong> The provider is GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA (hereinafter &quot;GitHub&quot;). When you visit our website, GitHub collects various log files including your IP address.</p><p>For more information, please refer to GitHub&#39;s privacy policy: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener noreferrer">https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement</a>.</p><p>GitHub Pages is used on the basis of Art. 6(1)(f) GDPR. We have a legitimate interest in presenting our website as reliably as possible.</p>
+            <h2><span class="n">2.</span> Hosting and Security</h2>
+            <p><strong>GitHub Pages</strong><br>Our website is hosted using GitHub Pages.</p><p>Provider: GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p><p>When you visit the website, GitHub processes technical connection data, including IP addresses, access times and information about the pages requested. GitHub also stores IP addresses for security purposes. We cannot access these logs, and the exact retention periods are not known to us.</p><p><strong>Cloudflare</strong><br>We use Cloudflare to help deliver our website securely and reliably.</p><p>Provider: Cloudflare, Inc., 101 Townsend Street, San Francisco, CA 94107, USA.</p><p>Cloudflare processes technical connection data, such as IP addresses, browser information and access times. This processing is based on our legitimate interest in the security and functionality of the website (Article 6(1)(f) GDPR).</p><p>A data processing agreement is in place with Cloudflare. We do not have direct access to its technical logs, and the exact retention periods are not known to us.</p><p><strong>Processing Outside the EU/EEA</strong><br>GitHub and Cloudflare may process personal data outside the European Union (EU) or European Economic Area (EEA), particularly in the United States.</p><p>Both providers rely, where applicable, on mechanisms including the EU–US Data Privacy Framework and the European Commission's Standard Contractual Clauses for relevant international data transfers.</p><p>Further information about the providers' privacy practices and international data transfers:</p><ul><li><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement</a></li><li><a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">https://www.cloudflare.com/privacypolicy/</a></li><li><a href="https://www.cloudflare.com/cloudflare-customer-dpa/" target="_blank" rel="noopener noreferrer">https://www.cloudflare.com/cloudflare-customer-dpa/</a></li></ul>
           </section>
-
           <section id="s3">
-            <h2><span class="n">3.</span> General Notes and Mandatory Information</h2>
-            <p><strong>Data Protection:</strong> The operators of these pages take the protection of your personal data very seriously. We treat your personal data confidentially and in accordance with the statutory data protection regulations and this privacy policy.</p><p><strong>Information on the Responsible Party:</strong><br>The responsible party for data processing on this website is:<br>Enaly<br>Helena Schmidt<br>Address upon request<br>E-mail: <a href="mailto:info@enaly.de">info@enaly.de</a></p><p><strong>Storage Duration:</strong> Unless a specific storage period has been mentioned within this privacy policy, your personal data will remain with us until the purpose for data processing no longer applies.</p><p><strong>Revocation of Your Consent to Data Processing:</strong> Many data processing operations are only possible with your express consent. You can revoke consent already given at any time. The legality of the data processing carried out until the revocation remains unaffected by the revocation.</p><p><strong>Right to Object to Data Collection in Special Cases (Art. 21 GDPR):</strong> YOU HAVE THE RIGHT TO OBJECT AT ANY TIME, ON GROUNDS RELATING TO YOUR PARTICULAR SITUATION, TO THE PROCESSING OF YOUR PERSONAL DATA.</p><p><strong>Right to Information, Deletion, and Correction:</strong> Within the framework of the applicable statutory provisions, you have the right at any time to free information about your stored personal data, its origin and recipients, and the purpose of the data processing and, if applicable, a right to correction or deletion of this data.</p>
+            <h2><span class="n">3.</span> Cookies</h2>
+            <p>We do not use analytics or advertising cookies, or tracking services. Our website itself does not set any cookies.</p><p>Cloudflare does not set cookies during normal page visits. In exceptional cases, where a security check is required, Cloudflare may use the cf_clearance cookie to record that the check has been completed successfully. This storage is strictly necessary for the security of the website and is permitted under Section 25(2) TDDDG. Any associated processing of personal data is based on our legitimate interest under Article 6(1)(f) GDPR.</p><p>Further information:<br><a href="https://www.cloudflare.com/cookie-policy/" target="_blank" rel="noopener noreferrer">https://www.cloudflare.com/cookie-policy/</a></p>
           </section>
-
           <section id="s4">
-            <h2><span class="n">4.</span> Data Collection on This Website</h2>
-            <p><strong>Contact Form (Formspree):</strong> If you send us inquiries via the contact form, your details from the inquiry form, including the contact details you provided there, will be processed for the purpose of processing the inquiry. Processing is handled via the Formspree service (Formspree Inc., USA). Data transmission is encrypted on the basis of Art. 6(1)(b) GDPR (contract fulfillment or pre-contractual measures) or Art. 6(1)(f) GDPR (legitimate interest).</p><p><strong>Spam Protection (Cloudflare Turnstile):</strong> To protect our contact form from spam and automated abuse, we use Cloudflare Turnstile, a service of Cloudflare, Inc., USA. Turnstile checks whether an inquiry is sent by a human. For this purpose, technical data such as your IP address, browser information (user agent) and connection data are transmitted to Cloudflare. The legal basis is Art. 6(1)(f) GDPR; our legitimate interest lies in protecting our contact form from spam and misuse. For more information, please refer to Cloudflare&#39;s Turnstile privacy information: <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer">https://www.cloudflare.com/turnstile-privacy-policy/</a></p><p><strong>Cookie Consent Framework:</strong> Our website uses a consent banner to store your privacy preferences (e.g., cookie selection). Your selection is stored in a cookie named &quot;enaly_cookie_consent&quot; in your browser for 12 months. The legal basis is Art. 6(1)(f) GDPR.</p>
+            <h2><span class="n">4.</span> Booking Form and Contact</h2>
+            <p><strong>Booking Enquiries</strong><br>If you use our booking form, we process the contact details and information you provide to respond to your enquiry and, where applicable, discuss a potential booking.</p><p>Your submission is checked by a Cloudflare Worker and immediately forwarded via IONOS's email server to <a href="mailto:info@enaly.de">info@enaly.de</a>. You will also receive an automatic acknowledgement.</p><p>Form content is not stored permanently by Cloudflare. No database, backups or logs of form content are created, and logging for the form Worker is disabled. Cloudflare may nevertheless process technical connection data as part of its general service operation.</p><p><strong>Cloudflare Turnstile</strong><br>We use Cloudflare Turnstile to protect our booking form against spam and automated submissions.</p><p>The service is loaded only when you interact with the form. It processes technical information such as your IP address, browser details and connection characteristics. Cloudflare may also process certain data under its own responsibility to improve the service.</p><p>This processing is based on our legitimate interest in preventing misuse (Article 6(1)(f) GDPR).</p><p>Further information:<br><a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer">https://www.cloudflare.com/turnstile-privacy-policy/</a></p><p><strong>Email Communication</strong><br>We use the following provider to receive and store emails:</p><p>IONOS SE, Elgendorfer Str. 57, 56410 Montabaur, Germany.</p><p>We process booking enquiries and emails under Article 6(1)(b) GDPR where necessary to take steps before entering into a contract or to perform a contract. Other enquiries are processed on the basis of our legitimate interest under Article 6(1)(f) GDPR.</p><p>Further information:<br><a href="https://www.ionos.de/terms-gtc/datenschutzerklaerung/" target="_blank" rel="noopener noreferrer">https://www.ionos.de/terms-gtc/datenschutzerklaerung/</a></p><p><strong>Retention Periods</strong><br>Non-binding enquiries that are not subject to statutory retention requirements are generally deleted within six months of the last contact.</p><p>Correspondence relating to ongoing booking negotiations is retained for as long as necessary to deal with the enquiry.</p><p>Business correspondence and records relevant for tax purposes are retained for the periods required by law. Otherwise, personal data is deleted once it is no longer needed and there is no legal basis for keeping it.</p>
           </section>
-
+          <section id="s5">
+            <h2><span class="n">5.</span> Your Data Protection Rights</h2>
+            <p>Under applicable law, you have the right to request access to your personal data and to ask for it to be corrected, erased or for its processing to be restricted.</p><p>In certain circumstances, you may request the transfer of your data.</p><p>You may withdraw any consent you have given at any time, with effect for the future. Withdrawal does not affect the lawfulness of processing carried out before the withdrawal.</p><p><strong>Right to object:</strong> Where we process your personal data on the basis of legitimate interests, you may object at any time on grounds relating to your particular situation. We will then generally stop processing the data unless we can demonstrate compelling legitimate grounds or the processing is necessary for the establishment, exercise or defence of legal claims.</p><p>You may object to the processing of your personal data for direct marketing at any time. Following such an objection, your data will no longer be processed for direct marketing purposes.</p><p>You also have the right to lodge a complaint with a competent data protection supervisory authority.</p><p>To exercise your rights or ask a question about data protection, please contact <a href="mailto:info@enaly.de">info@enaly.de</a>.</p>
+          </section>
+          <section id="s6">
+            <h2><span class="n">6.</span> Data Security and External Links</h2>
+            <p>Our website uses HTTPS encryption to protect data in transit.</p><p>Links to Instagram, Facebook, TikTok, SoundCloud, YouTube and other external services are ordinary hyperlinks. Simply visiting our website does not transmit data to those platforms through these links. If you follow a link, the privacy practices of the relevant provider apply.</p><p>We do not embed social media posts, external music or video players, or fonts loaded from third-party servers.</p><p>Based on an eRecht24 template – <a href="https://www.e-recht24.de" target="_blank" rel="noopener noreferrer">https://www.e-recht24.de</a></p>
+          </section>
         </article>
       </div>
     </div>
@@ -302,9 +305,9 @@
         <div class="footer-bottom">
           <p>© 2026 Enaly. All rights reserved.</p>
           <ul class="footer-legal">
-            <li><a href="#" role="button" data-cookie-settings>Cookie Settings</a></li>
+            <!-- Cookie banner hidden (no optional services): <li><a href="#" role="button" data-cookie-settings>Cookie Settings</a></li> -->
             <li><a href="imprint">Imprint</a></li>
-            <li><a href="privacy-policies" aria-current="page">Privacy Policies</a></li>
+            <li><a href="privacy-policies" aria-current="page">Privacy Policy</a></li>
           </ul>
         </div>
       </div>
@@ -312,7 +315,9 @@
   </footer>
 
   <script src="js/site.js?v=20261106a"></script>
-  <script src="js/cookie-banner.js?v=20261105b"></script>
+  <!-- Cookie banner hidden for now – the website sets no optional cookies. To show it again, remove this comment wrapper:
+    <script src="js/cookie-banner.js?v=20261105b"></script>
+  -->
   <script src="js/richtext.js?v=20261105d"></script>
   <script src="js/legal.js?v=20261106a"></script>
   <script>

@@ -1,20 +1,16 @@
 {
   "sections": [
     {
-      "title": "Information pursuant to § 5 DDG",
-      "body": "Enaly\nHelena Schmidt\nAddress upon request"
+      "title": "Information pursuant to Section 5 DDG",
+      "body": "Helena Schmidt\nEnaly\nAddress upon request\nGermany"
     },
     {
       "title": "Contact",
-      "body": "E-mail: info@enaly.de\nWebsite: https://enaly.de"
+      "body": "Email: info@enaly.de\nWebsite: https://enaly.de"
     },
     {
-      "title": "Editorially Responsible",
-      "body": "Helena Schmidt\nAddress upon request"
-    },
-    {
-      "title": "Consumer Dispute Resolution / Universal Arbitration Board",
-      "body": "We are not willing or obligated to participate in dispute resolution proceedings before a consumer arbitration board."
+      "title": "Consumer Dispute Resolution",
+      "body": "We are neither willing nor obliged to participate in dispute resolution proceedings before a consumer dispute resolution body."
     },
     {
       "title": "Liability for Content",
@@ -26,11 +22,11 @@
     },
     {
       "title": "Copyright",
-      "body": "The content and works created by me on these pages are subject to German copyright law. Reproduction, editing, distribution and any kind of use beyond the limits of copyright law require written consent.\n\nDownloads and copies of this page are only permitted for private, non-commercial use. Insofar as content on this page was not created by me, the copyrights of third parties are respected and such content is marked accordingly. Should you nevertheless become aware of a copyright infringement, please let me know. If I become aware of any infringements, I will remove such content immediately."
+      "body": "The content and works published on this website are subject to applicable copyright laws.\n\nSome content, including photographs, has been created by third parties. The respective copyrights remain with their original creators and rights holders. Such content is used on the basis of the applicable usage rights and permissions.\n\nIf you believe that any content on this website infringes your rights, please contact me at info@enaly.de."
     },
     {
       "title": "Website",
-      "body": "Design & development: Florian Miltz (FLOWZ)\nhttps://iamflowz.de"
+      "body": "Design & Development: Florian Miltz (FLOWZ)\nhttps://iamflowz.de\n\n© 2026 Enaly. All rights reserved.\n\nSource: eRecht24 (https://www.e-recht24.de)"
     }
   ]
 }
