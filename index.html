@@ -241,7 +241,6 @@
     <div class="wip-inner">
       <img src="assets/logo.png" alt="Enaly Logo" class="logo-img">
 
-      <span class="status"><span class="pulse" aria-hidden="true"></span>Work in progress</span>
       <h1>Something heavy is in the making</h1>
       <p>Come back here later..</p>
 
@@ -269,20 +268,21 @@
     <div class="footer-bottom">
       <p>© 2026 Enaly. All rights reserved.</p>
       <ul class="footer-legal">
-        <li><a href="#" role="button" data-cookie-settings>Cookie Settings</a></li>
+        <!-- Cookie banner hidden (no optional services): <li><a href="#" role="button" data-cookie-settings>Cookie Settings</a></li> -->
         <li><a href="imprint">Imprint</a></li>
         <li><a href="privacy-policies">Privacy Policy</a></li>
       </ul>
     </div>
   </footer>
 
+  <!-- Cookie banner hidden for now – the website sets no optional cookies. To show it again, remove this comment wrapper:
   <script src="js/cookie-banner.js"></script>
   <script>
-    // Cookie settings link (reopens the consent banner)
     document.querySelector('[data-cookie-settings]').addEventListener('click', function (e) {
       e.preventDefault();
       if (window.reopenCookieBanner) window.reopenCookieBanner();
     });
   </script>
+  -->
 </body>
 </html>
