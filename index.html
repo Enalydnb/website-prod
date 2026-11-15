@@ -9,11 +9,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta name="author" content="Florian Miltz (FLOWZ)">
   <link rel="author" href="/humans.txt">
-
-  <title>Enaly · Drum & Bass DJ</title>
-  <meta name="description" content="Official Website of Enaly. Drum & Bass DJ from Germany." />
-  <meta name="theme-color" content="#000000" />
-  <link rel="canonical" href="https://enaly.de/" />
+  <title>Work in Progress · Enaly</title>
+  <meta name="description" content="Official Website of Enaly. Drum & Bass DJ from Germany. Something heavy is in the making." />
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#000000">
 
   <!-- Favicon (white lightning) -->
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -23,908 +22,230 @@
 
   <!-- Open Graph & social previews -->
   <meta property="og:title" content="Enaly · Drum & Bass DJ" />
-  <meta property="og:description" content="Official Website of Enaly. Dark & Heavy Drum & Bass DJ." />
+  <meta property="og:description" content="Something heavy is in the making." />
   <meta property="og:url" content="https://enaly.de" />
-  <meta property="og:image" content="https://enaly.de/assets/og-image.jpg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Enaly · Drum &amp; Bass DJ" />
+  <meta property="og:image" content="https://enaly.de/assets/about.jpg" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Enaly" />
-
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Enaly · Drum & Bass DJ">
-  <meta name="twitter:description" content="Official Website of Enaly. Dark & Heavy Drum & Bass DJ.">
-  <meta name="twitter:image" content="https://enaly.de/assets/og-image.jpg">
 
-  <!-- Preload brand fonts -->
   <link rel="preload" href="fonts/league-gothic-v13-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/manrope-v20-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- Cloudflare Turnstile (spam protection) is loaded by js/booking-form.js only when someone uses the form -->
-
-  <!-- Structured data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "MusicGroup",
-    "name": "Enaly",
-    "url": "https://enaly.de",
-    "image": "https://enaly.de/assets/seo.jpg",
-    "genre": ["Drum & Bass", "Neurofunk", "Heavy D&B"],
-    "sameAs": [
-      "https://www.instagram.com/enaly",
-      "https://www.soundcloud.com/enaly_dnb",
-      "https://www.tiktok.com/@enaly.dnb",
-      "https://www.youtube.com/@enalymusic",
-      "https://www.facebook.com/enalydnb"
-    ]
-  }
-  </script>
-
-  <link rel="stylesheet" href="css/enaly.css?v=20261106a">
-
-
-  <!-- Start loading content.json right away: it says which images to show,
-       so no old/default picture flashes up before the chosen one -->
-  <script>
-    window.enalyContent = fetch('data/content.json?t=' + Date.now(), { cache: 'no-store' })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .catch(function () { return null; });
-  </script>
-
+  <!-- Self-contained on purpose: works on PROD without css/enaly.css or js/site.js -->
   <style>
+    @font-face { font-family: 'League Gothic'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/league-gothic-v13-latin-regular.woff2') format('woff2'); }
+    @font-face { font-family: 'Manrope'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/manrope-v20-latin-regular.woff2') format('woff2'); }
 
-    /* images chosen in the admin dashboard: invisible until the right picture has loaded */
-    img[data-dynamic] { opacity: 0; transition: opacity 0.5s ease; }
-    img[data-dynamic].is-loaded { opacity: 1; }
-    /* ==================== HOME · page layout ==================== */
-    section[id] { scroll-margin-top: calc(var(--nav-h) + 1.5rem); }
+    :root {
+      --bg-primary: #000000;
+      --bg-surface: #1A1A1A;
+      --text-primary: #FFFFFF;
+      --text-secondary: #888888;
+      --text-muted: #CCCCCC;
+      --pink: #FF006E;
+      --glass-border: rgba(255, 255, 255, 0.10);
+      --hairline: rgba(255, 255, 255, 0.06);
+      --radius-pill: 9999px;
+      --transition-fast: 200ms ease;
+      --font-display: 'League Gothic', 'Arial Narrow', sans-serif;
+      --font-body: 'Manrope', system-ui, sans-serif;
+      --gutter: clamp(1rem, 4vw, 2rem);
+    }
 
-    .section { padding: clamp(4rem, 9vw, 7rem) 0 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    .section-head {
+    html { background: var(--bg-primary); -webkit-text-size-adjust: 100%; }
+    body {
+      min-height: 100svh;
       display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+      flex-direction: column;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
-    .section-heading {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: clamp(3.2rem, 8vw, 6rem);
-      line-height: 0.88;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-    /* ---------- HERO ---------- */
-    .hero {
-      position: relative;
-      min-height: min(100svh, 920px);
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-      isolation: isolate;
-    }
-    .hero-media {
-      position: absolute;
-      inset: 0;
-      z-index: -2;
-    }
-    .hero-media picture { display: block; width: 100%; height: 100%; }
-    .hero-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 35%;
-      transform: scale(1.04);
-      animation: heroIn 1.6s cubic-bezier(.2,.7,.2,1) both;
-    }
-    .hero::after {
-      content: "";
-      position: absolute;
+    ::selection { background: var(--pink); color: #fff; }
+    :focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; border-radius: 6px; }
+
+    /* Ambient glow, slowly breathing */
+    .ambient {
+      position: fixed;
       inset: 0;
       z-index: -1;
+      pointer-events: none;
       background:
-        linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.35) 60%, #000 100%),
-        linear-gradient(90deg, rgba(0,0,0,0.55) 0%, transparent 55%);
+        radial-gradient(55vw 45vw at 50% 42%, rgba(255, 0, 110, 0.16), transparent 62%),
+        radial-gradient(60vw 40vw at 100% 0%, rgba(255, 0, 110, 0.06), transparent 60%),
+        var(--bg-primary);
+      animation: breathe 7s ease-in-out infinite;
     }
-    @keyframes heroIn {
-      from { transform: scale(1.12); }
-      to   { transform: scale(1.04); }
-    }
-
-    .hero-inner {
-      width: 100%;
-      padding-top: calc(var(--nav-h) + 3rem);
-      padding-bottom: clamp(2rem, 5vw, 3.5rem);
+    @keyframes breathe {
+      0%, 100% { opacity: 0.75; }
+      50% { opacity: 1; }
     }
 
-    .hero-bottom {
+    /* ---------- Main ---------- */
+    .wip {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: clamp(3rem, 10vh, 6rem) var(--gutter) 2rem;
+      text-align: center;
+    }
+    .wip-inner {
       display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 1.5rem 2rem;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
+      max-width: 820px;
     }
-    .hero-logo { margin: 0; line-height: 0; animation: rise 1100ms 150ms cubic-bezier(.2,.7,.2,1) both; }
-    .hero-logo img {
-      width: clamp(220px, 52vw, 720px);
+
+    .logo-img {
+      width: clamp(200px, 42vw, 440px);
       height: auto;
       filter: brightness(0) invert(1);
-    }
-    .hero-actions { animation: rise 900ms 400ms cubic-bezier(.2,.7,.2,1) both; }
-    .hero-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-
-    .next-show {
-      display: none;
-      margin-top: 1.5rem;
-      align-items: center;
-      gap: 0.9rem;
-      padding: 0.6rem 0.6rem 0.6rem 1rem;
-      border-radius: var(--radius-pill);
-      background: rgba(0,0,0,0.6);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      text-decoration: none;
-      max-width: 100%;
-      cursor: pointer;
-      transition: border-color var(--transition-fast), background var(--transition-fast);
-    }
-    .next-show.is-ready { display: inline-flex; }
-    .next-show:hover { border-color: var(--pink-line); background: rgba(0,0,0,0.8); }
-    .next-show .pulse {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--pink);
-      box-shadow: 0 0 0 0 rgba(255,0,110,0.6);
-      animation: pulse 2s infinite;
-      flex-shrink: 0;
-    }
-    .next-show .ns-label { font-size: 0.8rem; color: var(--text-secondary); white-space: nowrap; }
-    .next-show .ns-text {
-      font-size: 0.92rem;
-      color: var(--text-primary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
-    }
-    .next-show .ns-arrow {
-      width: 32px; height: 32px; border-radius: 50%;
-      display: inline-flex; align-items: center; justify-content: center;
-      background: rgba(255,255,255,0.08);
-      flex-shrink: 0;
-    }
-    .next-show .ns-arrow svg { width: 16px; height: 16px; }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(255,0,110,0.6); }
-      70% { box-shadow: 0 0 0 10px rgba(255,0,110,0); }
-      100% { box-shadow: 0 0 0 0 rgba(255,0,110,0); }
-    }
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: none; }
+      margin-bottom: clamp(2.5rem, 7vh, 4rem);
+      animation: rise 1000ms 100ms cubic-bezier(.2,.7,.2,1) both;
     }
 
-    /* ---------- WHAT'S NEW ---------- */
-    .whats-new-wrap { margin-top: clamp(1.5rem, 4vw, 2.5rem); }
-    .whats-new {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr) auto;
-      align-items: center;
-      gap: clamp(0.9rem, 3vw, 2rem);
-      padding: clamp(1rem, 2.5vw, 1.4rem) clamp(1.1rem, 3vw, 2rem);
-      text-decoration: none;
-      transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
-    }
-    a.whats-new { cursor: pointer; }
-    a.whats-new:hover { transform: translateY(-2px); }
-    a.whats-new:hover .wn-arrow { background: var(--pink); color: #fff; border-color: var(--pink); }
-    .wn-label {
+    .status {
       display: inline-flex;
       align-items: center;
       gap: 0.55rem;
-      font-size: 0.85rem;
+      margin-bottom: 1.25rem;
+      padding: 0.45rem 0.95rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--glass-border);
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      font-size: 0.82rem;
       font-weight: 600;
       color: var(--text-muted);
-      white-space: nowrap;
-      padding-right: clamp(0.9rem, 3vw, 2rem);
-      border-right: 1px solid var(--glass-border);
+      animation: rise 900ms 300ms cubic-bezier(.2,.7,.2,1) both;
     }
-    .wn-label .pulse {
+    .status .pulse {
       width: 8px; height: 8px; border-radius: 50%;
       background: var(--pink);
       animation: pulse 2s infinite;
     }
-    .wn-headline {
+
+    h1 {
       font-family: var(--font-display);
       font-weight: 400;
-      font-size: clamp(1.7rem, 3.4vw, 2.6rem);
-      line-height: 1;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      color: var(--pink);
-      overflow-wrap: anywhere;
-    }
-    .wn-arrow {
-      width: 46px; height: 46px; border-radius: 50%;
-      display: inline-flex; align-items: center; justify-content: center;
-      border: 1px solid var(--glass-border);
-      background: rgba(255,255,255,0.04);
-      color: var(--text-primary);
-      transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
-    }
-    .wn-arrow svg { width: 20px; height: 20px; }
-    @media (max-width: 600px) {
-      .whats-new { grid-template-columns: minmax(0, 1fr) auto; }
-      .wn-label { grid-column: 1 / -1; border-right: none; padding-right: 0; }
-      .wn-arrow { width: 40px; height: 40px; }
-    }
-
-    /* ---------- Ticket status (doorsale / sold out) ---------- */
-    .ticket-cell { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end; }
-    .btn.is-static { cursor: default; }
-    .btn.is-static:hover { background: rgba(255,255,255,0.04); border-color: var(--glass-border); }
-    /* Sold Out: same pill as Tickets/Doorsale, in pink, not clickable */
-    .btn.sold-out,
-    .btn.sold-out:hover {
-      color: var(--pink);
-      background: var(--pink-soft);
-      border-color: var(--pink-line);
-    }
-    @media (max-width: 600px) {
-      .ticket-cell { justify-content: center; }
-    }
-
-    /* ---------- ABOUT ---------- */
-    .about-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      gap: clamp(2rem, 5vw, 4.5rem);
-      align-items: stretch;
-    }
-    /* Desktop: photo is exactly as tall as the text column (top and bottom flush), no scrolling along */
-    .portrait-frame {
-      position: relative;
-      margin: 0;
-      min-height: 420px;
-    }
-    .portrait-frame img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 25%;
-      border-radius: var(--radius-card);
-    }
-    .about-text > :last-child { margin-bottom: 0; }
-    .about-body > :first-child { margin-top: -0.3em; } /* cancels the line spacing above the first line → text starts level with the photo */
-
-    .about-text p {
-      font-size: clamp(1.05rem, 1.5vw, 1.2rem);
-      line-height: 1.8;
-      color: var(--text-muted);
-      margin-bottom: 1.4rem;
-      max-width: 62ch;
-    }
-    .about-body > p:first-child {
-      font-size: clamp(1.2rem, 2vw, 1.45rem);
-      line-height: 1.6;
-      color: var(--text-primary);
-    }
-    /* formatting from the admin editor */
-    .about-body b { color: var(--text-primary); font-weight: 700; }
-    .about-body i { font-style: italic; }
-    .about-body u { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
-    .about-body .fs-s { font-size: 0.85em; }
-    .about-body .fs-l { font-size: 1.25em; line-height: 1.45; }
-    .about-body .fs-xl { font-size: 1.6em; line-height: 1.3; }
-    .about-body ul, .about-body ol {
-      margin: 0 0 1.4rem 1.4rem;
-      max-width: 62ch;
-      font-size: clamp(1.05rem, 1.5vw, 1.2rem);
-      line-height: 1.8;
-      color: var(--text-muted);
-    }
-    .about-text .placeholder { color: var(--text-secondary); }
-
-    .quote-box {
-      position: relative;
-      margin-top: 2.5rem;
-      padding: 2rem 2rem 2rem 2.25rem;
-      border-left: 3px solid var(--pink);
-      background: linear-gradient(90deg, var(--pink-soft), transparent 75%);
-      border-radius: 0 var(--radius-card) var(--radius-card) 0;
-    }
-    .quote-box svg {
-      position: absolute;
-      top: -0.9rem;
-      left: 1.6rem;
-      width: 34px;
-      height: 34px;
-      color: var(--pink);
-    }
-    .quote-box blockquote {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
-      line-height: 0.98;
+      font-size: clamp(3.2rem, 10vw, 7.5rem);
+      line-height: 0.9;
       letter-spacing: 0.02em;
       text-transform: uppercase;
-      color: var(--text-primary);
+      color: var(--pink);
+      max-width: 12ch;
+      animation: rise 1000ms 400ms cubic-bezier(.2,.7,.2,1) both;
     }
 
-    /* ---------- EVENTS ---------- */
-    .events-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); /* wider Past column → less wrapping, less height */
-      gap: 1.25rem;
-      align-items: stretch; /* Upcoming + Past boxes always equally tall */
+    .wip p {
+      margin-top: 1.25rem;
+      font-size: clamp(1rem, 1.6vw, 1.15rem);
+      color: var(--text-muted);
+      animation: rise 900ms 550ms cubic-bezier(.2,.7,.2,1) both;
     }
-    .panel { padding: clamp(1.25rem, 3vw, 2rem); }
-    .panel-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
-    }
-    .panel-title {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: 2rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-    .panel-title.muted { color: var(--text-secondary); }
 
-    .event-list { display: grid; gap: 0.6rem; grid-auto-rows: 1fr; } /* all event cards as tall as the tallest */
-    .event-card.is-extra { display: none; }
-    /* expanded list: Past box keeps its own height and travels along while scrolling */
-    .events-layout.is-expanded { align-items: start; }
-    .events-layout.is-expanded .past-panel { position: sticky; top: calc(var(--nav-h) + 1.25rem); }
-    .event-list.is-expanded .event-card.is-extra { display: grid; }
-    .show-all { margin-top: 0.75rem; width: 100%; }
-    .show-all[hidden] { display: none; }
-    .show-all svg { transition: transform var(--transition-fast); }
-    .show-all[aria-expanded="true"] svg { transform: rotate(180deg); }
-    .event-card {
-      display: grid;
-      grid-template-columns: 72px minmax(0, 1fr) auto;
-      gap: 1.25rem;
-      align-items: center;
-      padding: 0.7rem;
-      border-radius: calc(var(--radius-card) - 4px);
-      background: rgba(0,0,0,0.45);
-      border: 1px solid var(--hairline);
-      transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
-    }
-    .event-card:hover {
-      border-color: var(--pink-line);
-      background: rgba(255,0,110,0.05);
-      transform: translateX(4px);
-    }
-    .date-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      aspect-ratio: 1;
-      border-radius: var(--radius-inner);
-      background: var(--bg-surface-accent);
-      border: 1px solid var(--glass-border);
-      line-height: 1;
-    }
-    .date-block .d {
-      font-family: var(--font-display);
-      font-size: 2.3rem;
-      color: var(--pink);
-    }
-    .date-block .my {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: var(--text-secondary);
-      margin-top: 0.15rem;
-    }
-    .date-block .raw {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      color: var(--pink);
-      text-align: center;
-      padding: 0 0.3rem;
-    }
-    .event-info { min-width: 0; }
-    .event-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      line-height: 1.35;
-      margin-bottom: 0.3rem;
-      overflow-wrap: anywhere;
-    }
-    .event-meta {
+    .socials {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
-      gap: 0.25rem 0.9rem;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-    .event-meta span { display: inline-flex; align-items: center; gap: 0.35rem; }
-    .event-meta svg { width: 15px; height: 15px; flex-shrink: 0; }
-    .event-full-date { font-variant-numeric: tabular-nums; }
-
-    .empty-state {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.5rem;
-      border-radius: calc(var(--radius-card) - 4px);
-      border: 1px dashed var(--glass-border);
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-    }
-    .empty-state svg { width: 22px; height: 22px; color: var(--pink); flex-shrink: 0; }
-
-    .past-list { list-style: none; display: grid; }
-    .past-item {
-      display: grid;
-      grid-template-columns: 4.9rem minmax(0, 1fr); /* fixed date column → titles line up */
-      gap: 0.25rem 1rem;
-      align-content: center;
-      padding: 0.95rem 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .past-item:last-child { border-bottom: none; padding-bottom: 0; }
-    /* Desktop: the Past shows share the box height evenly, so there is no empty block at the bottom */
-    @media (min-width: 981px) {
-      .past-panel { display: flex; flex-direction: column; }
-      .past-list { flex: 1; grid-auto-rows: 1fr; }
-      .past-list.is-single { grid-auto-rows: auto; align-content: start; }
-      .past-item:last-child { padding-bottom: 0.95rem; }
-    }
-    .past-date {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      letter-spacing: 0.04em;
-      color: var(--text-secondary);
-      font-variant-numeric: tabular-nums;
-    }
-    .past-title { font-size: 0.95rem; color: var(--text-muted); overflow-wrap: anywhere; }
-    .past-loc { grid-column: 2; font-size: 0.82rem; color: #666; }
-
-    /* ---------- REFERENCES ---------- */
-    .refs { padding-top: clamp(4rem, 9vw, 7rem); }
-    .refs-panel {
-      text-align: center;
-      padding: clamp(2rem, 5vw, 3.5rem) clamp(1rem, 4vw, 3rem);
-    }
-    .ref-block + .ref-block { margin-top: clamp(2.25rem, 5vw, 3.5rem); }
-    .ref-label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: 1.25rem;
-    }
-    /* One row per line from the admin; squares only between comma-separated names of the same line */
-    .ref-block { container-type: inline-size; }
-    .ref-list {
-      --ref-max: clamp(1.7rem, 3.6vw, 3.2rem);
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.1em;
-      max-width: 1000px;
-      margin: 0 auto;
-      font-family: var(--font-display);
-      font-size: var(--ref-max);
-      /* as big as allowed, but never wider than the box (row width in em is measured once by JS) */
-      font-size: min(var(--ref-max), calc(97cqi / var(--row-em, 1)));
-      line-height: 1.15;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--text-primary);
-    }
-    .ref-row {
-      display: flex;
-      flex-wrap: nowrap; /* rows stay exactly as entered; JS scales the font so the widest row fits */
       justify-content: center;
-      gap: 0.1em 0.55em;
+      gap: 0.6rem;
+      margin-top: clamp(2.25rem, 6vh, 3.25rem);
+      animation: rise 900ms 700ms cubic-bezier(.2,.7,.2,1) both;
     }
-    .ref-item {
+    .social-icon-link {
+      width: 48px;
+      height: 48px;
       display: inline-flex;
       align-items: center;
-      white-space: nowrap;
-      transition: color var(--transition-fast);
-    }
-    .ref-item:not(:last-child)::after {
-      content: "■";
-      margin-left: 1.2em; /* = 0.55em of the name size, same as the gap after it */
-      font-size: 0.45em;
-      color: var(--pink);
-    }
-    /* Phones: same rows and squares as desktop, tighter spacing; JS scales the font to fit */
-    @media (max-width: 600px) {
-      .refs-panel { padding-left: 0.75rem; padding-right: 0.75rem; }
-      .ref-list { --ref-max: 1.75rem; gap: 0.2em; }
-      .ref-row { gap: 0.1em 0.5em; }
-      .ref-item:not(:last-child)::after { margin-left: 1.1em; } /* = 0.5em of the name size */
-    }
-    /* Safety net: never smaller than 15px – a very long row then wraps instead of shrinking further */
-    .ref-list { font-size: max(15px, min(var(--ref-max), calc(97cqi / var(--row-em, 1)))); }
-    .ref-row { flex-wrap: wrap; }
-
-    /* ---------- BOOKING ---------- */
-    .booking-panel {
-      display: grid;
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      overflow: hidden;
-    }
-    .booking-left {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      padding: clamp(1.5rem, 4vw, 2.75rem);
-      border-right: 1px solid var(--hairline);
-      background: linear-gradient(160deg, rgba(255,0,110,0.10), transparent 55%);
-    }
-    .booking-left h3 {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: clamp(2.8rem, 5vw, 4.2rem);
-      line-height: 0.92;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-    .booking-left p { color: var(--text-muted); font-size: 1.02rem; max-width: 40ch; }
-    .booking-left p a {
-      color: var(--text-primary);
-      text-decoration: underline;
-      text-decoration-color: var(--pink);
-      text-underline-offset: 3px;
-      transition: color var(--transition-fast);
-    }
-    .booking-left p a:hover { color: var(--pink); }
-    .booking-working-img {
-      flex: 1 1 0;          /* fills the rest of the column, so the photo ends level with the form */
-      min-height: 220px;
-      width: 100%;
-      object-fit: cover;
-      border-radius: var(--radius-inner);
+      justify-content: center;
+      border-radius: 50%;
       border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+    }
+    .social-icon-link svg { width: 19px; height: 19px; fill: currentColor; }
+    .social-icon-link:hover {
+      color: #fff;
+      background: var(--pink);
+      border-color: var(--pink);
+      transform: translateY(-2px);
     }
 
-    .booking-form {
-      padding: clamp(1.5rem, 4vw, 2.75rem);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.1rem 1rem;
-      align-content: start;
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: none; }
     }
-    .booking-form .span-2 { grid-column: 1 / -1; }
-    .form-intro {
-      grid-column: 1 / -1;
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 0, 110, 0.6); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 0, 110, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 0, 110, 0); }
+    }
+
+    /* ---------- Footer ---------- */
+    .site-footer {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 var(--gutter) 1.5rem;
+    }
+    .footer-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      margin-bottom: 0.4rem;
+      flex-wrap: wrap;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--hairline);
       font-size: 0.85rem;
+      line-height: 1.5;
       color: var(--text-secondary);
     }
-    .form-intro strong {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: 1.7rem;
-      letter-spacing: 0.05em;
-      color: var(--text-primary);
-    }
-    .form-actions {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: flex-end; /* Send button sits on the bottom edge of the form */
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 0.25rem;
-    }
-    .cf-turnstile { min-height: 65px; }
-
-    #formStatus {
-      grid-column: 1 / -1;
-      display: none;
-      align-items: flex-start;
-      gap: 0.7rem;
-      padding: 0.9rem 1rem;
-      border-radius: var(--radius-inner);
-      font-size: 0.95rem;
+    .footer-legal { display: flex; align-items: center; gap: 0.35rem 1.25rem; flex-wrap: wrap; list-style: none; }
+    .footer-legal li { display: flex; align-items: center; }
+    .footer-legal a {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0;
+      font-size: 0.85rem;
       line-height: 1.5;
+      color: var(--text-secondary);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color var(--transition-fast);
     }
-    #formStatus.is-visible { display: flex; }
-    #formStatus svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 0.1rem; }
-    #formStatus.success { background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.35); color: var(--green); }
-    #formStatus.error { background: var(--pink-soft); border: 1px solid var(--pink-line); color: #ff5c9e; }
+    .footer-legal a:hover { color: var(--pink); }
 
-    .spinner {
-      width: 16px; height: 16px;
-      border: 2px solid rgba(255,255,255,0.35);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+    @media (max-width: 640px) {
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .footer-legal { justify-content: center; }
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ---------- Responsive ---------- */
-    @media (max-width: 980px) {
-      .events-layout { grid-template-columns: 1fr; }
-      .events-layout.is-expanded .past-panel { position: static; }
-      .booking-panel { grid-template-columns: 1fr; }
-      .booking-left { border-right: none; border-bottom: 1px solid var(--hairline); }
-      .booking-working-img { flex: none; aspect-ratio: 16 / 9; min-height: 0; }
-    }
-    @media (max-width: 820px) {
-      .about-grid { grid-template-columns: 1fr; }
-      .portrait-frame { max-width: 520px; min-height: 0; }
-      .portrait-frame img { position: static; height: auto; }
-      .about-text { order: -1; }
-    }
-    @media (max-width: 600px) {
-      /* Mobile: header image in its natural aspect ratio (nothing cropped), logo + buttons below */
-      .hero {
-        display: block;
-        min-height: 0;
-        padding-top: calc(var(--nav-h) + 0.75rem);
-      }
-      .hero-media { position: relative; inset: auto; z-index: 0; }
-      .hero-media picture { display: block; }
-      .hero-media img {
-        height: auto;
-        max-height: 78svh;
-        object-fit: cover;
-        transform: none;
-        animation: none;
-      }
-      .hero::after { display: none; }
-      .hero-media::after {
-        content: "";
-        position: absolute;
-        left: 0; right: 0; bottom: 0;
-        height: 35%;
-        background: linear-gradient(180deg, transparent, #000);
-      }
-      .hero-inner { position: relative; z-index: 1; margin-top: -2.5rem; padding-top: 0; }
-      .hero-logo img { width: min(78vw, 360px); }
-      .hero-actions { width: 100%; }
-      /* Next show: same width as the two buttons above, no logo indent */
-      .next-show.is-ready { display: flex; width: 100%; }
-      .next-show.is-ready { display: flex; width: 100%; }
-      .next-show .ns-text { flex: 1; }
-      .hero-actions .btn { flex: 1 1 auto; }
-      .event-list { grid-auto-rows: auto; }
-      .event-card { grid-template-columns: 64px minmax(0, 1fr); gap: 0.9rem; }
-      .event-card .ticket-cell { grid-column: 1 / -1; }
-      .event-card .ticket-cell .btn { width: 100%; }
-      .date-block .d { font-size: 2.1rem; }
-      .booking-form { grid-template-columns: 1fr; }
-      .quote-box { padding: 1.75rem 1.25rem 1.5rem 1.5rem; }
-      .next-show .ns-label { display: none; }
-    }
     @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
     }
   </style>
 </head>
-<body id="top">
-  <a href="#main" class="skip-link">Skip to content</a>
+<body>
   <div class="ambient" aria-hidden="true"></div>
 
-  <!-- ==================== NAVIGATION ==================== -->
-  <nav class="site-nav" aria-label="Main">
-    <a href="/" class="nav-logo" aria-label="Enaly Home"><img src="assets/logo.png" alt="Enaly Logo" class="nav-logo-img"></a>
+  <main class="wip">
+    <div class="wip-inner">
+      <img src="assets/logo.png" alt="Enaly Logo" class="logo-img">
 
-    <div class="nav-right">
-      <ul class="nav-links">
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#events" class="nav-link">Events</a></li>
-        <li><a href="#booking" class="nav-link">Booking</a></li>
-      </ul>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navSheet" aria-label="Open menu">
-        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
-        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
-      </button>
-    </div>
-  </nav>
-  <div class="nav-sheet" id="navSheet">
-    <ul>
-      <li><a href="#about" class="nav-link">About <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
-      <li><a href="#events" class="nav-link">Events <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
-      <li><a href="#booking" class="nav-link">Booking <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
-    </ul>
-  </div>
+      <span class="status"><span class="pulse" aria-hidden="true"></span>Work in progress</span>
+      <h1>Something heavy is in the making</h1>
+      <p>Come back here later..</p>
 
-  <!-- ==================== HERO ==================== -->
-  <header class="hero">
-    <div class="hero-media">
-      <picture>
-        <!-- Mobile header (admin: Images / Layout → Header Banner Image · Mobile); breakpoint matches the mobile hero layout -->
-        <source id="imgHeaderMobile" media="(max-width: 600px)">
-        <img id="imgHeader" alt="Enaly Stage" fetchpriority="high" data-dynamic>
-      </picture>
-    </div>
-    <div class="container hero-inner">
-      <div class="hero-bottom">
-        <h1 class="hero-logo"><img src="assets/logo.png" alt="Enaly" width="720" height="144"></h1>
-        <div class="hero-actions">
-          <a href="#events" class="btn btn-ghost">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-            Upcoming Shows
-          </a>
-          <a href="/booking" class="btn btn-primary">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1a2 2 0 0 0 0 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2 2 0 0 0 0-4Z"/><path d="M13 7v2M13 15v2M13 11v2"/></svg>
-            Booking
-          </a>
-        </div>
-      </div>
-
-      <a href="#events" class="next-show" id="nextShow" aria-live="polite">
-        <span class="pulse" aria-hidden="true"></span>
-        <span class="ns-label">Next show</span>
-        <span class="ns-text" id="nextShowText"></span>
-        <span class="ns-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-      </a>
-    </div>
-  </header>
-
-  <main id="main">
-
-    <!-- ==================== WHAT'S NEW (toggle + texts in admin) ==================== -->
-    <div class="container whats-new-wrap" id="whatsNew" hidden></div>
-
-    <!-- ==================== ABOUT ==================== -->
-    <section class="section" id="about">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2 class="section-heading">About</h2>
-        </div>
-
-        <div class="about-grid">
-          <figure class="portrait-frame reveal">
-            <img id="imgAbout" alt="Enaly Portrait" data-dynamic>
-          </figure>
-
-          <div class="about-text reveal" id="aboutTextContainer">
-            <p class="placeholder">Loading bio…</p>
-            <div class="quote-box">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.6 19.5c-1-1-1.6-2.4-1.6-4.3 0-3.6 2.3-7 5.9-9.7l1.3 1.6c-2.2 1.8-3.4 3.6-3.6 5.4.4-.1.8-.2 1.3-.2 2 0 3.4 1.4 3.4 3.4 0 2.1-1.6 3.6-3.6 3.6-1.1 0-2.2-.4-3.1-1.2Zm10.5 0c-1-1-1.6-2.4-1.6-4.3 0-3.6 2.3-7 5.9-9.7l1.3 1.6c-2.2 1.8-3.4 3.6-3.6 5.4.4-.1.8-.2 1.3-.2 2 0 3.4 1.4 3.4 3.4 0 2.1-1.6 3.6-3.6 3.6-1.1 0-2.2-.4-3.1-1.2Z"/></svg>
-              <blockquote>"I like drum and bass more than people"</blockquote>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== EVENTS ==================== -->
-    <section class="section" id="events">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2 class="section-heading">Events</h2>
-        </div>
-
-        <div class="events-layout">
-          <div class="panel glass reveal">
-            <div class="panel-head">
-              <h3 class="panel-title">Upcoming Shows</h3>
-            </div>
-            <div class="event-list" id="upcomingEvents">
-              <div class="empty-state">Loading shows…</div>
-            </div>
-            <button type="button" class="btn btn-ghost btn-sm show-all" id="showAllEvents" aria-expanded="false" aria-controls="upcomingEvents" hidden>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-              <span>Show all</span>
-            </button>
-          </div>
-
-          <aside class="panel glass reveal past-panel" aria-labelledby="pastTitle">
-            <div class="panel-head">
-              <h3 class="panel-title muted" id="pastTitle">Past Shows</h3>
-            </div>
-            <ul class="past-list" id="pastEvents"></ul>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== REFERENCES ==================== -->
-    <section class="refs" aria-label="References" id="refs">
-      <div class="container">
-        <div class="refs-panel glass reveal">
-          <div class="ref-block">
-            <h3 class="ref-label">Shared the stage with</h3>
-            <ul class="ref-list" id="sharedStageContainer"></ul>
-          </div>
-          <div class="ref-block">
-            <h3 class="ref-label">Played at</h3>
-            <ul class="ref-list" id="selectedShowsContainer"></ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== BOOKING ==================== -->
-    <section class="section" id="booking">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2 class="section-heading">Booking</h2>
-        </div>
-
-        <div class="booking-panel glass reveal">
-          <div class="booking-left">
-            <h3>Want to make some noise together?</h3>
-            <p>Send your booking inquiry through the form or email directly to <a href="mailto:info@enaly.de">info@enaly.de</a>.</p>
-            <img id="imgWorking" alt="Enaly Working DJ Set" class="booking-working-img" data-dynamic>
-          </div>
-
-          <form id="bookingForm" class="booking-form" novalidate>
-            <div class="form-intro">
-              <strong>Booking Inquiry</strong>
-              <span>* required</span>
-            </div>
-
-            <div class="field">
-              <label for="f-name">Name<span class="req">*</span></label>
-              <input id="f-name" type="text" name="name" autocomplete="name" required>
-            </div>
-            <div class="field">
-              <label for="f-email">E-Mail<span class="req">*</span></label>
-              <input id="f-email" type="email" name="email" autocomplete="email" required>
-            </div>
-            <div class="field">
-              <label for="f-event">Event / Promoter<span class="req">*</span></label>
-              <input id="f-event" type="text" name="event" required>
-            </div>
-            <div class="field">
-              <label for="f-date">Date<span class="req">*</span></label>
-              <input id="f-date" type="text" name="date" placeholder="DD.MM.YYYY" inputmode="numeric" required>
-            </div>
-            <div class="field span-2">
-              <label for="f-location">City / Venue<span class="req">*</span></label>
-              <input id="f-location" type="text" name="location" placeholder="City, Venue" required>
-            </div>
-            <div class="field span-2">
-              <label for="f-message">Message</label>
-              <textarea id="f-message" name="message" rows="4"></textarea>
-            </div>
-
-            <div class="form-actions">
-              <!-- Cloudflare Turnstile captcha widget -->
-              <div class="cf-turnstile" data-sitekey="0x4AAAAAAE1CwQInEPI7M0NS" data-theme="dark"></div>
-
-              <button type="submit" id="submitBtn" class="btn btn-primary">
-                <span class="btn-text">Send Inquiry</span>
-                <svg class="icon-shift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-              </button>
-            </div>
-
-            <div id="formStatus" role="status" aria-live="polite"></div>
-          </form>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- ==================== FOOTER ==================== -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-top">
-          <div class="footer-socials">
+      <nav class="socials" aria-label="Social media">
             <a href="https://www.instagram.com/enaly" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Instagram">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.067 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </a>
@@ -940,353 +261,28 @@
             <a href="https://www.facebook.com/enalydnb" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Facebook">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             </a>
-          </div>
-        </div>
+          </nav>
+    </div>
+  </main>
 
-        <div class="footer-bottom">
-          <p>© 2026 Enaly. All rights reserved.</p>
-          <ul class="footer-legal">
-            <!-- Cookie banner hidden (no optional services): <li><a href="#" role="button" data-cookie-settings>Cookie Settings</a></li> -->
-            <li><a href="imprint">Imprint</a></li>
-            <li><a href="privacy-policies">Privacy Policy</a></li>
-          </ul>
-        </div>
-      </div>
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <p>© 2026 Enaly. All rights reserved.</p>
+      <ul class="footer-legal">
+        <li><a href="#" role="button" data-cookie-settings>Cookie Settings</a></li>
+        <li><a href="imprint">Imprint</a></li>
+        <li><a href="privacy-policies">Privacy Policy</a></li>
+      </ul>
     </div>
   </footer>
 
-  <!-- ==================== SCRIPTS ==================== -->
-  <script src="js/site.js?v=20261113a"></script>
-  <!-- Cookie banner hidden for now – the website sets no optional cookies. To show it again, remove this comment wrapper:
-    <script src="js/cookie-banner.js?v=20261105b"></script>
-  -->
-  <script src="js/booking-form.js?v=20261114a"></script>
-  <script src="js/richtext.js?v=20261105d"></script>
-
+  <script src="js/cookie-banner.js"></script>
   <script>
-    // ---------- Helpers ----------
-    const ICONS = {
-      pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
-      ticket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1a2 2 0 0 0 0 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2 2 0 0 0 0-4Z"/><path d="M13 7v2M13 15v2M13 11v2"/></svg>',
-      cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
-      ok: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>',
-      err: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>',
-      soldout: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="m9 12 2 2 4-4"/></svg>',
-      door: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 4h3a2 2 0 0 1 2 2v14"/><path d="M2 20h3M13 20h9M10 12v.01"/><path d="M13 4.6v16.1a1 1 0 0 1-1.2 1L5 20V5.6a2 2 0 0 1 1.5-1.9l4-1A2 2 0 0 1 13 4.6Z"/></svg>',
-      arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>',
-      send: '<svg class="icon-shift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>'
-    };
-    const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-
-    function escapeHtml(text) {
-      return String(text || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-    }
-    function safeUrl(url) {
-      const u = String(url || '').trim();
-      return /^https?:\/\//i.test(u) ? u : '';
-    }
-
-
-    // Show an image chosen in the dashboard; it fades in once loaded (never the old default first)
-    function showImage(img, src) {
-      if (!img || !src) return;
-      const done = () => img.classList.add('is-loaded');
-      img.addEventListener('load', done, { once: true });
-      img.addEventListener('error', done, { once: true });
-      img.src = src;
-      if (img.complete && img.naturalWidth) done();
-    }
-
-    // ---------- Content loader (data/content.json) ----------
-    async function loadContent() {
-      const container = document.getElementById('aboutTextContainer');
-      const quote = container.querySelector('.quote-box');
-      try {
-        const content = (await window.enalyContent) || {};
-
-        // Images: only the ones chosen in the dashboard (defaults only if nothing is set)
-        const header = content.imgHeader || 'assets/header.jpg';
-        // separate mobile header if set, otherwise phones use the desktop image (set before the img, so the browser picks the right one)
-        document.getElementById('imgHeaderMobile').srcset = content.imgHeaderMobile || header;
-        showImage(document.getElementById('imgHeader'), header);
-        showImage(document.getElementById('imgAbout'), content.imgAbout || 'assets/about.jpg');
-        showImage(document.getElementById('imgWorking'), content.imgWorking || 'assets/working.jpg');
-        if (!Object.keys(content).length) { container.querySelector('.placeholder')?.remove(); return; }
-
-        container.querySelector('.placeholder')?.remove();
-        if (content.about && content.about.trim() !== "") {
-          // formatted text from the admin editor (cleaned again here), or old plain text
-          const html = window.EnalyRich
-            ? EnalyRich.toHtml(content.about)
-            : content.about.replace(/<[^>]*>/g, '\n').split('\n').filter(p => p.trim() !== "").map(p => `<p>${escapeHtml(p)}</p>`).join('');
-          const box = document.createElement('div');
-          box.className = 'about-body';
-          box.innerHTML = html;
-          quote.before(box);
-        }
-
-        renderWhatsNew(content);
-        renderRefList(content.sharedStage, 'sharedStageContainer');
-        renderRefList(content.selectedShows, 'selectedShowsContainer');
-      } catch (err) {
-        container.querySelector('.placeholder')?.remove();
-        console.error('Error loading content:', err);
-      }
-    }
-
-    // What's New strip below the header (admin: on/off, title, headline, link)
-    function renderWhatsNew(content) {
-      const wrap = document.getElementById('whatsNew');
-      const active = content.whatsNewActive === true || content.whatsNewActive === 'true';
-      const headline = String(content.whatsNewHeadline || '').trim();
-      if (!active || !headline) { wrap.hidden = true; return; }
-
-      const title = String(content.whatsNewTitle || '').trim() || "What's New?";
-      const url = safeUrl(content.whatsNewLink);
-      const inner = `
-        <span class="wn-label"><span class="pulse" aria-hidden="true"></span>${escapeHtml(title)}</span>
-        <span class="wn-headline">${escapeHtml(headline)}</span>
-        ${url ? `<span class="wn-arrow">${ICONS.arrow}</span>` : ''}`;
-
-      wrap.innerHTML = url
-        ? `<a class="whats-new glass" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${inner}</a>`
-        : `<div class="whats-new glass">${inner}</div>`;
-      wrap.hidden = false;
-    }
-
-    // References: "Shared the stage with" + "Played at" (JSON key: selectedShows) as compact name lists
-    // Each line = one row; names inside a line are separated by commas
-    function parseRefRows(rawText) {
-      return String(rawText || '')
-        .split('\n')
-        .map(line => line.split(',').map(i => i.trim()).filter(Boolean))
-        .filter(row => row.length);
-    }
-
-    // Phones: always two names per row (no matter how the lines are set in the dashboard)
-    const REF_MOBILE = window.matchMedia('(max-width: 600px)');
-    function pairUp(rows) {
-      const names = rows.flat(), pairs = [];
-      for (let i = 0; i < names.length; i += 2) pairs.push(names.slice(i, i + 2));
-      return pairs;
-    }
-    const refSources = {};
-
-    function renderRefList(rawText, containerId) {
-      const container = document.getElementById(containerId);
-      refSources[containerId] = rawText;
-      const parsed = parseRefRows(rawText);
-      const rows = REF_MOBILE.matches ? pairUp(parsed) : parsed;
-      container.closest('.ref-block').hidden = !rows.length;
-      container.innerHTML = rows.map(row =>
-        `<li class="ref-row">${row.map(item => `<span class="ref-item">${escapeHtml(item)}</span>`).join('')}</li>`
-      ).join('');
-      const blocks = document.querySelectorAll('.refs .ref-block');
-      document.getElementById('refs').hidden = [...blocks].every(b => b.hidden);
-      fitRefLists();
-    }
-
-    // Font size for the name rows.
-    // JS only measures how wide the widest row is *relative to its font size* (in em) – that number
-    // never changes while scrolling. The browser then scales the text with CSS (container units),
-    // so the rows always fit, also when the iPhone address bar shows/hides or the phone is rotated.
-    function fitRefLists() {
-      const lists = [...document.querySelectorAll('.ref-list')];
-      let rowEm = 0;
-      lists.forEach(list => {
-        const fs = parseFloat(getComputedStyle(list).fontSize) || 16;
-        [...list.children].forEach(row => {
-          row.style.flexWrap = 'nowrap';            // measure the row in one line
-          rowEm = Math.max(rowEm, row.scrollWidth / fs);
-          row.style.flexWrap = '';
-        });
-      });
-      // both lists share one size so "Shared the stage with" and "Played at" look the same
-      if (rowEm > 0) document.getElementById('refs').style.setProperty('--row-em', rowEm.toFixed(3));
-    }
-    // re-measure once the brand font has loaded (the fallback font is wider, so before that the text is only smaller, never too big)
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitRefLists);
-    // switching between phone and desktop layout (e.g. rotating a tablet) → rebuild the rows
-    REF_MOBILE.addEventListener('change', () => {
-      Object.keys(refSources).forEach(id => renderRefList(refSources[id], id));
+    // Cookie settings link (reopens the consent banner)
+    document.querySelector('[data-cookie-settings]').addEventListener('click', function (e) {
+      e.preventDefault();
+      if (window.reopenCookieBanner) window.reopenCookieBanner();
     });
-
-    loadContent();
-
-
-    // ---------- Events loader (data/events.json) ----------
-    function parseDate(dateStr) {
-      if (!dateStr) return new Date(0);
-      const cleanStr = dateStr.trim();
-      if (/^\d{1,2}[\.\-]\d{1,2}[\.\-]\d{4}$/.test(cleanStr)) {
-        const parts = cleanStr.split(/[\.\-]/);
-        return new Date(parts[2], parts[1] - 1, parts[0]);
-      }
-      if (/^\d{4}[\.\-]\d{1,2}[\.\-]\d{1,2}$/.test(cleanStr)) {
-        const parts = cleanStr.split(/[\.\-]/);
-        return new Date(parts[0], parts[1] - 1, parts[2]);
-      }
-      return new Date(dateStr);
-    }
-
-    function dateBlock(item) {
-      const d = parseDate(item.date);
-      if (isNaN(d.getTime()) || d.getTime() === 0) {
-        return `<div class="date-block"><span class="raw">${escapeHtml(item.date)}</span></div>`;
-      }
-      return `<div class="date-block" aria-hidden="true">
-                <span class="d">${String(d.getDate()).padStart(2, '0')}</span>
-                <span class="my">${MONTHS[d.getMonth()]} ${String(d.getFullYear()).slice(2)}</span>
-              </div>`;
-    }
-
-    function locationLine(item) {
-      return [item.venue, item.city].filter(v => v && String(v).trim()).map(escapeHtml).join(' · ');
-    }
-
-    // Sold Out (pink text) wins; otherwise ticket link and/or doorsale (same look as the ticket button)
-    function isTrue(v) { return v === true || v === 'true'; }
-    function ticketCell(item, ticketUrl) {
-      if (isTrue(item.soldOut)) return `<span class="btn btn-ghost btn-sm is-static sold-out">${ICONS.soldout}Sold Out</span>`;
-      let html = '';
-      if (ticketUrl) html += `<a href="${escapeHtml(ticketUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm event-ticket-link">${ICONS.ticket}Tickets</a>`;
-      if (isTrue(item.doorsale)) html += `<span class="btn btn-ghost btn-sm is-static">${ICONS.door}Doorsale</span>`;
-      return html;
-    }
-
-    const UPCOMING_VISIBLE = 3; // shown before "Show all"
-
-    // Past box keeps the collapsed height while the upcoming list is opened
-    function lockPastHeight() {
-      const past = document.querySelector('.past-panel');
-      const layout = document.querySelector('.events-layout');
-      const list = document.getElementById('upcomingEvents');
-      const wasOpen = list.classList.contains('is-expanded');
-      past.style.height = '';
-      list.classList.remove('is-expanded'); layout.classList.remove('is-expanded');
-      const h = past.getBoundingClientRect().height;   // height with 3 shows, both boxes equal
-      if (wasOpen) { list.classList.add('is-expanded'); layout.classList.add('is-expanded'); }
-      if (window.matchMedia('(min-width: 981px)').matches) past.style.height = h + 'px';
-    }
-    let pastResizeWidth = window.innerWidth;
-    window.addEventListener('resize', () => {
-      if (window.innerWidth === pastResizeWidth) return;
-      pastResizeWidth = window.innerWidth;
-      if (document.getElementById('upcomingEvents').classList.contains('is-expanded')) lockPastHeight();
-    });
-
-    async function loadEvents() {
-      const upcomingContainer = document.getElementById('upcomingEvents');
-      const pastContainer = document.getElementById('pastEvents');
-
-      try {
-        const res = await fetch('data/events.json?t=' + Date.now(), { cache: 'no-store' });
-        const events = await res.json();
-        const now = new Date().setHours(0, 0, 0, 0);
-
-        const upcomingList = [];
-        const pastList = [];
-
-        events.forEach(item => {
-          const timestamp = parseDate(item.date).getTime();
-          if (timestamp >= now) upcomingList.push({ ...item, timestamp });
-          else pastList.push({ ...item, timestamp });
-        });
-
-        upcomingList.sort((a, b) => a.timestamp - b.timestamp);
-        pastList.sort((a, b) => b.timestamp - a.timestamp);
-        const recentPastList = pastList.slice(0, 3);
-
-
-        // Upcoming
-        upcomingContainer.innerHTML = upcomingList.length ? '' :
-          `<div class="empty-state">${ICONS.cal}<span>No upcoming shows announced. Stay tuned!</span></div>`;
-
-        upcomingList.forEach((item, idx) => {
-          const ticketUrl = safeUrl(item.tickets);
-          const loc = locationLine(item);
-          upcomingContainer.insertAdjacentHTML('beforeend', `
-            <article class="event-card${idx >= UPCOMING_VISIBLE ? ' is-extra' : ''}">
-              ${dateBlock(item)}
-              <div class="event-info">
-                <h4 class="event-title">${escapeHtml(item.title)}</h4>
-                <div class="event-meta">
-                  <span class="event-full-date">${ICONS.cal}${escapeHtml(item.date)}</span>
-                  ${loc ? `<span>${ICONS.pin}${loc}</span>` : ''}
-                </div>
-              </div>
-              <div class="ticket-cell">${ticketCell(item, ticketUrl)}</div>
-            </article>`);
-        });
-
-        // More than 3 upcoming shows → "Show all" button
-        const showAll = document.getElementById('showAllEvents');
-        const extra = upcomingList.length - UPCOMING_VISIBLE;
-        showAll.hidden = extra <= 0;
-        if (extra > 0) {
-          const label = showAll.querySelector('span');
-          label.textContent = `Show all (${upcomingList.length})`;
-          showAll.onclick = () => {
-            const willOpen = !upcomingContainer.classList.contains('is-expanded');
-            if (willOpen) lockPastHeight(); // keep the Past box exactly as tall as before
-            const open = upcomingContainer.classList.toggle('is-expanded');
-            document.querySelector('.events-layout').classList.toggle('is-expanded', open);
-            if (!open) document.querySelector('.past-panel').style.height = '';
-            showAll.setAttribute('aria-expanded', open ? 'true' : 'false');
-            label.textContent = open ? 'Show less' : `Show all (${upcomingList.length})`;
-            if (!open) document.getElementById('events').scrollIntoView({ behavior: 'smooth' });
-          };
-        }
-
-        // Next show pill in hero
-        if (upcomingList.length) {
-          const next = upcomingList[0];
-          const loc = [next.venue, next.city].filter(Boolean).join(', ');
-          document.getElementById('nextShowText').textContent =
-            `${next.date} · ${next.title}${loc ? ' · ' + loc : ''}`;
-          document.getElementById('nextShow').classList.add('is-ready');
-        }
-
-        // Past
-        pastContainer.innerHTML = recentPastList.length ? '' :
-          `<li class="past-item"><span class="past-title" style="grid-column:1/-1;color:var(--text-secondary)">No recent past shows.</span></li>`;
-
-        pastContainer.classList.toggle('is-single', recentPastList.length <= 1);
-        recentPastList.forEach(item => {
-          const loc = locationLine(item);
-          pastContainer.insertAdjacentHTML('beforeend', `
-            <li class="past-item">
-              <span class="past-date">${escapeHtml(item.date)}</span>
-              <span class="past-title">${escapeHtml(item.title)}</span>
-              ${loc ? `<span class="past-loc">${loc}</span>` : ''}
-            </li>`);
-        });
-
-      } catch (err) {
-        console.error('Error loading events:', err);
-        upcomingContainer.innerHTML = `<div class="empty-state">${ICONS.cal}<span>No upcoming shows announced. Stay tuned!</span></div>`;
-      }
-    }
-
-    loadEvents();
-
-    // ---------- Scrollspy ----------
-    (function () {
-      const sections = document.querySelectorAll('section[id]');
-      const navLinks = document.querySelectorAll('.nav-link');
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          const id = entry.target.getAttribute('id');
-          navLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-          });
-        });
-      }, { root: null, rootMargin: '-35% 0px -55% 0px', threshold: 0 });
-
-      sections.forEach(section => observer.observe(section));
-    })();
   </script>
 </body>
 </html>
