@@ -26,7 +26,11 @@
     },
     {
       "title": "Website",
-      "body": "<p>Design &amp; Development: Florian Miltz (FLOWZ)<br>https://iamflowz.de</p><p>© 2026 Enaly. All rights reserved.</p><p><span class=\"fs-s\">Source: eRecht24 (https://www.e-recht24.de)</span></p>"
+      "body": "<p>Design &amp; Development: Florian Miltz (FLOWZ)<br>https://iamflowz.de</p>"
+    },
+    {
+      "title": "Copyright",
+      "body": "<p>© 2026 Enaly. All rights reserved.</p><p><span class=\"fs-s\">Source: eRecht24 (https://www.e-recht24.de)</span></p>"
     }
   ]
 }
