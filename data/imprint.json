@@ -22,15 +22,11 @@
     },
     {
       "title": "Copyright",
-      "body": "The content and works published on this website are subject to applicable copyright laws.\n\nSome content, including photographs, has been created by third parties. The respective copyrights remain with their original creators and rights holders. Such content is used on the basis of the applicable usage rights and permissions.\n\nIf you believe that any content on this website infringes your rights, please contact me at info@enaly.de."
+      "body": "<p>The content and works published on this website are subject to applicable copyright laws.</p><p>Some content, including photographs, has been created by third parties. The respective copyrights remain with their original creators and rights holders. Such content is used on the basis of the applicable usage rights and permissions.</p><p>If you believe that any content on this website infringes your rights, please contact me at info@enaly.de.</p><p>© 2026 Enaly. All rights reserved.</p><p><span class=\"fs-s\">Source: eRecht24 (https://www.e-recht24.de)</span></p>"
     },
     {
-      "title": "Website",
-      "body": "<p>Design &amp; Development: Florian Miltz (FLOWZ)<br>https://iamflowz.de</p>"
-    },
-    {
-      "title": "Copyright",
-      "body": "<p>© 2026 Enaly. All rights reserved.</p><p><span class=\"fs-s\">Source: eRecht24 (https://www.e-recht24.de)</span></p>"
+      "title": "Design & Development",
+      "body": "<p>Florian Miltz (FLOWZ)<br>https://iamflowz.de</p>"
     }
   ]
 }
