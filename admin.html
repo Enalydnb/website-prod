@@ -188,6 +188,20 @@
     }
     .view-site svg { width: 16px; height: 16px; }
     .view-site:hover { color: var(--pink); }
+    /* Log out (ends the Cloudflare Access login for this domain) */
+    .logout-icon { display: none; }
+    @media (max-width: 900px) {
+      .mobile-status { display: flex !important; align-items: center; gap: 0.5rem; }
+      .logout-icon {
+        display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+        width: 36px; height: 36px; border-radius: 50%;
+        border: 1px solid var(--glass-border); background: rgba(255,255,255,0.04); color: var(--text-secondary);
+      }
+      .logout-icon svg { width: 16px; height: 16px; }
+      .logout-icon:active { color: var(--pink); }
+      .mobile-status .deploy-chip { white-space: nowrap; }
+      .mobile-status .deploy-label { white-space: nowrap; }
+    }
 
     /* Main */
     .main { min-width: 0; padding-top: 0.5rem; }
@@ -656,7 +670,7 @@
       .brand-mark { width: 34px; height: 34px; }
       .brand h1 { font-size: 1.5rem; }
       .sidebar-foot { display: none; }
-      .mobile-status { display: block !important; }
+      .mobile-status { display: flex !important; align-items: center; gap: 0.5rem; }
       /* phones: the status tab is opened via the status chip at the top (bottom bar keeps 5 items) */
       #tabBtnStatus { display: none; }
       .deploy-item .gh { display: none; }
@@ -765,6 +779,7 @@
           <span class="dot" aria-hidden="true"></span><span class="deploy-label">Checking status…</span>
           <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
         </button>
+        <a href="/cdn-cgi/access/logout" class="logout-icon" data-logout title="Log out" aria-label="Log out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg></a>
         </div>
       </div>
 
@@ -806,6 +821,10 @@
         <a href="/" target="_blank" rel="noopener" class="view-site">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
           View website
+        </a>
+        <a href="/cdn-cgi/access/logout" class="view-site logout-link" data-logout>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+          Log out
         </a>
       </div>
     </aside>
