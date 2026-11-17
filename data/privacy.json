@@ -2,7 +2,7 @@
   "sections": [
     {
       "title": "General Information",
-      "body": "Last updated: November 2026\n\nWe take the protection of your personal data seriously. This Privacy Policy explains what personal data is processed when you visit enaly.de or contact us, why it is processed and what rights you have.\n\n**Data Controller**\nHelena Schmidt\nEnaly\nAddress upon request\nEmail: info@enaly.de\n\n**Legal Bases for Processing**\nWe process personal data primarily on the following legal bases:\n\n- Article 6(1)(b) GDPR: taking steps before entering into a contract and performing a contract.\n- Article 6(1)(f) GDPR: providing a secure website, preventing misuse and responding to other enquiries.\n- Article 6(1)(c) GDPR: complying with legal obligations.\n- Article 6(1)(a) GDPR: where consent is required and has been given.\n\nSection 25 of the German Telecommunications Digital Services Data Protection Act (TDDDG) also applies to storing information on your device or accessing information stored on it."
+      "body": "<p><span class=\"fs-s\">Last updated: November 2026</span></p><p>We take the protection of your personal data seriously. This Privacy Policy explains what personal data is processed when you visit enaly.de or contact us, why it is processed and what rights you have.</p><p><b>Data Controller</b><br>Helena Schmidt<br>Enaly<br>Address upon request<br>Email: info@enaly.de</p><p><b>Legal Bases for Processing</b><br>We process personal data primarily on the following legal bases:</p><ul><li>Article 6(1)(b) GDPR: taking steps before entering into a contract and performing a contract.</li><li>Article 6(1)(f) GDPR: providing a secure website, preventing misuse and responding to other enquiries.</li><li>Article 6(1)(c) GDPR: complying with legal obligations.</li><li>Article 6(1)(a) GDPR: where consent is required and has been given.</li></ul><p>Section 25 of the German Telecommunications Digital Services Data Protection Act (TDDDG) also applies to storing information on your device or accessing information stored on it.</p>"
     },
     {
       "title": "Hosting and Security",
@@ -22,7 +22,7 @@
     },
     {
       "title": "Data Security and External Links",
-      "body": "Our website uses HTTPS encryption to protect data in transit.\n\nLinks to Instagram, Facebook, TikTok, SoundCloud, YouTube and other external services are ordinary hyperlinks. Simply visiting our website does not transmit data to those platforms through these links. If you follow a link, the privacy practices of the relevant provider apply.\n\nWe do not embed social media posts, external music or video players, or fonts loaded from third-party servers.\n\nBased on an eRecht24 template – https://www.e-recht24.de"
+      "body": "<p>Our website uses HTTPS encryption to protect data in transit.</p><p>Links to Instagram, Facebook, TikTok, SoundCloud, YouTube and other external services are ordinary hyperlinks. Simply visiting our website does not transmit data to those platforms through these links. If you follow a link, the privacy practices of the relevant provider apply.</p><p>We do not embed social media posts, external music or video players, or fonts loaded from third-party servers.</p><p><span class=\"fs-s\">Source: eRecht24 (https://www.e-recht24.de)&nbsp;based on an eRecht24 template</span></p>"
     }
   ]
 }

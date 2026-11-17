@@ -29,10 +29,12 @@
   },
   {
     "date": "30.09.2026",
-    "title": "Beats x Bass x Colonge pres. #MITTWOCHENENDE",
+    "title": "Beats x Bass x Cologne pres. #MITTWOCHENENDE",
     "venue": "Odonien",
-    "city": "Colonge, DE",
-    "tickets": ""
+    "city": "Cologne, DE",
+    "tickets": "",
+    "doorsale": false,
+    "soldOut": false
   },
   {
     "date": "16.10.2026",
@@ -47,6 +49,15 @@
     "venue": "Gebäude 9",
     "city": "Cologne, DE",
     "tickets": "https://www.eventim-light.com/de/a/5790efbae4b0780ff85d71ae/e/6ab64814b7344a6e5c929d9c?lang=de"
+  },
+  {
+    "date": "27.11.2026",
+    "title": "Gourski - \"Aura\"  Album Release Party",
+    "venue": "Boothaus",
+    "city": "Cologne",
+    "tickets": "https://bootshaus-club.ticket.io/dZ2pN9bX/?fbclid=IwY2xjawVpTApleHRuA2FlbQIxMABwZG9mBWJyaWQRMEY3SWI5a1c4MFh0YlBIaThzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEflovyJZQ5DFTsYqjx6x-pYr5iqoDUgYUgQlHvYha_chFhUrLIFbSEl97ZxAo_aem_VGZhlhFLNeAMQtLhYMIdQA",
+    "doorsale": false,
+    "soldOut": false
   },
   {
     "date": "22.01.2027",
